@@ -6,7 +6,7 @@ const UserAgent = require('user-agents');
 let browser, page;
 
 const chromeOptions = {
-    headless: true,
+    headless: false,
     defaultViewport: null,
     args: [
         "--incognito",
