@@ -135,7 +135,7 @@ app.get('/capture', async function (req, res) {
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
 
-        const retrievedData = await page.evaluate(async () => {
+        const retrievedData = await page.evaluate(async (candles) => {
 
 
             if (candles > 0) {
@@ -163,7 +163,7 @@ app.get('/capture', async function (req, res) {
             }
 
             return this._exposed_chartWidgetCollection.takeScreenshot()
-        })
+        }, candles)
         console.log('Success')
 
 
