@@ -136,30 +136,32 @@ app.get('/capture', async function (req, res) {
                 new KeyboardEvent('keydown', {
                     bubbles: true,
                     cancelable: true,
-                    key: isMac ? 'Meta' : 'Control',
-                    code: isMac ? 'MetaLeft' : 'ControlLeft',
+                    key: 'Alt',
+                    code: 'AltLeft',
                     location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
-                    getModifierState: (keyArg) => keyArg === (isMac ? 'Meta' : 'Control'),
-                    ctrlKey: !isMac,
-                    metaKey: isMac,
+                    getModifierState: (keyArg) => keyArg === 'Alt',
+                    ctrlKey: false,
+                    metaKey: false,
+                    altKey: true,
                     charCode: 0,
-                    keyCode: isMac ? 93 : 17,
-                    which: isMac ? 93 : 17,
+                    keyCode: 18,
+                    which: 18,
                 })
             );
 
             const preventableEvent = new KeyboardEvent('keydown', {
                 bubbles: true,
                 cancelable: true,
-                key: 'a',
-                code: 'KeyA',
+                key: 'r',
+                code: 'KeyR',
                 location: window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
-                getModifierState: (keyArg) => keyArg === (isMac ? 'Meta' : 'Control'),
-                ctrlKey: !isMac,
-                metaKey: isMac,
+                getModifierState: (keyArg) => keyArg === 'Alt',
+                ctrlKey: false,
+                metaKey: false,
+                altKey: true,
                 charCode: 0,
-                keyCode: 65,
-                which: 65,
+                keyCode: 82,
+                which: 82,
             });
 
             const wasPrevented = (
@@ -168,20 +170,21 @@ app.get('/capture', async function (req, res) {
             );
 
             if (!wasPrevented) {
-                document.execCommand('selectall', false, null);
+                // document.execCommand('selectall', false, null);
+                console.log("cant zoom out")
             }
 
             document.activeElement.dispatchEvent(
                 new KeyboardEvent('keyup', {
                     bubbles: true,
                     cancelable: true,
-                    key: isMac ? 'Meta' : 'Control',
-                    code: isMac ? 'MetaLeft' : 'ControlLeft',
+                    key: 'Alt',
+                    code: 'AltLeft',
                     location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
                     getModifierState: () => false,
                     charCode: 0,
-                    keyCode: isMac ? 93 : 17,
-                    which: isMac ? 93 : 17,
+                    keyCode: 18,
+                    which: 18,
                 }),
             );
 
