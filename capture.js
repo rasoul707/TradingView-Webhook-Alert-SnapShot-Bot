@@ -151,11 +151,11 @@ app.get('/capture', async function (req, res) {
                 start_time = "18:30"
                 end_time = "21:30"
 
-                document.querySelector('.row-9XF0QIKT:nth-child(1) input:nth-child(1)').value = start_date
-                document.querySelector('.row-9XF0QIKT:nth-child(2) input:nth-child(1)').value = end_date
+                document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[0].value = start_date
+                document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[0].value = end_date
 
-                document.querySelector('.row-9XF0QIKT:nth-child(1) input:nth-child(2)').value = start_time
-                document.querySelector('.row-9XF0QIKT:nth-child(2) input:nth-child(2)').value = end_time
+                document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[1].value = start_time
+                document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[1].value = end_time
 
                 // document.querySelector('button[type="submit"]').click()
             }
