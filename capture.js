@@ -125,18 +125,20 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(() => {
-        console.log('success')
+        console.log('Success')
+        await page.keyboard.down('AltLeft');
+        await page.keyboard.press('KeyR');
+        await page.keyboard.up('AltLeft');
+        const retrievedData = await page.evaluate(() => {
+            return this._exposed_chartWidgetCollection.takeScreenshot()
+        })
+        res.end(retrievedData);
     }).catch((res) => {
-        console.log('***fails', res)
+        console.log('Failed', res)
+        res.end('error')
     })
 
-    await page.keyboard.down('AltLeft');
-    await page.keyboard.press('KeyR');
-    await page.keyboard.up('AltLeft');
-    const retrievedData = await page.evaluate(() => {
-        return this._exposed_chartWidgetCollection.takeScreenshot()
-    })
-    res.end(retrievedData);
+
 });
 
 app.listen(7007);

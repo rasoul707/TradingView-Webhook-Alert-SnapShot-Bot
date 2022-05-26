@@ -51,7 +51,10 @@ def snapshot(arg):
         return cmd
     else:
         requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
-        return f'https://www.tradingview.com/x/{requests.get(requesturl).text}'
+        txtc = requests.get(requesturl).text
+        if txtc == 'error':
+            return 'error'
+        return f'https://www.tradingview.com/x/{txtc}'
 
 
 def sen2Admin(msg):
