@@ -8,6 +8,7 @@
 import json
 import time
 from flask import Flask, request
+import requests
 import config
 from helper import *
 
@@ -43,5 +44,6 @@ def webhook():
 
 if __name__ == "__main__":
     from waitress import serve
-
     serve(app, host="0.0.0.0", port=80)
+    startCapture = requests.get('http://localhost:7007/start-browser')
+    print(startCapture.text)
