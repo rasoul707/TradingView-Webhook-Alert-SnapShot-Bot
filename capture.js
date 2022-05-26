@@ -155,8 +155,8 @@ app.get('/capture', async function (req, res) {
         // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         // }
         // else {
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyR');
+        // page.keyboard.press('AltLeft');
+        // await page.keyboard.press('KeyR');
         // }
 
         const retrievedData = await page.evaluate(async () => {
