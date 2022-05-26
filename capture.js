@@ -59,12 +59,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 
 app.get('/start', async function (req, res) {
-    const userAgent = new UserAgent()
+    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
     const useragent = userAgent.toString()
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
-    await page.setRequestInterception(true);
+    // await page.setRequestInterception(true);
     await page.setUserAgent(useragent);
     await page.setViewport({
         width: 1920,
@@ -73,17 +73,17 @@ app.get('/start', async function (req, res) {
 
 
 
-    page.on('request', request => {
-        const requestUrl = request._url.split('?')[0].split('#')[0];
-        if (
-            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-        ) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
+    // page.on('request', request => {
+    //     const requestUrl = request._url.split('?')[0].split('#')[0];
+    //     if (
+    //         blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+    //         skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+    //     ) {
+    //         request.abort();
+    //     } else {
+    //         request.continue();
+    //     }
+    // });
 
 
 
