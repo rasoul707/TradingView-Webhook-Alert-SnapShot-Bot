@@ -62,7 +62,7 @@ app.get('/start', async function (req, res) {
         width: 1920,
         height: 1080,
     });
-    await page.goto('https://www.tradingview.com');
+    await page.goto('https://www.tradingview.com', { timeout: 25000, waitUntil: 'networkidle2', });
 
     // const html = await page.$('html')
     // const htmlCls = await html.getProperty('className')
