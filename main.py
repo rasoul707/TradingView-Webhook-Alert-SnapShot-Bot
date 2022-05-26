@@ -26,6 +26,7 @@ def webhook():
         if request.method == "POST":
             data = request.get_json()
             key = data["key"]
+            print(data)
             if key == config.sec_key:
                 print(get_timestamp(), "Alert Received & Sent!")
                 send_alert(data)
@@ -44,4 +45,4 @@ def webhook():
 if __name__ == "__main__":
     from waitress import serve
 
-    serve(app, host="0.0.0.0", port=8585)
+    serve(app, host="0.0.0.0", port=80)
