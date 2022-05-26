@@ -113,9 +113,9 @@ app.get('/start', async function (req, res) {
         ok = true
     }
 
-    const img = await page.screenshot();
+    // const img = await page.screenshot();
 
-    res.json({ ok, status, img, username, password, useragent });
+    res.json({ ok, status, img: "", username, password, useragent });
 });
 
 app.get('/capture', async function (req, res) {
@@ -141,6 +141,8 @@ app.get('/capture', async function (req, res) {
         console.log('Failed', err)
         res.end('error')
     })
+
+    await browser.close();
 
 
 });
