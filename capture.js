@@ -84,17 +84,17 @@ app.get('/start', async function (req, res) {
 
     // $(".tv-header__user-menu-button--anonymous").click()
     // $(".tv-header__user-menu-button--logged").click()
-    page.on('request', request => {
-        const requestUrl = request._url.split('?')[0].split('#')[0];
-        if (
-            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-        ) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
+    // page.on('request', request => {
+    //     const requestUrl = request._url.split('?')[0].split('#')[0];
+    //     if (
+    //         blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+    //         skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+    //     ) {
+    //         request.abort();
+    //     } else {
+    //         request.continue();
+    //     }
+    // });
     res.end('Browser server is ready!');
 });
 
