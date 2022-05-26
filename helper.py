@@ -32,7 +32,7 @@ def sendAlert(data, key):
         return 'err'
 
     message = "[hi]("+snapLink+") " + "**" + sy.upper()+" | "+tf.upper()+"**" + "\n" + \
-        + "استراتژی: " + sg + "\n" + msg
+        "استراتژی: " + sg + "\n" + msg
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
