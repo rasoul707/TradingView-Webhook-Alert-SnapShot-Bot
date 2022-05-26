@@ -24,9 +24,11 @@ def get_timestamp():
 def webhook():
     try:
         if request.method == "POST":
+            print(request)
             data = request.get_json()
+
             key = data["key"]
-            print(data)
+
             if key == config.sec_key:
                 print(get_timestamp(), "Alert Received & Sent!")
                 send_alert(data)
