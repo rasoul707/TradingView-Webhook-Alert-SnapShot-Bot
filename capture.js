@@ -116,9 +116,9 @@ app.get('/start', async function (req, res) {
 
 
 
-    // const img = await page.screenshot();
+    const img = await page.screenshot();
 
-    res.json(data);
+    res.json(img);
 });
 
 app.get('/capture', async function (req, res) {
