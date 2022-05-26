@@ -96,23 +96,41 @@ app.get('/start', async function (req, res) {
         }
     });
 
+
+
     const authUrl = 'https://www.tradingview.com/accounts/signin/';
-    const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
-    if (await page.url() === authUrl) {
-        console.log("login nashode");
-    } else {
-        console.log('login shode')
-    }
+    const username = "rrr";
+    const password = "mmm";
+    const remember = "on";
+    let formData = new FormData();
+    formData.append('name', 'John');
+    formData.append('password', 'John123');
+
+    const result = await fetch(authUrl, {
+        // headers: { Authorization: "Token " + token },
+        method: "POST",
+        body: formData
+    })
+    const data = await result.json();
+
+    // const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+    // if (await page.url() === authUrl) {
+    //     console.log("login nashode");
+    //     await page.click('.tv-signin-dialog__toggle-email')
+    //     await page.type('input[name="username"]', 'username');
+    //     await page.type('input[name="password"]', 'password');
+
+    // } else {
+    //     console.log('login shode')
+    // }
 
 
 
 
 
+    // const img = await page.screenshot();
 
-
-    const img = await page.screenshot();
-
-    res.end(img);
+    res.json(data);
 });
 
 app.get('/capture', async function (req, res) {
