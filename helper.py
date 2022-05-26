@@ -16,8 +16,8 @@ def sendAlert(data, key):
     tgbot = Bot(token=config.BOT_TOKEN)
     message = snapshot([
         data["ch"],
-        data["sy"],
         data["ex"],
+        data["sy"],
         data["tf"]
     ])
     try:
