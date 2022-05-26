@@ -131,6 +131,7 @@ app.get('/capture', async function (req, res) {
         const retrievedData = await page.evaluate(async () => {
 
             const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
 
             document.activeElement.dispatchEvent(
                 new KeyboardEvent('keydown', {
