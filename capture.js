@@ -97,6 +97,8 @@ app.get('/start', async function (req, res) {
     });
 
     await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
+    const img = await page.screenshot();
+    console.log(img);
 
     res.end('Browser server is ready!');
 });
