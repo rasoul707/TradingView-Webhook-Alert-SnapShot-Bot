@@ -92,12 +92,14 @@ app.get('/start', async function (req, res) {
 
     const html = await page.$('html')
     const htmlCls = await html.getProperty('className')
-    const htmlClsArr = htmlCls.split(" ")
-    if (htmlClsArr.includes("is-authenticated")) {
-        console.log("Logine")
-    } else {
-        console.log("Login kon")
-    }
+    // const htmlClsArr = htmlCls.split(" ")
+    // if (htmlClsArr.includes("is-authenticated")) {
+    //     console.log("Logine")
+    // } else {
+    //     console.log("Login kon")
+    // }
+
+    print(htmlCls);
 
     const img = await page.screenshot();
 
