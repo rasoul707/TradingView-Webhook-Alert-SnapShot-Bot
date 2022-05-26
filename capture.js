@@ -126,14 +126,7 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         console.log('Success')
-        // page.keyboard.type('AltLeft');
-        // await page.keyboard.press('KeyR');
 
-        // await page.keyboard.down('AltLeft');
-        // await page.keyboard.down('R');
-
-        // await page.keyboard.up('R');
-        // await page.keyboard.up('AltLeft');
 
         const retrievedData = await page.evaluate(() => {
 
@@ -154,19 +147,19 @@ app.get('/capture', async function (req, res) {
             this.document.activeElement.dispatchEvent(preventableEvent);
 
 
-            // document.activeElement.dispatchEvent(
-            //     new KeyboardEvent('keyup', {
-            //         bubbles: true,
-            //         cancelable: true,
-            //         key: 'r',
-            //         code: 'KeyR',
-            //         location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
-            //         getModifierState: () => false,
-            //         charCode: 0,
-            //         keyCode: 82,
-            //         which: 82,
-            //     }),
-            // );
+            this.document.activeElement.dispatchEvent(
+                new KeyboardEvent('keyup', {
+                    bubbles: true,
+                    cancelable: true,
+                    key: 'r',
+                    code: 'KeyR',
+                    location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
+                    getModifierState: () => false,
+                    charCode: 0,
+                    keyCode: 82,
+                    which: 82,
+                }),
+            );
 
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
