@@ -15,13 +15,19 @@ def sendAlert(data, key):
     msg = data["msg"]
     msg = msg.encode("latin-1", "backslashreplace").decode("unicode_escape")
     tgbot = Bot(token=config.BOT_TOKEN)
+
+    ex = data["ex"]
+    sy = data["sy"]
+    tf = data["tf"]
     snapLink = snapshot([
         "-",
-        data["ex"],
-        data["sy"],
-        data["tf"]
+        ex,
+        sy,
+        tf
     ])
-    message = msg + "\n" + snapLink
+
+    message = "**"+sy.upper()+" | "+tf.upper()+"**" + "\n" + \
+        "[.]("+snapLink+")" + msg
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
