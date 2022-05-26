@@ -2,7 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
 var FormData = require('form-data');
-var userAgent = require('user-agents');
+const UserAgent = require('user-agents');
 
 let browser, page;
 
@@ -67,6 +67,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 
 app.get('/start', async function (req, res) {
+    const userAgent = new UserAgent()
     const useragent = userAgent.toString()
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();

