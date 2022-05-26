@@ -45,7 +45,7 @@ def webhook():
 if __name__ == "__main__":
     from waitress import serve
     start = requests.get(
-        'http://localhost:7007/start?username={config.username}&password={config.password}')
+        'http://localhost:7007/start?username='+config.username+'&password='+config.password)
     data = start.json()
     ok = data["ok"]
     status = data["status"]
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     if ok:
         print(get_timestamp(), "Login Success")
         sen2Admin(
-            'LoginSuccess: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
+            'LoginSuccess: '+status+'\nUsername: '+username+'\nPassword: '+password+'\nUseragent: '+useragent)
 
     else:
         print("[X]", get_timestamp(), "Login failed")
