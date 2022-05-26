@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const app = express();
 const UserAgent = require('user-agents');
 
-let browser, page;
+let browser, useragent;
 
 const chromeOptions = {
     headless: true,
@@ -60,9 +60,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 app.get('/start', async function (req, res) {
     const userAgent = new UserAgent({ "deviceCategory": "desktop" })
-    const useragent = userAgent.toString()
+    useragent = userAgent.toString()
+
     browser = await puppeteer.launch(chromeOptions);
-    page = await browser.newPage();
+    const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
     await page.setRequestInterception(true);
     await page.setUserAgent(useragent);
@@ -70,8 +71,6 @@ app.get('/start', async function (req, res) {
         width: 1920,
         height: 1080,
     });
-
-
 
     page.on('request', request => {
         const requestUrl = request._url.split('?')[0].split('#')[0];
@@ -114,7 +113,7 @@ app.get('/start', async function (req, res) {
     }
 
     // const img = await page.screenshot();
-    await browser.close();
+    await page.close();
     res.json({ ok, status, img: "", username, password, useragent });
 });
 
@@ -124,6 +123,29 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+
+
+    const page = await browser.newPage();
+    page.setDefaultNavigationTimeout(0);
+    await page.setRequestInterception(true);
+    await page.setUserAgent(useragent);
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
+
+    page.on('request', request => {
+        const requestUrl = request._url.split('?')[0].split('#')[0];
+        if (
+            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+        ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
+
 
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
@@ -143,7 +165,7 @@ app.get('/capture', async function (req, res) {
     })
 
 
-
+    await page.close();
 
 });
 
