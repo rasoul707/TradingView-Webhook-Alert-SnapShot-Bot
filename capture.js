@@ -128,7 +128,7 @@ app.get('/capture', async function (req, res) {
         console.log('Success')
 
 
-        const retrievedData = await page.evaluate(() => {
+        const retrievedData = await page.evaluate(async () => {
 
             const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 
