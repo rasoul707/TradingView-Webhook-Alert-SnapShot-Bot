@@ -83,11 +83,11 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-    // await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
-    // const retrievedData = await page.evaluate(() => {
-    //     return this._exposed_chartWidgetCollection.takeScreenshot()
-    // })
-    res.end(url);
+    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
+    const retrievedData = await page.evaluate(() => {
+        return this._exposed_chartWidgetCollection.takeScreenshot()
+    })
+    res.end(retrievedData);
 });
 
 app.listen(7007);
