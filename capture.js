@@ -100,7 +100,7 @@ app.get('/start', async function (req, res) {
     const img = await page.screenshot();
     console.log(img);
 
-    res.end('Browser server is ready!');
+    res.end(img);
 });
 
 app.get('/capture', async function (req, res) {
