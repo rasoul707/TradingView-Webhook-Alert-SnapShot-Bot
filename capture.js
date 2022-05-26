@@ -16,7 +16,7 @@ const chromeOptions = {
         "--disable-dev-shm-usage",
         "--disable-accelerated-2d-canvas",
         "--disable-gpu",
-        "--window-size=2560x1440",
+        "--window-size=1920x1080",
     ],
 };
 
@@ -59,8 +59,8 @@ app.get('/start', async function (req, res) {
     await page.setRequestInterception(true);
     await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
     await page.setViewport({
-        width: 2560,
-        height: 1440,
+        width: 1920,
+        height: 1080,
     });
     await page.goto('https://www.tradingview.com');
 
