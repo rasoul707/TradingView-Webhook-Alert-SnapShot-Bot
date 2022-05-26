@@ -53,6 +53,14 @@ const skippedResources = [
     'tiqcdn',
 ];
 
+async function elementHasClass(el, className) {
+    const classNames = (
+        await (await el.getProperty('className')).jsonValue()
+    ).split(/\s+/);
+
+    return classNames.includes(className);
+}
+
 app.get('/start', async function (req, res) {
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
@@ -91,7 +99,7 @@ app.get('/start', async function (req, res) {
     const response = await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
 
     const html = await page.$('html')
-    const htmlCls = await html.getProperty('className')
+    // const htmlCls = await html.getProperty('className')
     // const htmlClsArr = htmlCls.split(" ")
     // if (htmlClsArr.includes("is-authenticated")) {
     //     console.log("Logine")
@@ -99,7 +107,7 @@ app.get('/start', async function (req, res) {
     //     console.log("Login kon")
     // }
 
-    console.log(htmlCls);
+    console.log(elementHasClass(html, "is-authenticated"));
 
     const img = await page.screenshot();
 
