@@ -16,7 +16,7 @@ const chromeOptions = {
         "--disable-dev-shm-usage",
         "--disable-accelerated-2d-canvas",
         "--disable-gpu",
-        "--window-size=1920x1080",
+        "--window-size=1440",
     ],
 };
 
@@ -59,21 +59,42 @@ app.get('/start', async function (req, res) {
     await page.setRequestInterception(true);
     await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
     await page.setViewport({
-        width: 1920,
-        height: 1080,
+        width: 2560,
+        height: 1440,
     });
+    await page.goto('https://www.tradingview.com');
 
-    page.on('request', request => {
-        const requestUrl = request._url.split('?')[0].split('#')[0];
-        if (
-            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-        ) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
+    const html = await page.$('html')
+    const htmlCls = await html.getProperty('className')
+    const htmlClsArr = htmlCls.split(" ")
+    if (htmlClsArr.includes("is-authenticated")) {
+        console.log("Logine")
+    } else {
+        console.log("Login kon")
+    }
+
+    // await page.type('#username', 'username');
+    // await page.type('#password', 'password');
+
+    // await page.click('#submit');
+
+    // await page.waitForNavigation(); // <------------------------- Wait for Navigation
+
+    // console.log('New Page URL:', page.url());
+
+    // $(".tv-header__user-menu-button--anonymous").click()
+    // $(".tv-header__user-menu-button--logged").click()
+    // page.on('request', request => {
+    //     const requestUrl = request._url.split('?')[0].split('#')[0];
+    //     if (
+    //         blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+    //         skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+    //     ) {
+    //         request.abort();
+    //     } else {
+    //         request.continue();
+    //     }
+    // });
     res.end('Browser server is ready!');
 });
 
@@ -84,12 +105,12 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     console.log(url)
-    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
-    const retrievedData = await page.evaluate(() => {
-        return this._exposed_chartWidgetCollection.takeScreenshot()
-    })
+    // await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
+    // const retrievedData = await page.evaluate(() => {
+    //     return this._exposed_chartWidgetCollection.takeScreenshot()
+    // })
 
-    res.end(retrievedData);
+    res.end(url);
 });
 
 app.listen(7007);
