@@ -19,8 +19,12 @@ channels = [
 ]
 
 
+# trading-view auth
+username = "qkhpmdbekdeal"
+password = "5HDzYmPpCWQs"
+
+
 # default chart settings
-chart_id = "-"
 exchange = "binance"
 symbol = "btcusdt"
 timeframe = "15"

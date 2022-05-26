@@ -15,7 +15,7 @@ def sendAlert(data, key):
     msg = msg.encode("latin-1", "backslashreplace").decode("unicode_escape")
     tgbot = Bot(token=config.BOT_TOKEN)
     message = snapshot([
-        data["ch"],
+        "-",
         data["ex"],
         data["sy"],
         data["tf"]

@@ -44,6 +44,7 @@ def webhook():
 
 if __name__ == "__main__":
     from waitress import serve
-    capture_start = requests.get('http://localhost:7007/start')
-    print(capture_start.text)
+    capture_start = requests.get(
+        'http://localhost:7007/start?username=' + config.username + '&password=' + config.password)
+    print(capture_start.json)
     serve(app, host="0.0.0.0", port=80)

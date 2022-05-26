@@ -67,10 +67,11 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 
 app.get('/start', async function (req, res) {
+    const useragent = userAgent.toString()
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
     await page.setRequestInterception(true);
-    await page.setUserAgent(userAgent.toString());
+    await page.setUserAgent(useragent);
     await page.setViewport({
         width: 1920,
         height: 1080,
@@ -91,32 +92,35 @@ app.get('/start', async function (req, res) {
 
 
 
-
     const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
-    const username = 'qkhpmdbekdeal'
-    const password = '5HDzYmPpCWQs'
+    const username = req.query.username
+    const password = req.query.password
 
+    let status = ''
+    let ok = false
     await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
     if (await page.url() === authUrl) {
-        console.log("login nashode");
         await page.click('.tv-signin-dialog__toggle-email')
         await page.type('input[name="username"]', username)
         await page.type('input[name="password"]', password)
         await page.click('button[type="submit"]')
         await sleep(5000);
         if (await page.url() === authUrl) {
-            console.log("error login")
+            status = "error"
+            ok = false
         }
         else {
-            console.log("login success 1")
+            status = "login"
+            ok = true
         }
     } else {
-        console.log("login success 2")
+        status = "hasLogin"
+        ok = true
     }
 
     const img = await page.screenshot();
 
-    res.end(img);
+    res.json({ ok, status, img, username, password, useragent });
 });
 
 app.get('/capture', async function (req, res) {
@@ -125,7 +129,6 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-    console.log(url)
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
     const retrievedData = await page.evaluate(() => {
         return this._exposed_chartWidgetCollection.takeScreenshot()
