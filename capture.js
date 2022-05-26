@@ -169,6 +169,8 @@ app.get('/capture', async function (req, res) {
                 preventableEvent.defaultPrevented
             );
 
+            await sleep(2000);
+
             if (!wasPrevented) {
                 // document.execCommand('selectall', false, null);
                 console.log("cant zoom out")
@@ -190,7 +192,7 @@ app.get('/capture', async function (req, res) {
 
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        // await sleep(2000);
+        // 
         res.end(retrievedData);
     }).catch((err) => {
         console.log('Failed', err)
