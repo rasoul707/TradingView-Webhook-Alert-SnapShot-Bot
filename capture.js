@@ -129,10 +129,10 @@ app.get('/capture', async function (req, res) {
         await page.keyboard.down('AltLeft');
         await page.keyboard.press('KeyR');
         await page.keyboard.up('AltLeft');
-        const retrievedData = await page.evaluate(() => {
-            return this._exposed_chartWidgetCollection.takeScreenshot()
-        })
-        res.end(retrievedData);
+        // const retrievedData = await page.evaluate(() => {
+        //     return this._exposed_chartWidgetCollection.takeScreenshot()
+        // })
+        res.end('rrrrr');
     }).catch((err) => {
         console.log('Failed', err)
         res.end('error')
