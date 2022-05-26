@@ -31,7 +31,7 @@ def sendAlert(data, key):
     if not snapLink:
         return 'err'
 
-    message = "[hi]("+snapLink+") " + "**" + sy.upper()+" | "+tf.upper()+"**" + "\n" + \
+    message = "[🔻]("+snapLink+") " + "**" + sy.upper()+" | "+tf.upper()+"**" + "\n" + \
         "استراتژی: " + sg + "\n" + msg
     try:
         tgbot.sendMessage(
