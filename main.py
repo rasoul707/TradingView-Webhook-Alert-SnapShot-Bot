@@ -44,7 +44,20 @@ def webhook():
 
 if __name__ == "__main__":
     from waitress import serve
-    capture_start = requests.get(
-        'http://localhost:7007/start?username=' + config.username + '&password=' + config.password)
-    print(capture_start.json)
+    start = requests.get(
+        'http://localhost:7007/start?username={config.username}&password={config.password}')
+    data = start.json
+    ok = data["ok"]
+    status = data["status"]
+    username = data["username"]
+    password = data["password"]
+    useragent = data["useragent"]
+    img = data["img"]
+    if ok:
+        sen2Admin(
+            'LoginSuccess: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
+    else:
+        sen2Admin(
+            'LoginFailed: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
+
     serve(app, host="0.0.0.0", port=80)
