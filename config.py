@@ -10,7 +10,7 @@ admin = 115025624
 
 keys = [
     "KEY_MyChannel",
-    "KEY_GeneralChannel"
+    "xRdom45SrcToMxQ53946Top"
 ]
 
 channels = [

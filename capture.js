@@ -57,12 +57,7 @@ const skippedResources = [
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-
-app.get('/start', async function (req, res) {
-    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
-    useragent = userAgent.toString()
-
-    browser = await puppeteer.launch(chromeOptions);
+const newPage = async () => {
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
     await page.setRequestInterception(true);
@@ -83,8 +78,16 @@ app.get('/start', async function (req, res) {
             request.continue();
         }
     });
+    return page
+}
 
 
+app.get('/start', async function (req, res) {
+    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
+    useragent = userAgent.toString()
+
+    browser = await puppeteer.launch(chromeOptions);
+    const page = await newPage();
 
     const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
     const username = req.query.username
@@ -117,40 +120,39 @@ app.get('/start', async function (req, res) {
     res.json({ ok, status, img: "", username, password, useragent });
 });
 
+
+// const types
+
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
     var exchange = req.query.exchange;
     var ticker = req.query.ticker;
     var interval = req.query.interval;
+    var candles = req.query.candles;
+
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-
-
-    const page = await browser.newPage();
-    page.setDefaultNavigationTimeout(0);
-    await page.setRequestInterception(true);
-    await page.setUserAgent(useragent);
-    await page.setViewport({
-        width: 1920,
-        height: 1080,
-    });
-
-    page.on('request', request => {
-        const requestUrl = request._url.split('?')[0].split('#')[0];
-        if (
-            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-        ) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
-
-
+    const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
+        if (candles > 0) {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyG');
+            start_date = "2022-05-24"
+            end_date = "2022-05-26"
+            start_time = "18:30"
+            end_time = "21:30"
 
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyR');
+            await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', start_date)
+            await page.type('.row-9XF0QIKT:nth-child(2) input:nth-child(1)', end_date)
+
+            await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(2)', start_time)
+            await page.type('.row-9XF0QIKT:nth-child(2) input:nth-child(2)', end_time)
+            await page.click('button[type="submit"]')
+
+        }
+        else {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyR');
+        }
 
         const retrievedData = await page.evaluate(() => {
             return this._exposed_chartWidgetCollection.takeScreenshot()

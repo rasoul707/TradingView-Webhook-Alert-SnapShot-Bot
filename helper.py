@@ -19,18 +19,20 @@ def sendAlert(data, key):
     ex = data["ex"]
     sy = data["sy"]
     tf = data["tf"]
+    sg = data["sg"]
+    cl = data["cl"]
     snapLink = snapshot([
         "-",
         ex,
         sy,
         tf
-    ])
+    ], cl)
 
     if not snapLink:
         return 'err'
 
-    message = "**"+sy.upper()+" | "+tf.upper()+"**" + "\n" + \
-        "[.]("+snapLink+")" + msg
+    message = "[🔸]("+snapLink+") " + "**" + sy.upper()+" | "+tf.upper()+"**" + "\n" + \
+        + "استراتژی: " + sg + "\n" + msg
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
@@ -47,13 +49,13 @@ def sendAlert(data, key):
         print("[X] Telegram Error:\n>", e)
 
 
-def snapshot(arg):
+def snapshot(arg, cl):
     cmd = [x if i == 0 else x.upper() for i, x in enumerate(arg)] if len(
         arg) >= 4 and len(arg) <= 5 and (arg[0] == '-' or (len(arg[0]) == 8 and not arg[0].islower() and not arg[0].isupper())) else [config.chart_id, config.exchange, config.symbol, config.timeframe] if len(arg) == 0 else 'error'
     if isinstance(cmd, str):
         return cmd
     else:
-        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
+        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
         txtc = requests.get(requesturl).text
         if txtc == 'error':
             return ''
