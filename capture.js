@@ -64,14 +64,14 @@ app.get('/start', async function (req, res) {
     });
     await page.goto('https://www.tradingview.com');
 
-    const html = await page.$('html')
-    const htmlCls = await html.getProperty('className')
-    const htmlClsArr = htmlCls.split(" ")
-    if (htmlClsArr.includes("is-authenticated")) {
-        console.log("Logine")
-    } else {
-        console.log("Login kon")
-    }
+    // const html = await page.$('html')
+    // const htmlCls = await html.getProperty('className')
+    // const htmlClsArr = htmlCls.split(" ")
+    // if (htmlClsArr.includes("is-authenticated")) {
+    //     console.log("Logine")
+    // } else {
+    //     console.log("Login kon")
+    // }
 
     // await page.type('#username', 'username');
     // await page.type('#password', 'password');
