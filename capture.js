@@ -6,7 +6,7 @@ const UserAgent = require('user-agents');
 let browser, page;
 
 const chromeOptions = {
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: [
         "--incognito",
@@ -64,7 +64,7 @@ app.get('/start', async function (req, res) {
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
-    // await page.setRequestInterception(true);
+    await page.setRequestInterception(true);
     await page.setUserAgent(useragent);
     await page.setViewport({
         width: 1920,
@@ -73,17 +73,18 @@ app.get('/start', async function (req, res) {
 
 
 
-    // page.on('request', request => {
-    //     const requestUrl = request._url.split('?')[0].split('#')[0];
-    //     if (
-    //         blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-    //         skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-    //     ) {
-    //         request.abort();
-    //     } else {
-    //         request.continue();
-    //     }
-    // });
+    page.on('request', request => {
+        console.log("######")
+        const requestUrl = request._url.split('?')[0].split('#')[0];
+        if (
+            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+        ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
 
 
 
@@ -126,9 +127,9 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         console.log('Success')
-        await page.keyboard.down('AltLeft');
-        await page.keyboard.press('KeyR');
-        await page.keyboard.up('AltLeft');
+        // await page.keyboard.down('AltLeft');
+        // await page.keyboard.press('KeyR');
+        // await page.keyboard.up('AltLeft');
         // const retrievedData = await page.evaluate(() => {
         //     return this._exposed_chartWidgetCollection.takeScreenshot()
         // })
