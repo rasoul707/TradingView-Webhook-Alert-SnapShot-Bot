@@ -1,16 +1,16 @@
-# ----------------------------------------------- #
-# Plugin Name           : TradingView-Webhook-Bot #
-# Author Name           : fabston                 #
-# File Name             : main.py                 #
-# ----------------------------------------------- #
+# ------------------------------------------------------------------- #
+# Plugin Name           : TradingView-Webhook-Alert-Telegram-SnapShot #
+# Author Name           : rasoul707                                   #
+# File Name             : main.py                                     #
+# ------------------------------------------------------------------- #
+
 
 import json
 import time
-
 from flask import Flask, request
-
 import config
-from handler import *
+from helper import *
+
 
 app = Flask(__name__)
 
@@ -20,21 +20,20 @@ def get_timestamp():
     return timestamp
 
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/wh", methods=["POST"])
 def webhook():
     try:
         if request.method == "POST":
             data = request.get_json()
             key = request.args.get('key')
-            print(data)
-            if key == config.sec_key:
-                print(get_timestamp(), "Alert Received & Sent!")
-                send_alert(data)
-                return "Sent alert", 200
 
+            if key in config.keys:
+                print(get_timestamp(), "New Alert Received & Sent!")
+                sendAlert(data, key)
+                return "Sent alert", 200
             else:
                 print("[X]", get_timestamp(),
-                      "Alert Received & Refused! (Wrong Key)")
+                      "New Alert Received & Refused! [Key Not Found]")
                 return "Refused alert", 400
 
     except Exception as e:
