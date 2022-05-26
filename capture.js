@@ -73,18 +73,6 @@ app.get('/start', async function (req, res) {
     });
 
 
-
-    // await page.type('#username', 'username');
-    // await page.type('#password', 'password');
-
-    // await page.click('#submit');
-
-    // await page.waitForNavigation(); // <------------------------- Wait for Navigation
-
-    // console.log('New Page URL:', page.url());
-
-    // $(".tv-header__user-menu-button--anonymous").click()
-    // $(".tv-header__user-menu-button--logged").click()
     page.on('request', request => {
         const requestUrl = request._url.split('?')[0].split('#')[0];
         if (
@@ -100,6 +88,7 @@ app.get('/start', async function (req, res) {
 
 
 
+    const authUrl = 'https://www.tradingview.com/accounts/signin/';
 
     const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
     if (await page.url() === authUrl) {
