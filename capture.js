@@ -103,7 +103,7 @@ app.get('/start', async function (req, res) {
 
     const img = await page.screenshot();
 
-    res.end(response.text());
+    res.end(await response.text());
 });
 
 app.get('/capture', async function (req, res) {
