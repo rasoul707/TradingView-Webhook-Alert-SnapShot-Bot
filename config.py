@@ -18,8 +18,9 @@ channels = [
     -1001724862991
 ]
 
-# chart
 
-chart_id = ""
-exchange = ""
-theme = "dark"
+# default chart settings
+chart_id = "-"
+exchange = "binance"
+symbol = "btcusdt"
+timeframe = "15"
