@@ -130,34 +130,58 @@ app.get('/capture', async function (req, res) {
 
         const retrievedData = await page.evaluate(() => {
 
+            const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 
+            document.activeElement.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    cancelable: true,
+                    key: isMac ? 'Meta' : 'Control',
+                    code: isMac ? 'MetaLeft' : 'ControlLeft',
+                    location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
+                    getModifierState: (keyArg) => keyArg === (isMac ? 'Meta' : 'Control'),
+                    ctrlKey: !isMac,
+                    metaKey: isMac,
+                    charCode: 0,
+                    keyCode: isMac ? 93 : 17,
+                    which: isMac ? 93 : 17,
+                })
+            );
 
             const preventableEvent = new KeyboardEvent('keydown', {
                 bubbles: true,
                 cancelable: true,
-                key: 'r',
-                code: 'KeyR',
+                key: 'a',
+                code: 'KeyA',
                 location: window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
-                getModifierState: (keyArg) => keyArg === 'Alt',
-                altKey: true,
+                getModifierState: (keyArg) => keyArg === (isMac ? 'Meta' : 'Control'),
+                ctrlKey: !isMac,
+                metaKey: isMac,
                 charCode: 0,
-                keyCode: 82,
-                which: 82,
+                keyCode: 65,
+                which: 65,
             });
-            this.document.activeElement.dispatchEvent(preventableEvent);
 
+            const wasPrevented = (
+                !document.activeElement.dispatchEvent(preventableEvent) ||
+                preventableEvent.defaultPrevented
+            );
 
-            this.document.activeElement.dispatchEvent(
+            if (!wasPrevented) {
+                document.execCommand('selectall', false, null);
+            }
+
+            document.activeElement.dispatchEvent(
                 new KeyboardEvent('keyup', {
                     bubbles: true,
                     cancelable: true,
-                    key: 'r',
-                    code: 'KeyR',
+                    key: isMac ? 'Meta' : 'Control',
+                    code: isMac ? 'MetaLeft' : 'ControlLeft',
                     location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
                     getModifierState: () => false,
                     charCode: 0,
-                    keyCode: 82,
-                    which: 82,
+                    keyCode: isMac ? 93 : 17,
+                    which: isMac ? 93 : 17,
                 }),
             );
 
