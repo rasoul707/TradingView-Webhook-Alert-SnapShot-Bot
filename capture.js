@@ -133,18 +133,18 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-        if (candles > 0) {
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyG');
+        // if (candles > 0) {
+        page.keyboard.press('AltLeft');
+        await page.keyboard.press('KeyG');
 
-            await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', '20220422', { delay: 500 });
-            // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
+        await page.type(candles, '20220422', { delay: 500 });
+        // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
 
-        }
-        else {
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyR');
-        }
+        // }
+        // else {
+        //     page.keyboard.press('AltLeft');
+        //     await page.keyboard.press('KeyR');
+        // }
 
 
         // const retrievedData = await page.evaluate(async (candles) => {
