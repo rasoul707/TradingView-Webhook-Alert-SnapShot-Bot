@@ -15,10 +15,10 @@ def sendAlert(data, key):
     msg = msg.encode("latin-1", "backslashreplace").decode("unicode_escape")
     tgbot = Bot(token=config.BOT_TOKEN)
     message = snapshot([
-        'zHzK4L65',
-        'binance',
-        'btcusdt',
-        '1d'
+        msg["ch"],
+        msg["sy"],
+        msg["ex"],
+        msg["tf"]
     ])
     try:
         tgbot.sendMessage(
