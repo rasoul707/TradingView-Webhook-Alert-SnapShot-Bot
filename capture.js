@@ -114,7 +114,7 @@ app.get('/start', async function (req, res) {
     }
 
     // const img = await page.screenshot();
-
+    await browser.close();
     res.json({ ok, status, img: "", username, password, useragent });
 });
 
@@ -142,7 +142,7 @@ app.get('/capture', async function (req, res) {
         res.end('error')
     })
 
-    await browser.close();
+
 
 
 });
