@@ -64,14 +64,6 @@ app.get('/start', async function (req, res) {
     });
 
 
-    // const html = await page.$('html')
-    // const htmlCls = await html.getProperty('className')
-    // const htmlClsArr = htmlCls.split(" ")
-    // if (htmlClsArr.includes("is-authenticated")) {
-    //     console.log("Logine")
-    // } else {
-    //     console.log("Login kon")
-    // }
 
     // await page.type('#username', 'username');
     // await page.type('#password', 'password');
@@ -97,8 +89,17 @@ app.get('/start', async function (req, res) {
     });
 
     await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
+
+    const html = await page.$('html')
+    const htmlCls = await html.getProperty('className')
+    const htmlClsArr = htmlCls.split(" ")
+    if (htmlClsArr.includes("is-authenticated")) {
+        console.log("Logine")
+    } else {
+        console.log("Login kon")
+    }
+
     const img = await page.screenshot();
-    console.log(img);
 
     res.end(img);
 });
