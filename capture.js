@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
 var FormData = require('form-data');
+var userAgent = require('user-agents');
 
 let browser, page;
 
@@ -69,7 +70,7 @@ app.get('/start', async function (req, res) {
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
     await page.setRequestInterception(true);
-    await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
+    await page.setUserAgent(userAgent.toString());
     await page.setViewport({
         width: 1920,
         height: 1080,
@@ -91,11 +92,11 @@ app.get('/start', async function (req, res) {
 
 
 
-    const authUrl = 'https://www.tradingview.com/accounts/signin/';
+    const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
     const username = 'qkhpmdbekdeal'
     const password = '5HDzYmPpCWQs'
 
-    const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+    await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
     if (await page.url() === authUrl) {
         console.log("login nashode");
         await page.click('.tv-signin-dialog__toggle-email')
@@ -112,7 +113,6 @@ app.get('/start', async function (req, res) {
     } else {
         console.log("login success 2")
     }
-
 
     const img = await page.screenshot();
 
