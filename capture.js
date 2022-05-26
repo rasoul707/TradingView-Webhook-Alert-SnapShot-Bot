@@ -1,6 +1,7 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
+var FormData = require('form-data');
 
 let browser, page;
 
