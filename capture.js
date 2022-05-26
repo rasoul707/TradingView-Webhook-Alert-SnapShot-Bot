@@ -128,9 +128,9 @@ app.get('/capture', async function (req, res) {
         console.log('Success')
 
         const retrievedData = await page.evaluate(async () => {
-            await page.keyboard.down('AltLeft');
-            await page.keyboard.press('KeyR');
-            await page.keyboard.up('AltLeft');
+            await this.keyboard.down('AltLeft');
+            await this.keyboard.press('KeyR');
+            await this.keyboard.up('AltLeft');
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         res.end(retrievedData);
