@@ -74,7 +74,7 @@ app.get('/start', async function (req, res) {
             request.continue();
         }
     });
-    res.end('Browser Started');
+    res.end('Browser server is ready!');
 });
 
 app.get('/capture', async function (req, res) {
