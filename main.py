@@ -30,7 +30,7 @@ def webhook():
 
             if key in config.keys:
                 print(get_timestamp(), "New Alert Received & Prepare To Send!")
-                if sendAlert(data, key) == 'Err':
+                if sendAlert(data, key) == 'err':
                     return "Failed send", 400
                 return "Sent alert", 200
             else:
