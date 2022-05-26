@@ -44,5 +44,6 @@ def snapshot(arg):
     else:
         ChartID = f'chart/{cmd[0]}/' if len(
             cmd[0]) == 8 and not cmd[0].islower() and not cmd[0].isupper() else 'chart/'
-        requesturl = f'http://localhost:7007/capture?base={ChartID}&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
+
+        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
         return f'https://www.tradingview.com/x/{requests.get(requesturl).text}'
