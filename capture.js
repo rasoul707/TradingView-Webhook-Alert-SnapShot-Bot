@@ -125,75 +125,17 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-        console.log('Success')
+
+        page.keyboard.press('AltLeft');
+        await page.keyboard.press('KeyR');
 
 
-        const retrievedData = await page.evaluate(async () => {
 
-            const isMac = /Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
-            const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-            document.activeElement.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    bubbles: true,
-                    cancelable: true,
-                    key: 'Alt',
-                    code: 'AltLeft',
-                    location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
-                    getModifierState: (keyArg) => keyArg === 'Alt',
-                    ctrlKey: false,
-                    metaKey: false,
-                    altKey: true,
-                    charCode: 0,
-                    keyCode: 18,
-                    which: 18,
-                })
-            );
-
-            const preventableEvent = new KeyboardEvent('keydown', {
-                bubbles: true,
-                cancelable: true,
-                key: 'r',
-                code: 'KeyR',
-                location: window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
-                getModifierState: (keyArg) => keyArg === 'Alt',
-                ctrlKey: false,
-                metaKey: false,
-                altKey: true,
-                charCode: 0,
-                keyCode: 82,
-                which: 82,
-            });
-
-            const wasPrevented = (
-                !document.activeElement.dispatchEvent(preventableEvent) ||
-                preventableEvent.defaultPrevented
-            );
-
-            await sleep(2000);
-
-            if (!wasPrevented) {
-                // document.execCommand('selectall', false, null);
-                console.log("cant zoom out")
-            }
-
-            document.activeElement.dispatchEvent(
-                new KeyboardEvent('keyup', {
-                    bubbles: true,
-                    cancelable: true,
-                    key: 'Alt',
-                    code: 'AltLeft',
-                    location: window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
-                    getModifierState: () => false,
-                    charCode: 0,
-                    keyCode: 18,
-                    which: 18,
-                }),
-            );
-
+        const retrievedData = await page.evaluate(() => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        // 
+        console.log('Success')
+
         res.end(retrievedData);
     }).catch((err) => {
         console.log('Failed', err)
