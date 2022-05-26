@@ -62,7 +62,7 @@ app.get('/start', async function (req, res) {
         width: 1920,
         height: 1080,
     });
-    await page.goto('https://www.tradingview.com/x/ZIwQSYr8', { timeout: 25000, waitUntil: 'networkidle2', });
+    // await page.goto('https://www.tradingview.com/x/ZIwQSYr8', { timeout: 25000, waitUntil: 'networkidle2', });
 
     // const html = await page.$('html')
     // const htmlCls = await html.getProperty('className')
@@ -84,17 +84,17 @@ app.get('/start', async function (req, res) {
 
     // $(".tv-header__user-menu-button--anonymous").click()
     // $(".tv-header__user-menu-button--logged").click()
-    // page.on('request', request => {
-    //     const requestUrl = request._url.split('?')[0].split('#')[0];
-    //     if (
-    //         blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
-    //         skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
-    //     ) {
-    //         request.abort();
-    //     } else {
-    //         request.continue();
-    //     }
-    // });
+    page.on('request', request => {
+        const requestUrl = request._url.split('?')[0].split('#')[0];
+        if (
+            blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
+            skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
+        ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
     res.end('Browser server is ready!');
 });
 
