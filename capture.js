@@ -133,8 +133,8 @@ app.get('/capture', async function (req, res) {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         res.end(retrievedData);
-    }).catch((res) => {
-        console.log('Failed', res)
+    }).catch((err) => {
+        console.log('Failed', err)
         res.end('error')
     })
 
