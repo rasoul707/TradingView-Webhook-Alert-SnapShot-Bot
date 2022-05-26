@@ -133,7 +133,14 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-
+        if (candles > 0) {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyG');
+        }
+        else {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyR');
+        }
 
         const retrievedData = await page.evaluate(async (candles) => {
 
@@ -141,7 +148,7 @@ app.get('/capture', async function (req, res) {
             if (candles > 0) {
                 page.keyboard.press('AltLeft');
                 await page.keyboard.press('KeyG');
-                start_date = "2022-05-24"
+                start_date = "2022-04-24"
                 end_date = "2022-05-26"
                 start_time = "18:30"
                 end_time = "21:30"
@@ -157,10 +164,7 @@ app.get('/capture', async function (req, res) {
 
 
             }
-            else {
-                page.keyboard.press('AltLeft');
-                await page.keyboard.press('KeyR');
-            }
+
 
             return this._exposed_chartWidgetCollection.takeScreenshot()
         }, candles)
