@@ -100,7 +100,7 @@ app.get('/start', async function (req, res) {
         await page.type('input[name="password"]', password)
         await page.click('button[type="submit"]')
         await sleep(5000);
-        if (await page.url() === authUrl) {
+        if (page.url() === authUrl) {
             status = "error"
             ok = false
         }
