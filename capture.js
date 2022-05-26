@@ -1,7 +1,6 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
-var FormData = require('form-data');
 const UserAgent = require('user-agents');
 
 let browser, page;
@@ -55,13 +54,6 @@ const skippedResources = [
     'tiqcdn',
 ];
 
-async function elementHasClass(el, className) {
-    const classNames = (
-        await (await el.getProperty('className')).jsonValue()
-    ).split(/\s+/);
-
-    return classNames.includes(className);
-}
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -131,6 +123,9 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
+    await page.keyboard.down('AltLeft');
+    await page.keyboard.press('KeyR');
+    await page.keyboard.up('AltLeft');
     const retrievedData = await page.evaluate(() => {
         return this._exposed_chartWidgetCollection.takeScreenshot()
     })
