@@ -153,16 +153,16 @@ app.get('/capture', async function (req, res) {
             const preventableEvent = new KeyboardEvent('keydown', {
                 bubbles: true,
                 cancelable: true,
-                key: 'm',
-                code: 'KeyM',
+                key: 'r',
+                code: 'KeyR',
                 location: window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
                 getModifierState: (keyArg) => keyArg === 'Alt',
                 ctrlKey: false,
                 metaKey: false,
                 altKey: true,
                 charCode: 0,
-                keyCode: 77,
-                which: 77,
+                keyCode: 82,
+                which: 82,
             });
 
             const wasPrevented = (
