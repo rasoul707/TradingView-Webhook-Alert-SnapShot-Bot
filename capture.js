@@ -146,8 +146,6 @@ app.get('/capture', async function (req, res) {
 
 
             if (candles > 0) {
-                page.keyboard.press('AltLeft');
-                await page.keyboard.press('KeyG');
                 start_date = "2022-04-24"
                 end_date = "2022-05-26"
                 start_time = "18:30"
@@ -160,9 +158,6 @@ app.get('/capture', async function (req, res) {
                 document.querySelector('.row-9XF0QIKT:nth-child(2) input:nth-child(2)').value = end_time
 
                 // document.querySelector('button[type="submit"]').click()
-
-
-
             }
 
 
