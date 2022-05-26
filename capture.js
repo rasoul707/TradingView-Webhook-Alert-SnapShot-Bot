@@ -89,20 +89,25 @@ app.get('/start', async function (req, res) {
 
 
     const authUrl = 'https://www.tradingview.com/accounts/signin/';
+    const username = 'qkhpmdbekdeal'
+    const password = '5HDzYmPpCWQs'
 
     const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
     if (await page.url() === authUrl) {
         console.log("login nashode");
         await page.click('.tv-signin-dialog__toggle-email')
-        await page.type('input[name="username"]', 'username');
-        await page.type('input[name="password"]', 'password');
-
+        await page.type('input[name="username"]', username)
+        await page.type('input[name="password"]', password)
+        await page.click('button[type="submit"]')
+        if (await page.url() === authUrl) {
+            console.log("error login")
+        }
+        else {
+            console.log("login success 1")
+        }
     } else {
-        console.log('login shode')
+        console.log("login success 2")
     }
-
-
-
 
 
     const img = await page.screenshot();
