@@ -88,7 +88,7 @@ app.get('/start', async function (req, res) {
         }
     });
 
-    await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
+    const response = await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
 
     const html = await page.$('html')
     const htmlCls = await html.getProperty('className')
@@ -101,7 +101,7 @@ app.get('/start', async function (req, res) {
 
     const img = await page.screenshot();
 
-    res.end(img);
+    res.end(response.text());
 });
 
 app.get('/capture', async function (req, res) {
