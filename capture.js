@@ -133,28 +133,35 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-        if (candles > 0) {
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyG');
-            start_date = "2022-05-24"
-            end_date = "2022-05-26"
-            start_time = "18:30"
-            end_time = "21:30"
 
-            await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', start_date)
-            await page.type('.row-9XF0QIKT:nth-child(2) input:nth-child(1)', end_date)
-
-            await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(2)', start_time)
-            await page.type('.row-9XF0QIKT:nth-child(2) input:nth-child(2)', end_time)
-            await page.click('button[type="submit"]')
-
-        }
-        else {
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyR');
-        }
 
         const retrievedData = await page.evaluate(() => {
+
+
+            if (candles > 0) {
+                page.keyboard.press('AltLeft');
+                await page.keyboard.press('KeyG');
+                start_date = "2022-05-24"
+                end_date = "2022-05-26"
+                start_time = "18:30"
+                end_time = "21:30"
+
+                document.querySelector('.row-9XF0QIKT:nth-child(1) input:nth-child(1)').value = start_date
+                document.querySelector('.row-9XF0QIKT:nth-child(2) input:nth-child(1)').value = end_date
+
+                document.querySelector('.row-9XF0QIKT:nth-child(1) input:nth-child(2)').value = start_time
+                document.querySelector('.row-9XF0QIKT:nth-child(2) input:nth-child(2)').value = end_time
+
+                // document.querySelector('button[type="submit"]').click()
+
+
+
+            }
+            else {
+                page.keyboard.press('AltLeft');
+                await page.keyboard.press('KeyR');
+            }
+
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         console.log('Success')
