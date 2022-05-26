@@ -103,8 +103,9 @@ app.get('/start', async function (req, res) {
     const password = "mmm";
     const remember = "on";
     let formData = new FormData();
-    formData.append('name', 'John');
-    formData.append('password', 'John123');
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('remember', remember);
 
     const result = await fetch(authUrl, {
         // headers: { Authorization: "Token " + token },
