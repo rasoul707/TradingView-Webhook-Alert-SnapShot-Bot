@@ -26,6 +26,9 @@ def sendAlert(data, key):
         tf
     ])
 
+    if not snapLink:
+        return ''
+
     message = "**"+sy.upper()+" | "+tf.upper()+"**" + "\n" + \
         "[.]("+snapLink+")" + msg
     try:
@@ -52,8 +55,8 @@ def snapshot(arg):
     else:
         requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
         txtc = requests.get(requesturl).text
-        if txtc == 'error':
-            return 'error'
+        if not txtc:
+            return ''
         return f'https://www.tradingview.com/x/{txtc}'
 
 

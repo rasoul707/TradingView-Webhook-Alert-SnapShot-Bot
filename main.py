@@ -29,9 +29,8 @@ def webhook():
             key = request.args.get('key')
 
             if key in config.keys:
-                print(get_timestamp(), "New Alert Received & Sent!")
-                m = sendAlert(data, key)
-                if m == 'error':
+                print(get_timestamp(), "New Alert Received & Prepare To Send!")
+                if not sendAlert(data, key):
                     return "Failed send", 400
                 return "Sent alert", 200
             else:
