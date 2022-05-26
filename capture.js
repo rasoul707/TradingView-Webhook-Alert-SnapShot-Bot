@@ -127,7 +127,7 @@ app.get('/capture', async function (req, res) {
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         console.log('Success')
 
-        const retrievedData = await page.evaluate(() => {
+        const retrievedData = await page.evaluate(async () => {
             await page.keyboard.down('AltLeft');
             await page.keyboard.press('KeyR');
             await page.keyboard.up('AltLeft');
