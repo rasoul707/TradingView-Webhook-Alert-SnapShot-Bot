@@ -126,7 +126,7 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         console.log('Success')
-        await page.keyboard.press('AltLeft');
+        page.keyboard.press('AltLeft');
         // page.keyboard.press('KeyR');
 
         const retrievedData = await page.evaluate(() => {
