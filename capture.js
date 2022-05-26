@@ -129,11 +129,11 @@ app.get('/capture', async function (req, res) {
         // page.keyboard.type('AltLeft');
         // await page.keyboard.press('KeyR');
 
-        await this.page.keyboard.down('AltLeft');
-        await this.page.keyboard.down('R');
+        await page.keyboard.down('AltLeft');
+        await page.keyboard.down('R');
 
-        await this.page.keyboard.up('R');
-        await this.page.keyboard.up('AltLeft');
+        await page.keyboard.up('R');
+        await page.keyboard.up('AltLeft');
 
         const retrievedData = await page.evaluate(() => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
