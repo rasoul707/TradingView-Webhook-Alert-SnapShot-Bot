@@ -96,16 +96,15 @@ app.get('/start', async function (req, res) {
         }
     });
 
-    const response = await page.goto('https://www.tradingview.com/', { timeout: 25000, waitUntil: 'networkidle2', });
-
-    const html = await page.$('html')
-    const isLogin = await elementHasClass(html, "is-authenticated")
-    console.log('isLogin', isLogin);
-
-    if (!isLogin) {
-        await page.click('.tv-header__user-menu-button--anonymous')
-        await page.click('div[data-name="header-user-menu-sign-in"]')
+    const authUrl = 'https://www.tradingview.com/accounts/signin/';
+    const response = await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+    if (await page.url() === authUrl) {
+        console.log("login nashode");
+    } else {
+        console.log('login shode')
     }
+
+
 
 
 
