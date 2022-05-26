@@ -62,6 +62,9 @@ async function elementHasClass(el, className) {
     return classNames.includes(className);
 }
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+
 app.get('/start', async function (req, res) {
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
@@ -99,6 +102,7 @@ app.get('/start', async function (req, res) {
         await page.type('input[name="username"]', username)
         await page.type('input[name="password"]', password)
         await page.click('button[type="submit"]')
+        await sleep(5000);
         if (await page.url() === authUrl) {
             console.log("error login")
         }
