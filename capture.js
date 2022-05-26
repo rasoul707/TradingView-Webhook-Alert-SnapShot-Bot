@@ -104,7 +104,7 @@ app.get('/start', async function (req, res) {
 
     if (!isLogin) {
         await page.click('.tv-header__user-menu-button--anonymous')
-        await page.click('[data-name=header-user-menu-sign-in]')
+        await page.click('[data-name="header-user-menu-sign-in"]')
     }
 
 
