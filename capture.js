@@ -134,8 +134,8 @@ app.get('/capture', async function (req, res) {
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         // if (candles > 0) {
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyG');
+        // page.keyboard.press('AltLeft');
+        // await page.keyboard.press('KeyG');
 
         //     start_date = "2022-04-24"
         //     end_date = "2022-05-26"
@@ -155,8 +155,8 @@ app.get('/capture', async function (req, res) {
         // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         // }
         // else {
-        // page.keyboard.press('AltLeft');
-        // await page.keyboard.press('KeyR');
+        page.keyboard.press('AltLeft');
+        await page.keyboard.press('KeyR');
         // }
 
         const retrievedData = await page.evaluate(async () => {
