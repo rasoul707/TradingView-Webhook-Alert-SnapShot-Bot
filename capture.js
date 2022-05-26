@@ -63,13 +63,14 @@ app.get('/start', async function (req, res) {
     const useragent = userAgent.toString()
     browser = await puppeteer.launch(chromeOptions);
     page = await browser.newPage();
+    page.setDefaultNavigationTimeout(0);
     await page.setRequestInterception(true);
     await page.setUserAgent(useragent);
     await page.setViewport({
         width: 1920,
         height: 1080,
     });
-    page.setDefaultNavigationTimeout(0);
+
 
 
     page.on('request', request => {
@@ -123,7 +124,12 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
+    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(() => {
+        console.log('success')
+    }).catch((res) => {
+        console.log('***fails', res)
+    })
+
     await page.keyboard.down('AltLeft');
     await page.keyboard.press('KeyR');
     await page.keyboard.up('AltLeft');
