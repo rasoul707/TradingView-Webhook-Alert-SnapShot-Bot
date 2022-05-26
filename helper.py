@@ -27,7 +27,7 @@ def sendAlert(data, key):
     ])
 
     if not snapLink:
-        return ''
+        return 'err'
 
     message = "**"+sy.upper()+" | "+tf.upper()+"**" + "\n" + \
         "[.]("+snapLink+")" + msg
