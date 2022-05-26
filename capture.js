@@ -152,16 +152,16 @@ app.get('/capture', async function (req, res) {
             const preventableEvent = new KeyboardEvent('keydown', {
                 bubbles: true,
                 cancelable: true,
-                key: 'r',
-                code: 'KeyR',
+                key: 'm',
+                code: 'KeyM',
                 location: window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
                 getModifierState: (keyArg) => keyArg === 'Alt',
                 ctrlKey: false,
                 metaKey: false,
                 altKey: true,
                 charCode: 0,
-                keyCode: 82,
-                which: 82,
+                keyCode: 77,
+                which: 77,
             });
 
             const wasPrevented = (
@@ -190,7 +190,7 @@ app.get('/capture', async function (req, res) {
 
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        await sleep(2000);
+        // await sleep(2000);
         res.end(retrievedData);
     }).catch((err) => {
         console.log('Failed', err)
