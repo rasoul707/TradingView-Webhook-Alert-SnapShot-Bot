@@ -126,8 +126,14 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         console.log('Success')
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyR');
+        // page.keyboard.type('AltLeft');
+        // await page.keyboard.press('KeyR');
+
+        await this.page.keyboard.down('AltLeft');
+        await this.page.keyboard.down('R');
+
+        await this.page.keyboard.up('R');
+        await this.page.keyboard.up('AltLeft');
 
         const retrievedData = await page.evaluate(() => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
