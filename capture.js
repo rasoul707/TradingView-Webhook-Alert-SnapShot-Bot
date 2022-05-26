@@ -99,7 +99,7 @@ app.get('/start', async function (req, res) {
     //     console.log("Login kon")
     // }
 
-    print(htmlCls);
+    console.log(htmlCls);
 
     const img = await page.screenshot();
 
