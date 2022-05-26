@@ -5,7 +5,7 @@ const app = express();
 let browser, page;
 
 const chromeOptions = {
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: [
         "--incognito",
