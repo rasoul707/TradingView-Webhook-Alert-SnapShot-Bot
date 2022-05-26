@@ -15,9 +15,10 @@ def sendAlert(data, key):
     msg = msg.encode("latin-1", "backslashreplace").decode("unicode_escape")
     tgbot = Bot(token=config.BOT_TOKEN)
     try:
+
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
-            msg,
+            msg + " " + snapshot(['-', 'binance', 'btcusdt', '4h']),
             parse_mode="MARKDOWN",
         )
     except KeyError:
