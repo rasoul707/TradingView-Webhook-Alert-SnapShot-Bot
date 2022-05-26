@@ -16,7 +16,7 @@ const chromeOptions = {
         "--disable-dev-shm-usage",
         "--disable-accelerated-2d-canvas",
         "--disable-gpu",
-        "--window-size=1440",
+        "--window-size=2560x1440",
     ],
 };
 
