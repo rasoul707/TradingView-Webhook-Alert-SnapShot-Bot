@@ -220,8 +220,8 @@ app.get('/capture', async function (req, res) {
 
             const start_date = start.format("YYYYMMDD")
             const end_date = end.format("YYYYMMDD")
-            const start_time = start.format("HH:mm")
-            const end_time = end.format("HH:mm")
+            const start_time = start.format("HHmm")
+            const end_time = end.format("HHmm")
 
             console.log(start_date, start_time, end_date, end_time)
 
@@ -262,34 +262,51 @@ app.get('/capture', async function (req, res) {
 
 
             await uploadImg(page, 1)
-            await page.waitForTimeout(2000);
             await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
+            await page.waitForTimeout(2000);
+
             await uploadImg(page, 2)
+            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
             await page.waitForTimeout(2000);
-            await page.keyboard.press('Backspace');
+
             await uploadImg(page, 3)
+            await page.click('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
             await page.waitForTimeout(2000);
-            await page.keyboard.type(start_time, { delay: 200 });
+
             await uploadImg(page, 4)
+            await page.click('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
             await page.waitForTimeout(2000);
 
-            await uploadImg(page, 5)
-            await page.waitForTimeout(2000);
-            // await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
-            await uploadImg(page, 6)
-            await page.waitForTimeout(2000);
-            await page.keyboard.press('Backspace');
-            await uploadImg(page, 7)
-            await page.waitForTimeout(2000);
-            await page.type('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input', end_time, { delay: 200 });
-            await uploadImg(page, 8)
-            await page.waitForTimeout(2000);
 
-            // await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            await uploadImg(page, 9)
-            await page.waitForTimeout(2000);
+            // await uploadImg(page, 1)
+            // await page.waitForTimeout(2000);
+            // await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
+            // await uploadImg(page, 2)
+            // await page.waitForTimeout(2000);
+            // await page.keyboard.press('Backspace');
+            // await uploadImg(page, 3)
+            // await page.waitForTimeout(2000);
+            // await page.keyboard.type(start_time, { delay: 200 });
+            // await uploadImg(page, 4)
+            // await page.waitForTimeout(2000);
 
-            await page.waitForTimeout(1000);
+            // await uploadImg(page, 5)
+            // await page.waitForTimeout(2000);
+            // // await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
+            // await uploadImg(page, 6)
+            // await page.waitForTimeout(2000);
+            // await page.keyboard.press('Backspace');
+            // await uploadImg(page, 7)
+            // await page.waitForTimeout(2000);
+            // await page.type('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input', end_time, { delay: 200 });
+            // await uploadImg(page, 8)
+            // await page.waitForTimeout(2000);
+
+            // // await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
+            // await uploadImg(page, 9)
+            // await page.waitForTimeout(2000);
+
+            // await page.waitForTimeout(1000);
         }
 
 
