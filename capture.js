@@ -143,27 +143,27 @@ const dateTimeRange = (interval, candles) => {
         if (duration === 'H') {
             _start = { hours: number }
             _end = { hours: 10 }
-            now.endOf('hour')
+            now.endOf('hour').add(1, 'second')
         }
         if (duration === 'D') {
             _start = { days: number }
             _end = { days: 10 }
-            now.endOf('day')
+            now.endOf('day').add(1, 'second')
         }
         if (duration === 'W') {
             _start = { weeks: number }
             _end = { weeks: 10 }
-            now.endOf('week')
+            now.endOf('week').add(1, 'second')
         }
         if (duration === 'M') {
             _start = { months: number }
             _end = { months: 10 }
-            now.endOf('month')
+            now.endOf('month').add(1, 'second')
         }
         if (duration === 'Y') {
             _start = { years: number }
             _end = { years: 10 }
-            now.endOf('year')
+            now.endOf('year').add(1, 'second')
         }
     }
     else {
@@ -171,7 +171,7 @@ const dateTimeRange = (interval, candles) => {
         number = candles * number
         _start = { minutes: number }
         _end = { minutes: 10 }
-        now.endOf('minute')
+        now.endOf('minute').add(1, 'second')
     }
     const start = now.clone().subtract(_start)
     const end = now.clone().add(_end)
@@ -202,10 +202,10 @@ app.get('/capture', async function (req, res) {
 
             console.log(start, end)
 
-            start_date = start.format("YYYYMMDD")
-            end_date = end.format("YYYYMMDD")
-            start_time = start.format("HH:mm")
-            end_time = end.format("HH:mm")
+            const start_date = start.format("YYYYMMDD")
+            const end_date = end.format("YYYYMMDD")
+            const start_time = start.format("HH:mm")
+            const end_time = end.format("HH:mm")
 
 
             await page.waitFor(".row-9XF0QIKT");
