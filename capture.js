@@ -141,10 +141,10 @@ app.get('/capture', async function (req, res) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
-            //     start_date = "2022-04-24"
-            //     end_date = "2022-05-26"
-            //     start_time = "18:30"
-            //     end_time = "21:30"
+            start_date = "2022-04-24"
+            end_date = "2022-05-26"
+            start_time = "18:30"
+            end_time = "21:30"
 
             //     document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[0].value = start_date
             //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[0].value = end_date
@@ -153,7 +153,7 @@ app.get('/capture', async function (req, res) {
             //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[1].value = end_time
 
             //     document.querySelector('.submitButton-xe9kH1lJ button').click()
-            // await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', '20220422', { delay: 500 });
+            await page.type('.row-9XF0QIKT:nth-child(1) input', '20220422', { delay: 500 });
             // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         }
         else {
