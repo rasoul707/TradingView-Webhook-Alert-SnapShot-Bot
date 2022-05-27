@@ -171,7 +171,7 @@ app.get('/capture', async function (req, res) {
             method: 'POST',
             headers: {
                 Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-                "Content-Type": "image/jpeg"
+                "Content-Type": "image/png"
             },
             body: img
         })
