@@ -172,7 +172,22 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
-            await page.keyboard.type('20220422', { delay: 500 });
+            await page.keyboard.type('20220422', { delay: 200 });
+
+
+            await page.focus('.row-9XF0QIKT:nth-child(2) input');
+            await page.keyboard.press('End');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.type('20220523', { delay: 200 });
 
 
         }
