@@ -126,7 +126,7 @@ app.get('/start', async function (req, res) {
         },
         body: img
     })
-    console.log(n)
+    console.log(await n.json())
 
     await page.close();
     res.json({ ok, status, img: "", username, password, useragent });
