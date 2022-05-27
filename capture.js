@@ -179,7 +179,7 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
-const uploadImg = (_page) => {
+const uploadImg = async (_page) => {
     const img = await _page.screenshot();
     const n = await fetch('https://api.upload.io/v1/files/basic', {
         method: 'POST',
