@@ -55,7 +55,7 @@ def snapshot(arg, cl):
     if isinstance(cmd, str):
         return cmd
     else:
-        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}'
+        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
         txtc = requests.get(requesturl).text
         if txtc == 'error':
             return ''

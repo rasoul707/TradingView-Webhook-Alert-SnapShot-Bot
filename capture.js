@@ -117,15 +117,6 @@ app.get('/start', async function (req, res) {
         ok = true
     }
 
-    const img = await page.screenshot();
-    const n = await fetch('https://api.upload.io/v1/files/basic', {
-        method: 'POST',
-        headers: {
-            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws"
-        },
-        body: img
-    })
-    console.log(await n.json())
 
     await page.close();
     res.json({ ok, status, img: "", username, password, useragent });
@@ -144,34 +135,44 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-        // if (candles > 0) {
-        // page.keyboard.press('AltLeft');
-        // await page.keyboard.press('KeyG');
+        if (candles > 0) {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyG');
 
-        //     start_date = "2022-04-24"
-        //     end_date = "2022-05-26"
-        //     start_time = "18:30"
-        //     end_time = "21:30"
+            //     start_date = "2022-04-24"
+            //     end_date = "2022-05-26"
+            //     start_time = "18:30"
+            //     end_time = "21:30"
 
-        //     document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[0].value = start_date
-        //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[0].value = end_date
+            //     document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[0].value = start_date
+            //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[0].value = end_date
 
-        //     document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[1].value = start_time
-        //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[1].value = end_time
+            //     document.querySelectorAll('.row-9XF0QIKT:nth-child(1) input')[1].value = start_time
+            //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[1].value = end_time
 
-        //     document.querySelector('.submitButton-xe9kH1lJ button').click()
-        // await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', '20220422', { delay: 500 });
-        // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
-        // }
-        // else {
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyR');
-        // }
+            //     document.querySelector('.submitButton-xe9kH1lJ button').click()
+            // await page.type('.row-9XF0QIKT:nth-child(1) input:nth-child(1)', '20220422', { delay: 500 });
+            // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
+        }
+        else {
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyR');
+        }
 
         const retrievedData = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         console.log('Success')
+
+        const img = await page.screenshot();
+        const n = await fetch('https://api.upload.io/v1/files/basic', {
+            method: 'POST',
+            headers: {
+                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws"
+            },
+            body: img
+        })
+        console.log(await n.json())
 
 
         res.end(retrievedData);
