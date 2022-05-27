@@ -153,6 +153,7 @@ app.get('/capture', async function (req, res) {
             //     document.querySelectorAll('.row-9XF0QIKT:nth-child(2) input')[1].value = end_time
 
             //     document.querySelector('.submitButton-xe9kH1lJ button').click()
+            await page.waitFor(".row-9XF0QIKT");
             await page.type('.row-9XF0QIKT', '20220422', { delay: 500 });
             // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         }
