@@ -118,7 +118,7 @@ app.get('/start', async function (req, res) {
     }
 
     const img = await page.screenshot();
-    await fetch('https://api.upload.io/v1/files/basic', {
+    const n = await fetch('https://api.upload.io/v1/files/basic', {
         method: 'POST',
         headers: {
             Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
@@ -126,6 +126,7 @@ app.get('/start', async function (req, res) {
         },
         body: img
     })
+    console.log(n)
 
     await page.close();
     res.json({ ok, status, img: "", username, password, useragent });
