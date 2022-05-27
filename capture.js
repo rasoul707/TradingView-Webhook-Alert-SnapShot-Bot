@@ -225,7 +225,7 @@ app.get('/capture', async function (req, res) {
             console.log(start_date, start_time, end_date, end_time)
 
 
-            await page.waitForTimeout(1500);
+            await page.waitForTimeout(1000);
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
 
@@ -257,9 +257,9 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.type(start_time, { delay: 200 });
             await uploadImg(page, 2)
 
-
             // 
-
+            await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+            // 
 
             await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(1) input');
             await page.waitForTimeout(500);
@@ -286,12 +286,12 @@ app.get('/capture', async function (req, res) {
             await uploadImg(page, 4)
 
 
-
-
             // 
-            await page.waitForTimeout(500)
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+            // 
+
             await uploadImg(page, 10)
+            await page.waitForTimeout(200)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
             await page.waitForTimeout(200)
         }
