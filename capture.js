@@ -154,8 +154,19 @@ app.get('/capture', async function (req, res) {
 
             //     document.querySelector('.submitButton-xe9kH1lJ button').click()
             await page.waitFor(".row-9XF0QIKT");
-            await page.type('.row-9XF0QIKT:nth-child(1) input', '20220422', { delay: 500 });
+            // await page.type('.row-9XF0QIKT:nth-child(1) input', '20220422', { delay: 500 });
+            // await page.focus('#email')
+            // await page.keyboard.type('test54')
             // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
+
+
+            await page.focus('.row-9XF0QIKT:nth-child(1) input');
+            await page.keyboard.press('End');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+
         }
         else {
 
