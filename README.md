@@ -2,7 +2,7 @@
 Send SnapShot of your chart in tradingview when alert activated to your channel
 
 ## Usage
-You set webhook on your tradingview like this: ```http://YOUR_SERVER_IP:7007/wh?key=KEY```
+You set webhook on your tradingview like this: ```http://YOUR_SERVER_IP:80/wh?key=KEY```
 You can set a lot of key and channel in ```config.py```
 in message box you must type a message like this:
 ```
@@ -15,6 +15,12 @@ in message box you must type a message like this:
     "msg": "Your description"
 }
 ```
+sy => symbol name
+ex => exchange
+tf => timeframe (```1H```,```4H```,```W```,```15```,```55```, ...)
+cl => candles count you want to show
+sg => strategy name
+msg => message
 then when alert activated, snapshot of defined chart will send to your channel that related to key that you entered
 
 
