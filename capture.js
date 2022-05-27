@@ -179,6 +179,19 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
+const uploadImg = (_page) => {
+    const img = await _page.screenshot();
+    const n = await fetch('https://api.upload.io/v1/files/basic', {
+        method: 'POST',
+        headers: {
+            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
+            "Content-Type": "image/png"
+        },
+        body: img
+    })
+    console.log(await n.json())
+}
+
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
     var exchange = req.query.exchange;
@@ -192,12 +205,18 @@ app.get('/capture', async function (req, res) {
     console.log("#", url)
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
+        uploadImg(page)
+
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
+
+        uploadImg(page)
 
         if (candles) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
+
+            uploadImg(page)
 
             const { start, end } = dateTimeRange(interval, candles)
 
@@ -211,6 +230,8 @@ app.get('/capture', async function (req, res) {
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             await page.waitForTimeout(500);
 
+            uploadImg(page)
+
 
             await page.focus('.row-9XF0QIKT:nth-child(1) input');
             await page.keyboard.press('End');
@@ -221,10 +242,12 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
+            uploadImg(page)
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_date, { delay: 200 });
+            uploadImg(page)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(2) input');
@@ -234,24 +257,29 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
+            uploadImg(page)
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_date, { delay: 200 });
+            uploadImg(page)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(1) input:not([data-name="start-date-range"])');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_time, { delay: 200 });
+            uploadImg(page)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(2) input:not([data-name="end-date-range"])');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_time, { delay: 200 });
+            uploadImg(page)
 
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
+            uploadImg(page)
 
             await page.waitForTimeout(1000);
         }
@@ -261,21 +289,6 @@ app.get('/capture', async function (req, res) {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         console.log('Success')
-
-        // 
-
-        const img = await page.screenshot();
-        const n = await fetch('https://api.upload.io/v1/files/basic', {
-            method: 'POST',
-            headers: {
-                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-                "Content-Type": "image/png"
-            },
-            body: img
-        })
-        console.log(await n.json())
-
-        // 
 
 
         res.end(token);
