@@ -2,6 +2,8 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
 const UserAgent = require('user-agents');
+const fetch = require('node-fetch');
+
 
 let browser, useragent;
 
@@ -115,7 +117,16 @@ app.get('/start', async function (req, res) {
         ok = true
     }
 
-    // const img = await page.screenshot();
+    const img = await page.screenshot();
+    await fetch('https://api.upload.io/v1/files/basic', {
+        method: 'POST',
+        headers: {
+            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
+            "Content-Type": ""
+        },
+        body: img
+    })
+
     await page.close();
     res.json({ ok, status, img: "", username, password, useragent });
 });
