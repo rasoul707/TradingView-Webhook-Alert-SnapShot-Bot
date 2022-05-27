@@ -121,8 +121,7 @@ app.get('/start', async function (req, res) {
     const n = await fetch('https://api.upload.io/v1/files/basic', {
         method: 'POST',
         headers: {
-            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-            "Content-Type": ""
+            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws"
         },
         body: img
     })
