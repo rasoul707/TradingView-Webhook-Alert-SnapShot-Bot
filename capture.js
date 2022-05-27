@@ -211,7 +211,7 @@ app.get('/capture', async function (req, res) {
 
 
         if (candles) {
-            await page.waitForTimeout(500);
+            await page.waitForTimeout(200);
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
@@ -228,10 +228,10 @@ app.get('/capture', async function (req, res) {
 
             await page.waitForTimeout(1000);
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-            await page.waitForTimeout(500);
+            await page.waitForTimeout(200);
 
 
-            await page.focus('.row-9XF0QIKT:nth-child(1) input');
+            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(1) input');
             await page.keyboard.press('End');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
@@ -246,7 +246,7 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.type(start_date, { delay: 200 });
 
 
-            await page.focus('.row-9XF0QIKT:nth-child(2) input');
+            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(1) input');
             await page.keyboard.press('End');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
@@ -263,7 +263,7 @@ app.get('/capture', async function (req, res) {
 
             await uploadImg(page, 1)
             await page.waitForTimeout(2000);
-            await page.focus('.row-9XF0QIKT:nth-child(1) input:not([data-name="start-date-range"])');
+            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
             await uploadImg(page, 2)
             await page.waitForTimeout(2000);
             await page.keyboard.press('Backspace');
@@ -275,7 +275,7 @@ app.get('/capture', async function (req, res) {
 
             await uploadImg(page, 5)
             await page.waitForTimeout(2000);
-            await page.focus('.row-9XF0QIKT:nth-child(2) input:not([data-name="end-date-range"])');
+            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
             await uploadImg(page, 6)
             await page.waitForTimeout(2000);
             await page.keyboard.press('Backspace');
@@ -286,7 +286,7 @@ app.get('/capture', async function (req, res) {
             await page.waitForTimeout(2000);
 
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            await uploadImg(page, 4)
+            await uploadImg(page, 9)
             await page.waitForTimeout(2000);
 
             await page.waitForTimeout(1000);
