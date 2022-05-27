@@ -179,7 +179,7 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
-const uploadImg = async (_page) => {
+const uploadImg = async (_page, ii) => {
     const img = await _page.screenshot();
     const n = await fetch('https://api.upload.io/v1/files/basic', {
         method: 'POST',
@@ -189,7 +189,7 @@ const uploadImg = async (_page) => {
         },
         body: img
     })
-    console.log(await n.json())
+    console.log(ii, await n.json())
 }
 
 app.get('/capture', async function (req, res) {
@@ -205,18 +205,18 @@ app.get('/capture', async function (req, res) {
     console.log("#", url)
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
-        uploadImg(page)
+        uploadImg(page, 1)
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
 
-        uploadImg(page)
+        uploadImg(page, 2)
 
         if (candles) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
-            uploadImg(page)
+            uploadImg(page, 3)
 
             const { start, end } = dateTimeRange(interval, candles)
 
@@ -225,12 +225,14 @@ app.get('/capture', async function (req, res) {
             const start_time = start.format("HH:mm")
             const end_time = end.format("HH:mm")
 
+            console.log(start_date, start_time, end_date, end_time)
+
 
             await page.waitForTimeout(1000);
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             await page.waitForTimeout(500);
 
-            uploadImg(page)
+            uploadImg(page, 4)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(1) input');
@@ -242,12 +244,12 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
-            uploadImg(page)
+            uploadImg(page, 5)
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_date, { delay: 200 });
-            uploadImg(page)
+            uploadImg(page, 6)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(2) input');
@@ -257,29 +259,29 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
-            uploadImg(page)
+            uploadImg(page, 7)
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_date, { delay: 200 });
-            uploadImg(page)
+            uploadImg(page, 8)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(1) input:not([data-name="start-date-range"])');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_time, { delay: 200 });
-            uploadImg(page)
+            uploadImg(page, 9)
 
 
             await page.focus('.row-9XF0QIKT:nth-child(2) input:not([data-name="end-date-range"])');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_time, { delay: 200 });
-            uploadImg(page)
+            uploadImg(page, 10)
 
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            uploadImg(page)
+            uploadImg(page, 11)
 
             await page.waitForTimeout(1000);
         }
