@@ -16,11 +16,17 @@ in message box you must type a message like this:
 }
 ```
 sy => symbol name
+
 ex => exchange
+
 tf => timeframe (```1H```,```4H```,```W```,```15```,```55```, ...)
+
 cl => candles count you want to show
+
 sg => strategy name
+
 msg => message
+
 then when alert activated, snapshot of defined chart will send to your channel that related to key that you entered
 
 
