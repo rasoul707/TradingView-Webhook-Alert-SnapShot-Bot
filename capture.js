@@ -131,6 +131,7 @@ const dateTimeRange = (interval, candles) => {
 
     let start = now.clone()
     let _start = {}
+    let _end = {}
     candles = parseInt(candles)
     if (!candles || isNaN(candles)) candles = 1
     if (types.includes(temp)) {
@@ -192,6 +193,8 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('KeyG');
 
             const { start, end } = dateTimeRange(interval, candles)
+
+            console.log(start, end)
 
             start_date = start.format("YYYYMMDD")
             end_date = end.format("YYYYMMDD")
