@@ -166,6 +166,14 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.press('Backspace');
+            await page.keyboard.type('20220422', { delay: 500 });
+
 
         }
         else {
