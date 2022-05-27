@@ -189,7 +189,7 @@ app.get('/capture', async function (req, res) {
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
-    console.log("############")
+    console.log("############", url)
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
         console.log("*******")
