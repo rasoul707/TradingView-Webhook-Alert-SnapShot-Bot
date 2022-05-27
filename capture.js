@@ -1,3 +1,11 @@
+/* -------------------------------------------------------------------- */
+/* Plugin Name           : TradingView-Webhook-Alert-Telegram-SnapShot  */
+/* Author Name           : rasoul707                                    */
+/* File Name             : capture.js                                   */
+/* -------------------------------------------------------------------- */
+    
+
+
 const express = require('express');
 const puppeteer = require('puppeteer');
 const app = express();
