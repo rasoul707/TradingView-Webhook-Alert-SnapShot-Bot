@@ -129,7 +129,7 @@ const dateTimeRange = (interval, candles) => {
     const temp = interval.slice(-1)
     const now = moment()
 
-    let start = now.clone()
+
     let _start = {}
     let _end = {}
     candles = parseInt(candles)
@@ -143,22 +143,27 @@ const dateTimeRange = (interval, candles) => {
         if (duration === 'H') {
             _start = { hours: number }
             _end = { hours: 10 }
+            now.endOf('hour')
         }
         if (duration === 'D') {
             _start = { days: number }
             _end = { days: 10 }
+            now.endOf('day')
         }
         if (duration === 'W') {
             _start = { weeks: number }
             _end = { weeks: 10 }
+            now.endOf('week')
         }
         if (duration === 'M') {
             _start = { months: number }
             _end = { months: 10 }
+            now.endOf('month')
         }
         if (duration === 'Y') {
             _start = { years: number }
             _end = { years: 10 }
+            now.endOf('year')
         }
     }
     else {
@@ -166,9 +171,10 @@ const dateTimeRange = (interval, candles) => {
         number = candles * number
         _start = { minutes: number }
         _end = { minutes: 10 }
+        now.endOf('minute')
     }
-    start.subtract(_start)
-    end = now.clone().add(_end)
+    const start = now.clone().subtract(_start)
+    const end = now.clone().add(_end)
     return { start, end }
 }
 
