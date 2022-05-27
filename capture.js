@@ -154,7 +154,7 @@ app.get('/capture', async function (req, res) {
 
             //     document.querySelector('.submitButton-xe9kH1lJ button').click()
             await page.waitFor(".row-9XF0QIKT");
-            await page.type('.row-9XF0QIKT', '20220422', { delay: 500 });
+            await page.type('.row-9XF0QIKT:nth-child(1) input', '20220422', { delay: 500 });
             // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         }
         else {
@@ -170,7 +170,8 @@ app.get('/capture', async function (req, res) {
         const n = await fetch('https://api.upload.io/v1/files/basic', {
             method: 'POST',
             headers: {
-                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws"
+                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
+                "Content-Type": "image/jpeg"
             },
             body: img
         })
