@@ -135,6 +135,8 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
+        page.keyboard.press('AltLeft');
+        await page.keyboard.press('KeyR');
         if (candles > 0) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
@@ -155,8 +157,7 @@ app.get('/capture', async function (req, res) {
             // await page.$eval('table tr td:nth-child(2)', el => { return el.innerHTML });
         }
         else {
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyR');
+
         }
 
         const retrievedData = await page.evaluate(async () => {
