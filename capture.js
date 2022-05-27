@@ -247,7 +247,7 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_date, { delay: 200 });
-            await uploadImg(page, 1)
+
 
 
 
@@ -255,7 +255,7 @@ app.get('/capture', async function (req, res) {
             await page.waitForTimeout(500);
             await page.keyboard.press('Backspace');
             await page.keyboard.type(start_time, { delay: 200 });
-            await uploadImg(page, 2)
+
 
             // 
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
@@ -275,7 +275,7 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.press('Backspace');
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_date, { delay: 200 });
-            await uploadImg(page, 3)
+
 
 
 
@@ -283,7 +283,7 @@ app.get('/capture', async function (req, res) {
             await page.waitForTimeout(500);
             await page.keyboard.press('Backspace');
             await page.keyboard.type(end_time, { delay: 200 });
-            await uploadImg(page, 4)
+
 
 
             // 
