@@ -213,6 +213,7 @@ app.get('/capture', async function (req, res) {
         uploadImg(page, 2)
 
         if (candles) {
+            await page.waitForTimeout(500);
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
