@@ -225,10 +225,12 @@ app.get('/capture', async function (req, res) {
             console.log(start_date, start_time, end_date, end_time)
 
 
-            await page.waitForTimeout(1000);
+            // await page.waitForTimeout(1000);
+
+            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', {
+                visible: true
+            });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-
-
 
             // 
 
