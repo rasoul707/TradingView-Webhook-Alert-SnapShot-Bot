@@ -119,7 +119,7 @@ app.get('/start', async function (req, res) {
 
 
     await page.close();
-    res.json({ ok, status, img: "", username, password, useragent });
+    res.json({ ok, status, username, password, useragent });
 });
 
 
@@ -187,10 +187,13 @@ app.get('/capture', async function (req, res) {
     var candles = req.query.candles;
 
 
-
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
+    console.log("############")
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
+
+        console.log("*******")
+
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
 
@@ -251,29 +254,24 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.type(end_time, { delay: 200 });
 
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-
-
-
         }
-        else {
 
-        }
 
         const retrievedData = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         console.log('Success')
 
-        // const img = await page.screenshot();
-        // const n = await fetch('https://api.upload.io/v1/files/basic', {
-        //     method: 'POST',
-        //     headers: {
-        //         Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-        //         "Content-Type": "image/png"
-        //     },
-        //     body: img
-        // })
-        // console.log(await n.json())
+        const img = await page.screenshot();
+        const n = await fetch('https://api.upload.io/v1/files/basic', {
+            method: 'POST',
+            headers: {
+                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
+                "Content-Type": "image/png"
+            },
+            body: img
+        })
+        console.log(await n.json())
 
 
         res.end(retrievedData);
