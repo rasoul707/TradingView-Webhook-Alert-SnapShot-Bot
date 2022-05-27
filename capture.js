@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const app = express();
 const UserAgent = require('user-agents');
 const fetch = require('node-fetch');
-
+const moment = require('moment');
 
 let browser, useragent;
 
@@ -123,7 +123,36 @@ app.get('/start', async function (req, res) {
 });
 
 
-// const types
+const startDateTimeRange = (endDate, interval, candles) => {
+    interval = interval.toUpperCase();
+    const types = ['H', 'D', 'W', 'M', 'Y']
+    const temp = interval.slice(-1)
+
+    let result = endDate.clone()
+    let obj = {}
+    candles = parseInt(candles)
+    if (!candles || isNaN(candles)) candles = 1
+    if (types.includes(temp)) {
+        let duration = temp
+        let number = parseInt(interval.substring(0, interval.length - 1))
+        if (!number || isNaN(number)) number = 1
+        number = candles * number
+
+        if (duration === 'H') obj = { hours: number }
+        if (duration === 'D') obj = { days: number }
+        if (duration === 'W') obj = { weeks: number }
+        if (duration === 'M') obj = { months: number }
+        if (duration === 'Y') obj = { years: number }
+    }
+    else {
+        let number = parseInt(interval)
+        number = candles * number
+        obj = { minutes: number }
+    }
+    result.subtract(obj)
+    return result
+}
+
 
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
@@ -132,21 +161,25 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     var candles = req.query.candles;
 
-    console.log(interval)
+
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
-        if (candles > 0) {
+
+        if (candles) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
-            start_date = "2022-04-24"
-            end_date = "2022-05-21"
-            start_time = "00:00"
-            end_time = "15:00"
+            const endRangeMoment = moment();
+            const startRangeMoment = startDateTimeRange(endRangeMoment, interval, candles)
+
+            start_date = startRangeMoment.format("YYYYMMDD")
+            end_date = endRangeMoment.format("YYYYMMDD")
+            start_time = startRangeMoment.format("HH:mm")
+            end_time = endRangeMoment.format("HH:mm")
 
             await page.waitFor(".row-9XF0QIKT");
 
