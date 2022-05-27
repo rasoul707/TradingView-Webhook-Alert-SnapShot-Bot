@@ -255,16 +255,16 @@ app.get('/capture', async function (req, res) {
         })
         console.log('Success')
 
-        const img = await page.screenshot();
-        const n = await fetch('https://api.upload.io/v1/files/basic', {
-            method: 'POST',
-            headers: {
-                Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-                "Content-Type": "image/png"
-            },
-            body: img
-        })
-        console.log(await n.json())
+        // const img = await page.screenshot();
+        // const n = await fetch('https://api.upload.io/v1/files/basic', {
+        //     method: 'POST',
+        //     headers: {
+        //         Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
+        //         "Content-Type": "image/png"
+        //     },
+        //     body: img
+        // })
+        // console.log(await n.json())
 
 
         res.end(retrievedData);
