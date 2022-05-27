@@ -138,39 +138,38 @@ const dateTimeRange = (interval, candles) => {
         let duration = temp
         let number = parseInt(interval.substring(0, interval.length - 1))
         if (!number || isNaN(number)) number = 1
-        number = candles * number
+
 
         if (duration === 'H') {
-            _start = { hours: number }
-            _end = { hours: 10 }
+            _start = { hours: candles * number }
+            _end = { hours: number * 10 }
             now.endOf('hour').add(1, 'second')
         }
         if (duration === 'D') {
-            _start = { days: number }
-            _end = { days: 10 }
+            _start = { days: candles * number }
+            _end = { days: number * 10 }
             now.endOf('day').add(1, 'second')
         }
         if (duration === 'W') {
-            _start = { weeks: number }
-            _end = { weeks: 10 }
+            _start = { weeks: candles * number }
+            _end = { weeks: number * 10 }
             now.endOf('week').add(1, 'second')
         }
         if (duration === 'M') {
-            _start = { months: number }
-            _end = { months: 10 }
+            _start = { months: candles * number }
+            _end = { months: number * 10 }
             now.endOf('month').add(1, 'second')
         }
         if (duration === 'Y') {
-            _start = { years: number }
-            _end = { years: 10 }
+            _start = { years: candles * number }
+            _end = { years: number * 10 }
             now.endOf('year').add(1, 'second')
         }
     }
     else {
         let number = parseInt(interval)
-        number = candles * number
         _start = { minutes: candles * number }
-        _end = { minutes: parseInt(interval) * 10 }
+        _end = { minutes: number * 10 }
         now.endOf('minute').add(1, 'second')
     }
     const start = now.clone().subtract(_start)
