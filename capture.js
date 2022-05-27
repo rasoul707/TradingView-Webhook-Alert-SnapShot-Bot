@@ -57,7 +57,7 @@ const skippedResources = [
 ];
 
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 
 const newPage = async () => {
     const page = await browser.newPage();
@@ -103,7 +103,7 @@ app.get('/start', async function (req, res) {
         await page.type('input[name="username"]', username)
         await page.type('input[name="password"]', password)
         await page.click('button[type="submit"]')
-        await sleep(5000);
+        await page.waitForTimeout(5000);
         if (page.url() === authUrl) {
             status = "error"
             ok = false
@@ -189,10 +189,8 @@ app.get('/capture', async function (req, res) {
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
-    console.log("############", url)
+    console.log("#", url)
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
-
-        console.log("*******")
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
@@ -203,15 +201,15 @@ app.get('/capture', async function (req, res) {
 
             const { start, end } = dateTimeRange(interval, candles)
 
-            console.log(start, end)
-
             const start_date = start.format("YYYYMMDD")
             const end_date = end.format("YYYYMMDD")
             const start_time = start.format("HH:mm")
             const end_time = end.format("HH:mm")
 
 
-            await page.waitFor(".row-9XF0QIKT");
+            await page.waitForTimeout(1000);
+            await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+            await page.waitForTimeout(500);
 
 
             await page.focus('.row-9XF0QIKT:nth-child(1) input');
@@ -254,13 +252,17 @@ app.get('/capture', async function (req, res) {
             await page.keyboard.type(end_time, { delay: 200 });
 
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
+
+            await page.waitForTimeout(1000);
         }
 
 
-        const retrievedData = await page.evaluate(async () => {
+        const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         console.log('Success')
+
+        // 
 
         const img = await page.screenshot();
         const n = await fetch('https://api.upload.io/v1/files/basic', {
@@ -273,8 +275,10 @@ app.get('/capture', async function (req, res) {
         })
         console.log(await n.json())
 
+        // 
 
-        res.end(retrievedData);
+
+        res.end(token);
     }).catch((err) => {
         console.log('Failed', err)
         res.end('error')
