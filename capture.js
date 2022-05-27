@@ -123,13 +123,14 @@ app.get('/start', async function (req, res) {
 });
 
 
-const startDateTimeRange = (endDate, interval, candles) => {
+const dateTimeRange = (interval, candles) => {
     interval = interval.toUpperCase();
     const types = ['H', 'D', 'W', 'M', 'Y']
     const temp = interval.slice(-1)
+    const now = moment()
 
-    let result = endDate.clone()
-    let obj = {}
+    let start = now.clone()
+    let _start = {}
     candles = parseInt(candles)
     if (!candles || isNaN(candles)) candles = 1
     if (types.includes(temp)) {
@@ -138,19 +139,36 @@ const startDateTimeRange = (endDate, interval, candles) => {
         if (!number || isNaN(number)) number = 1
         number = candles * number
 
-        if (duration === 'H') obj = { hours: number }
-        if (duration === 'D') obj = { days: number }
-        if (duration === 'W') obj = { weeks: number }
-        if (duration === 'M') obj = { months: number }
-        if (duration === 'Y') obj = { years: number }
+        if (duration === 'H') {
+            _start = { hours: number }
+            _end = { hours: 10 }
+        }
+        if (duration === 'D') {
+            _start = { days: number }
+            _end = { days: 10 }
+        }
+        if (duration === 'W') {
+            _start = { weeks: number }
+            _end = { weeks: 10 }
+        }
+        if (duration === 'M') {
+            _start = { months: number }
+            _end = { months: 10 }
+        }
+        if (duration === 'Y') {
+            _start = { years: number }
+            _end = { years: 10 }
+        }
     }
     else {
         let number = parseInt(interval)
         number = candles * number
-        obj = { minutes: number }
+        _start = { minutes: number }
+        _end = { minutes: 10 }
     }
-    result.subtract(obj)
-    return result
+    start.subtract(_start)
+    end = now.clone().add(_end)
+    return { start, end }
 }
 
 
@@ -173,13 +191,13 @@ app.get('/capture', async function (req, res) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
-            const endRangeMoment = moment();
-            const startRangeMoment = startDateTimeRange(endRangeMoment, interval, candles)
+            const { start, end } = dateTimeRange(interval, candles)
 
-            start_date = startRangeMoment.format("YYYYMMDD")
-            end_date = endRangeMoment.format("YYYYMMDD")
-            start_time = startRangeMoment.format("HH:mm")
-            end_time = endRangeMoment.format("HH:mm")
+            start_date = start.format("YYYYMMDD")
+            end_date = end.format("YYYYMMDD")
+            start_time = start.format("HH:mm")
+            end_time = end.format("HH:mm")
+
 
             await page.waitFor(".row-9XF0QIKT");
 
