@@ -169,8 +169,8 @@ const dateTimeRange = (interval, candles) => {
     else {
         let number = parseInt(interval)
         number = candles * number
-        _start = { minutes: number }
-        _end = { minutes: 10 }
+        _start = { minutes: candles * number }
+        _end = { minutes: parseInt(interval) * 10 }
         now.endOf('minute').add(1, 'second')
     }
     const start = now.clone().subtract(_start)
