@@ -212,12 +212,13 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
     console.log("#", url)
+    let images = []
     await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
 
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
-        let images = []
+
 
 
         if (candles) {
@@ -234,10 +235,11 @@ app.get('/capture', async function (req, res) {
             const end_time = end.format("HHmm")
 
             console.log(start_date, start_time, end_date, end_time)
+            images.push(await uploadImg(page, '#wait'))
 
             await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', {
                 visible: true,
-                timeout: 1000000
+                timeout: 30000
             });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
@@ -316,7 +318,7 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: true, token, images });
     }).catch((err) => {
         console.log('Failed', err)
-        res.json({ ok: false, error: err.toString() })
+        res.json({ ok: false, error: err.toString(), images })
     })
 
 
