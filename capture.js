@@ -196,7 +196,9 @@ const uploadImg = async (_page, ii) => {
         },
         body: img
     })
-    console.log(ii, await n.json())
+    // console.log(ii, await n.json())
+    const json = await n.json()
+    return JSON.parse(json).fileUrl
 }
 
 app.get('/capture', async function (req, res) {
@@ -215,6 +217,7 @@ app.get('/capture', async function (req, res) {
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
+        let images = []
 
 
         if (candles) {
@@ -295,11 +298,11 @@ app.get('/capture', async function (req, res) {
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             // 
 
-            await uploadImg(page, '#before')
+            images.push(await uploadImg(page, '#before'))
             await page.waitForTimeout(500)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
             await page.waitForTimeout(500)
-            await uploadImg(page, '#final')
+            images.push(await uploadImg(page, '#final'))
         }
 
 
@@ -309,10 +312,10 @@ app.get('/capture', async function (req, res) {
         console.log('Success')
 
 
-        res.end(token);
+        res.end({ ok: true, token, images });
     }).catch((err) => {
         console.log('Failed', err)
-        res.end('error')
+        res.end({ ok: false, error: err })
     })
 
 

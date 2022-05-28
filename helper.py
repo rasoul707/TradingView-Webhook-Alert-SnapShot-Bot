@@ -10,11 +10,12 @@ from telegram import Bot
 import requests
 import config
 
+tgbot = Bot(token=config.BOT_TOKEN)
+
 
 def sendAlert(data, key):
     msg = data["msg"]
     msg = msg.encode("latin-1", "backslashreplace").decode("unicode_escape")
-    tgbot = Bot(token=config.BOT_TOKEN)
 
     ex = data["ex"]
     sy = data["sy"]
@@ -40,11 +41,7 @@ def sendAlert(data, key):
             parse_mode="MARKDOWN",
         )
     except KeyError:
-        tgbot.sendMessage(
-            config.admin,
-            message,
-            parse_mode="MARKDOWN",
-        )
+        sen2Admin(message)
     except Exception as e:
         print("[X] Telegram Error:\n>", e)
 
@@ -55,15 +52,18 @@ def snapshot(arg, cl):
     if isinstance(cmd, str):
         return cmd
     else:
-        requesturl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
-        txtc = requests.get(requesturl).text
-        if txtc == 'error':
-            return ''
-        return f'https://www.tradingview.com/x/{txtc}'
+        requestUrl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
+        result = requests.get(requestUrl).text
+        if result['ok']:
+            token = result['token']
+            url = f'https://www.tradingview.com/x/{token}'
+            sen2Admin('Suc =>\n'+result['images'].join('\n')+'\n\n'+url)
+            return url
+        sen2Admin('Err =>\n')
+        return ''
 
 
 def sen2Admin(msg):
-    tgbot = Bot(token=config.BOT_TOKEN)
 
     try:
         tgbot.sendMessage(

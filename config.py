@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------- #
 # Plugin Name           : TradingView-Webhook-Alert-Telegram-SnapShot #
 # Author Name           : rasoul707                                   #
-# File Name             : config.py                                     #
+# File Name             : config.py                                   #
 # ------------------------------------------------------------------- #
 
 BOT_TOKEN = "BOT_TOKEN"
