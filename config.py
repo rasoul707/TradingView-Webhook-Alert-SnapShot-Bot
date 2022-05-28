@@ -4,24 +4,24 @@
 # File Name             : config.py                                   #
 # ------------------------------------------------------------------- #
 
-BOT_TOKEN = "5386492523:AAFxvoCs0mFyMAx8yhklnVHHJiCM_ks4qM4"
+BOT_TOKEN = "BOT_TOKEN"
 
 admin = 115025624
 
 keys = [
-    "KEY_MyChannel",
-    "xRdom45SrcToMxQ53946Top"
+    # "KEY1",
+    # "KEY2"
 ]
 
 channels = [
-    -1001368926240,
-    -1001724862991
+    -1,
+    -2
 ]
 
 
 # trading-view auth
-username = "qkhpmdbekdeal"
-password = "5HDzYmPpCWQs"
+username = "user"
+password = "pass"
 
 
 # default chart settings
