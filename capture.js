@@ -315,7 +315,7 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: true, token, images });
     }).catch((err) => {
         console.log('Failed', err)
-        res.json({ ok: false, error: err })
+        res.json({ ok: false, error: err.toString() })
     })
 
 
