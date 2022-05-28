@@ -216,9 +216,13 @@ app.get('/capture', async function (req, res) {
     await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', }).then(async () => {
 
 
+        await page.waitForSelector('#header-toolbar-symbol-search', {
+            visible: true,
+            timeout: 30000
+        });
+
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
-
 
 
         if (candles) {
