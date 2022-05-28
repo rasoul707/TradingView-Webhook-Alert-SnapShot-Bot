@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------- #
 # Plugin Name           : TradingView-Webhook-Alert-Telegram-SnapShot #
 # Author Name           : rasoul707                                   #
-# File Name             : helper.py                                     #
+# File Name             : helper.py                                   #
 # ------------------------------------------------------------------- #
 
 
