@@ -227,11 +227,7 @@ app.get('/capture', async function (req, res) {
     let images = []
     await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', }).then(async () => {
 
-
-        await page.waitForSelector('#header-toolbar-symbol-search', {
-            visible: true,
-            timeout: 30000
-        });
+        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true });
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
@@ -250,13 +246,10 @@ app.get('/capture', async function (req, res) {
             const start_time = start.format("HHmm")
             const end_time = end.format("HHmm")
 
-            console.log(start_date, start_time, end_date, end_time)
+
             images.push(await uploadImg(page, '#wait'))
 
-            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', {
-                visible: true,
-                timeout: 30000
-            });
+            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
 
