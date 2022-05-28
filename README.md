@@ -27,8 +27,19 @@ sg => strategy name
 
 msg => message
 
+You can use TradingView shortcut, like this:
+```
+{
+    "sy": "{{ticker}}",
+    "ex": "{{exchange}}",
+    "tf": "{{interval}}",
+    "cl": 50,
+    "sg": "Strategy Name",
+    "msg": "Your description"
+}
+```
 then when alert activated, snapshot of defined chart will send to your channel that related to key that you entered
-
+P
 
 ## Run
 - First: ```node capture.js &```
