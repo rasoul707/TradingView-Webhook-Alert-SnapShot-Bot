@@ -213,7 +213,7 @@ app.get('/capture', async function (req, res) {
     const page = await newPage();
     console.log("#", url)
     let images = []
-    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', }).then(async () => {
+    await page.goto(url, { timeout: 25000, waitUntil: 'networkidle0', }).then(async () => {
 
 
         page.keyboard.press('AltLeft');
