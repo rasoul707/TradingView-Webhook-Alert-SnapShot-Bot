@@ -140,46 +140,58 @@ const dateTimeRange = (interval, candles) => {
 
     let _start = {}
     let _end = {}
+    let duration
+    let number
     candles = parseInt(candles)
     if (!candles || isNaN(candles)) candles = 1
-    if (types.includes(temp)) {
-        let duration = temp
-        let number = parseInt(interval.substring(0, interval.length - 1))
-        if (!number || isNaN(number)) number = 1
 
-
-        if (duration === 'H') {
-            _start = { hours: candles * number }
-            _end = { hours: number * 10 }
-            now.endOf('hour').add(1, 'second')
-        }
-        if (duration === 'D') {
-            _start = { days: candles * number }
-            _end = { days: number * 10 }
-            now.endOf('day').add(1, 'second')
-        }
-        if (duration === 'W') {
-            _start = { weeks: candles * number }
-            _end = { weeks: number * 10 }
-            now.endOf('week').add(1, 'second')
-        }
-        if (duration === 'M') {
-            _start = { months: candles * number }
-            _end = { months: number * 10 }
-            now.endOf('month').add(1, 'second')
-        }
-        if (duration === 'Y') {
-            _start = { years: candles * number }
-            _end = { years: number * 10 }
-            now.endOf('year').add(1, 'second')
-        }
+    if (!types.includes(temp)) {
+        duration = 'm'
+        number = parseInt(interval)
     }
     else {
-        let number = parseInt(interval)
+        duration = temp
+        number = parseInt(interval.substring(0, interval.length - 1))
+    }
+
+
+    if (!number || isNaN(number)) number = 1
+
+    if (duration === 'S') {
+        _start = { seconds: candles * number }
+        _end = { seconds: number * 10 }
+        now.endOf('second')
+    } if (duration === 'm') {
         _start = { minutes: candles * number }
         _end = { minutes: number * 10 }
         now.endOf('minute').add(1, 'second')
     }
+    if (duration === 'H') {
+        _start = { hours: candles * number }
+        _end = { hours: number * 10 }
+        now.endOf('hour').add(1, 'second')
+    }
+    if (duration === 'D') {
+        _start = { days: candles * number }
+        _end = { days: number * 10 }
+        now.endOf('day').add(1, 'second')
+    }
+    if (duration === 'W') {
+        _start = { weeks: candles * number }
+        _end = { weeks: number * 10 }
+        now.endOf('week').add(1, 'second')
+    }
+    if (duration === 'M') {
+        _start = { months: candles * number }
+        _end = { months: number * 10 }
+        now.endOf('month').add(1, 'second')
+    }
+    if (duration === 'Y') {
+        _start = { years: candles * number }
+        _end = { years: number * 10 }
+        now.endOf('year').add(1, 'second')
+    }
+
     const start = now.clone().subtract(_start)
     const end = now.clone().add(_end)
     return { start, end }
