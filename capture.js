@@ -198,7 +198,7 @@ const uploadImg = async (_page, ii) => {
     })
     // console.log(ii, await n.json())
     const json = await n.json()
-    return JSON.parse(json).fileUrl
+    return json['fileUrl']
 }
 
 app.get('/capture', async function (req, res) {
@@ -312,10 +312,10 @@ app.get('/capture', async function (req, res) {
         console.log('Success')
 
 
-        res.end({ ok: true, token, images });
+        res.json({ ok: true, token, images });
     }).catch((err) => {
         console.log('Failed', err)
-        res.end({ ok: false, error: err })
+        res.json({ ok: false, error: err })
     })
 
 
