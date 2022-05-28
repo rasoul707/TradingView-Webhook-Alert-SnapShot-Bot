@@ -53,7 +53,7 @@ def snapshot(arg, cl):
         return cmd
     else:
         requestUrl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
-        result = requests.get(requestUrl).text
+        result = requests.get(requestUrl).json()
         if result['ok']:
             token = result['token']
             url = f'https://www.tradingview.com/x/{token}'
