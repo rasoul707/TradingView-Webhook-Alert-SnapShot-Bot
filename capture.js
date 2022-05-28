@@ -6,13 +6,12 @@
 
 
 
-import express from 'express';
-import puppeteer from 'puppeteer';
-import UserAgent from 'user-agents';
-import fetch from 'node-fetch';
-import moment from 'moment';
-const app = express();
+const express = require('express');
+const puppeteer = require('puppeteer');
+const UserAgent = require('user-agents');
+const moment = require('moment');
 
+const app = express();
 
 let browser, useragent;
 
