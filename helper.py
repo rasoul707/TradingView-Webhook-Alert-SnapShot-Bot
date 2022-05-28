@@ -32,13 +32,13 @@ def sendAlert(data, key):
     if not snapLink:
         return 'err'
 
-    message = "[🔻]("+snapLink+") " + "**" + sy.upper()+" | "+tf.upper()+"**" + "\n" + \
-        "استراتژی: " + sg + "\n" + msg
+    message = "<a href='"+snapLink+"'>🔻</a> " + "<b>" + sy.upper() + " | " + tf.upper() + "</b>" + "\n" + \
+        "<b>استراتژی: </b>" + sg + "\n" + msg
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
             message,
-            parse_mode="MarkdownV2",
+            parse_mode="HTML",
         )
     except KeyError:
         sen2Admin(message)
@@ -57,10 +57,11 @@ def snapshot(arg, cl):
         if result['ok']:
             token = result['token']
             url = f'https://www.tradingview.com/x/{token}'
-            sen2Admin('Suc =>\n'+'\n'.join(result['images'])+'\n\n'+url)
+            sen2Admin('<b>Success</b> =>\n' +
+                      '\n'.join(result['images'])+'\n\n'+url)
             return url
         sen2Admin(
-            'Err =>\n'+'\n'.join(result['images']) + '\n\n' + result['error'])
+            '<b>Error</b> =>\n'+'\n'.join(result['images']) + '\n\n' + result['error'])
         return ''
 
 
@@ -70,7 +71,7 @@ def sen2Admin(msg):
         tgbot.sendMessage(
             config.admin,
             msg,
-            parse_mode="MarkdownV2",
+            parse_mode="HTML",
         )
     except Exception as e:
         print("[X] Telegram Send Admin Error:\n>", e)
