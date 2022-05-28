@@ -38,7 +38,7 @@ def sendAlert(data, key):
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
             message,
-            parse_mode="MARKDOWN",
+            parse_mode="MarkdownV2",
         )
     except KeyError:
         sen2Admin(message)
@@ -70,7 +70,7 @@ def sen2Admin(msg):
         tgbot.sendMessage(
             config.admin,
             msg,
-            parse_mode="MARKDOWN",
+            parse_mode="MarkdownV2",
         )
     except Exception as e:
         print("[X] Telegram Send Admin Error:\n>", e)
