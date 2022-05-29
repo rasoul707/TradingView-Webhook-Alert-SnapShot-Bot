@@ -10,9 +10,8 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const UserAgent = require('user-agents');
 const moment = require('moment');
-import fetch from 'node-fetch';
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
-
 let browser, useragent;
 
 const chromeOptions = {
