@@ -57,16 +57,13 @@ def snapshot(arg, cl):
         if result['ok']:
             token = result['token']
             url = f'https://www.tradingview.com/x/{token}'
-            sen2Admin('<b>Success</b> =>\n' +
-                      '\n'.join(result['images'])+'\n\n'+url)
             return url
-        sen2Admin(
-            '<b>Error</b> =>\n'+'\n'.join(result['images']) + '\n\n' + result['error'])
+        imgs = +'\n'.join(result['images']) + '\n'
+        sen2Admin('<b>Error</b> =>\n' + imgs + '\n' + result['error'])
         return ''
 
 
 def sen2Admin(msg):
-
     try:
         tgbot.sendMessage(
             config.admin,

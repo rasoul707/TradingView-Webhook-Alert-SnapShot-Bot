@@ -209,7 +209,7 @@ const uploadImg = async (_page, ii) => {
     })
     // console.log(ii, await n.json())
     const json = await n.json()
-    return json['fileUrl']
+    return json['fileUrl'] || ""
 }
 
 app.get('/capture', async function (req, res) {
@@ -245,7 +245,7 @@ app.get('/capture', async function (req, res) {
             const end_time = end.format("HHmm")
 
 
-            images.push(await uploadImg(page, '#wait'))
+            // images.push(await uploadImg(page, '#wait'))
 
             await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
@@ -308,10 +308,10 @@ app.get('/capture', async function (req, res) {
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             // 
 
-            images.push(await uploadImg(page, '#before'))
+            // images.push(await uploadImg(page, '#before'))
             await page.waitForTimeout(200)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            images.push(await uploadImg(page, '#final'))
+            // images.push(await uploadImg(page, '#final'))
         }
 
 
@@ -321,7 +321,7 @@ app.get('/capture', async function (req, res) {
         console.log('Success')
 
 
-        res.json({ ok: true, token, images });
+        res.json({ ok: true, token });
     }).catch((err) => {
         console.log('Failed', err)
         res.json({ ok: false, error: err.toString(), images })
