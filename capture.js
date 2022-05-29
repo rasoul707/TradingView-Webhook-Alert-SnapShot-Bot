@@ -10,7 +10,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const UserAgent = require('user-agents');
 const moment = require('moment');
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 const app = express();
 
 let browser, useragent;
