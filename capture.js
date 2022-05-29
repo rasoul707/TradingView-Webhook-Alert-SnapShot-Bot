@@ -251,7 +251,7 @@ app.get('/capture', async function (req, res) {
             images.push(await uploadImg(page, '#wait'))
 
 
-            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true });
+            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
 
