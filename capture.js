@@ -225,17 +225,16 @@ app.get('/capture', async function (req, res) {
     let images = []
     await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', }).then(async () => {
 
-        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true });
+        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, timeout: 50000 });
+        await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, timeout: 50000 });
+
+        await page.waitForTimeout(1000);
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
 
 
         if (candles) {
-            await page.waitForTimeout(200);
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyG');
-
 
             const { start, end } = dateTimeRange(interval, candles)
 
@@ -245,7 +244,12 @@ app.get('/capture', async function (req, res) {
             const end_time = end.format("HHmm")
 
 
-            // images.push(await uploadImg(page, '#wait'))
+            page.keyboard.press('AltLeft');
+            await page.keyboard.press('KeyG');
+
+
+            images.push(await uploadImg(page, '#wait'))
+
 
             await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
@@ -308,10 +312,10 @@ app.get('/capture', async function (req, res) {
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             // 
 
-            // images.push(await uploadImg(page, '#before'))
+            images.push(await uploadImg(page, '#before'))
             await page.waitForTimeout(200)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            // images.push(await uploadImg(page, '#final'))
+            images.push(await uploadImg(page, '#final'))
         }
 
 

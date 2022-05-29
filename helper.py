@@ -58,7 +58,10 @@ def snapshot(arg, cl):
             token = result['token']
             url = f'https://www.tradingview.com/x/{token}'
             return url
-        imgs = +'\n'.join(result['images']) + '\n'
+        imgs = ''
+        print(result['images'])
+        if result['images'] != "[]":
+            imgs = '\n'.join(result['images']) + '\n'
         sen2Admin('<b>Error</b> =>\n' + imgs + '\n' + result['error'])
         return ''
 
