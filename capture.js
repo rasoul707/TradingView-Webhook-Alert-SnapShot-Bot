@@ -211,21 +211,6 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
-const uploadImg = async (_page, ii) => {
-    const img = await _page.screenshot();
-    const n = await fetch('https://api.upload.io/v1/files/basic', {
-        method: 'POST',
-        headers: {
-            Authorization: "Bearer public_12a1xk8CY7DbH49KvyPFABVpCSws",
-            "Content-Type": "image/png"
-        },
-        body: img
-    })
-    // console.log(ii, await n.json())
-    const json = await n.json()
-    return json['fileUrl'] || ""
-}
-
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
     var exchange = req.query.exchange;
@@ -236,7 +221,7 @@ app.get('/capture', async function (req, res) {
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage();
-    let images = []
+
     await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', }).then(async () => {
 
         await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, timeout: 50000 });
@@ -260,10 +245,6 @@ app.get('/capture', async function (req, res) {
 
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
-
-
-            images.push(await uploadImg(page, '#wait'))
-
 
             await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
@@ -326,10 +307,9 @@ app.get('/capture', async function (req, res) {
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
             // 
 
-            images.push(await uploadImg(page, '#before'))
+
             await page.waitForTimeout(200)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            images.push(await uploadImg(page, '#final'))
         }
 
 
@@ -342,7 +322,7 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: true, token });
     }).catch((err) => {
         console.log('Failed', err)
-        res.json({ ok: false, error: err.toString(), images })
+        res.json({ ok: false, error: err.toString() })
     })
 
 
