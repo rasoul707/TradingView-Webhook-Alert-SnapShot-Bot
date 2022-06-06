@@ -117,34 +117,38 @@ app.get('/start', async function (req, res) {
     const userAgent = new UserAgent({ "deviceCategory": "desktop" })
     useragent = userAgent.toString()
 
+    try {
+        browser = await puppeteer.launch(chromeOptions);
+        const page = await newPage();
 
-
-    browser = await puppeteer.launch(chromeOptions);
-    const page = await newPage();
-
-    await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
-    if (await page.url() === authUrl) {
-        await page.click('.tv-signin-dialog__toggle-email')
-        await page.type('input[name="username"]', username)
-        await page.type('input[name="password"]', password)
-        await page.click('button[type="submit"]')
-        await page.waitForTimeout(5000);
-        if (page.url() === authUrl) {
-            status = "error"
-            ok = false
-        }
-        else {
-            status = "login"
+        await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+        if (await page.url() === authUrl) {
+            await page.click('.tv-signin-dialog__toggle-email')
+            await page.type('input[name="username"]', username)
+            await page.type('input[name="password"]', password)
+            await page.click('button[type="submit"]')
+            await page.waitForTimeout(5000);
+            if (page.url() === authUrl) {
+                status = "error"
+                ok = false
+            }
+            else {
+                status = "login"
+                ok = true
+            }
+        } else {
+            status = "hasLogin"
             ok = true
         }
-    } else {
-        status = "hasLogin"
-        ok = true
+
+        await page.close();
+        if (ok) res.json({ ok, status, username, password, useragent });
+        else throw 'Err Login'
+    }
+    catch (err) {
+        throw err;
     }
 
-
-    await page.close();
-    res.json({ ok, status, username, password, useragent });
 });
 
 
