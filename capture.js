@@ -218,11 +218,11 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     var candles = req.query.candles;
 
+    try {
+        const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+        const page = await newPage();
 
-    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-    const page = await newPage();
-
-    await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', }).then(async () => {
+        await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
 
         await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, timeout: 50000 });
         await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, timeout: 50000 });
@@ -316,15 +316,12 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        console.log('Success')
-
 
         res.json({ ok: true, token });
-    }).catch((err) => {
-        console.log('Failed', err)
-        res.json({ ok: false, error: err.toString() })
-    })
 
+    } catch (err) {
+        res.json({ ok: false, error: err.toString() })
+    }
 
     await page.close();
 
