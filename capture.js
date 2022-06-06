@@ -106,11 +106,6 @@ const newPage = async () => {
 
 
 app.get('/start', async function (req, res) {
-    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
-    useragent = userAgent.toString()
-
-    browser = await puppeteer.launch(chromeOptions);
-    const page = await newPage();
 
     const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
     const username = req.query.username
@@ -118,6 +113,15 @@ app.get('/start', async function (req, res) {
 
     let status = ''
     let ok = false
+
+    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
+    useragent = userAgent.toString()
+
+
+
+    browser = await puppeteer.launch(chromeOptions);
+    const page = await newPage();
+
     await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
     if (await page.url() === authUrl) {
         await page.click('.tv-signin-dialog__toggle-email')
@@ -247,6 +251,8 @@ app.get('/capture', async function (req, res) {
             page.keyboard.press('AltLeft');
             await page.keyboard.press('KeyG');
 
+            await page.waitForTimeout(1000)
+
             await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
             await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
@@ -309,8 +315,9 @@ app.get('/capture', async function (req, res) {
             // 
 
 
-            await page.waitForTimeout(200)
+            await page.waitForTimeout(2000)
             await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
+            await page.waitForTimeout(2000)
         }
 
 
