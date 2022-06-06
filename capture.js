@@ -217,9 +217,10 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     var candles = req.query.candles;
+    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
     try {
-        const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+
         const page = await newPage();
 
         await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
@@ -318,12 +319,13 @@ app.get('/capture', async function (req, res) {
         })
 
         res.json({ ok: true, token });
+        await page.close();
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
     }
 
-    await page.close();
+
 
 });
 
