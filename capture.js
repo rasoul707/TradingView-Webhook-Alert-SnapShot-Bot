@@ -64,7 +64,21 @@ const skippedResources = [
 ];
 
 
+const runPythonBot = () => {
+    return new Promise((resolve, reject) => {
 
+        const { spawn } = require('child_process');
+        const pyprog = spawn('python3', ['./main.py']);
+
+        pyprog.stdout.on('data', function (data) {
+            resolve(data);
+        });
+
+        pyprog.stderr.on('data', (data) => {
+            reject(data);
+        });
+    });
+}
 
 const newPage = async () => {
     const page = await browser.newPage();
@@ -336,4 +350,8 @@ app.get('/capture', async function (req, res) {
 
 });
 
-app.listen(7007);
+app.listen(7007, async () => {
+    console.log('Server is running on port 7007');
+    const m = await runPythonBot();
+    console.log(m);
+});
