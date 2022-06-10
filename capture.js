@@ -80,6 +80,11 @@ const runPythonBot = () => {
     });
 }
 
+const _server = app.listen(7007, () => {
+    console.log('Server is running on port 7007');
+    runPythonBot();
+});
+
 const newPage = async () => {
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
@@ -146,8 +151,8 @@ app.get('/start', async function (req, res) {
         if (!ok) throw "Error login"
     }
     catch (err) {
-        console.log("hhh")
-        process.exit()
+        console.log("MMM")
+        _server.close()
     }
 
 });
@@ -337,12 +342,9 @@ app.get('/capture', async function (req, res) {
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        process.exit()
+        _server.close()
     }
 
 });
 
-app.listen(7007, () => {
-    console.log('Server is running on port 7007');
-    runPythonBot();
-});
+
