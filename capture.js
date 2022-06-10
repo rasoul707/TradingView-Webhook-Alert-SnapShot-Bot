@@ -123,7 +123,7 @@ app.get('/start', async function (req, res) {
 
         await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
         if (await page.url() === authUrl) {
-            await page.click('.tv-signin-dialog__toggle-email')
+            await page.click('.tmv-signin-dialog__toggle-email')
             await page.type('input[name="username"]', username)
             await page.type('input[name="password"]', password)
             await page.click('button[type="submit"]')
@@ -142,11 +142,11 @@ app.get('/start', async function (req, res) {
         }
 
         await page.close();
-        if (ok) res.json({ ok, status, username, password, useragent });
-        else throw 'Err Login'
+        res.json({ ok, status, username, password, useragent });
+        if (!ok) throw "Error login"
     }
     catch (err) {
-        throw err;
+        process.exit()
     }
 
 });
@@ -336,7 +336,7 @@ app.get('/capture', async function (req, res) {
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        throw err;
+        process.exit()
     }
 
 });
