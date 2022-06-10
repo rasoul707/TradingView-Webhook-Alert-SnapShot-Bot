@@ -146,6 +146,7 @@ app.get('/start', async function (req, res) {
         if (!ok) throw "Error login"
     }
     catch (err) {
+        console.log("hhh")
         process.exit()
     }
 
