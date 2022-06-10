@@ -237,6 +237,8 @@ app.get('/capture', async function (req, res) {
     var candles = req.query.candles;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
+    console.log("New Capture")
+
 
 
     try {
