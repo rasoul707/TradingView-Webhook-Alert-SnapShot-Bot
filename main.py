@@ -54,6 +54,9 @@ if __name__ == "__main__":
     password = data["password"]
     useragent = data["useragent"]
 
+    if status == "Error":
+        sen2Admin("Start Error: " + data["error"])
+
     title = 'LoginFailed'
     if ok:
         title = 'LoginSuccess'
