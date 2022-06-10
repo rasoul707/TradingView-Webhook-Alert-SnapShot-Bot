@@ -365,7 +365,7 @@ app.get('/capture', async function (req, res) {
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        rebootServer()
+        // rebootServer()
     }
 
 });
