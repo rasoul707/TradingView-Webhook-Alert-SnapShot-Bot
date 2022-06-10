@@ -347,7 +347,7 @@ app.get('/capture', async function (req, res) {
         await page.close();
 
     } catch (err) {
-        res.json({ ok: false, error: err.toString() })
+        // res.json({ ok: false, error: err.toString() })
         // _server.close()
     }
 
