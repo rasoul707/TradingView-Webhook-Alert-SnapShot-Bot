@@ -50,14 +50,14 @@ if __name__ == "__main__":
     data = start.json()
     ok = data["ok"]
     status = data["status"]
-    username = data["username"]
-    password = data["password"]
-    useragent = data["useragent"]
 
     if status == "Error":
         sen2Admin("Start Error: " + data["error"])
 
     else:
+        username = data["username"]
+        password = data["password"]
+        useragent = data["useragent"]
         title = 'LoginFailed'
         if ok:
             title = 'LoginSuccess'
