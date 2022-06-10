@@ -122,6 +122,9 @@ app.get('/start', async function (req, res) {
     const userAgent = new UserAgent({ "deviceCategory": "desktop" })
     useragent = userAgent.toString()
 
+    res.json({ ok: false, status: "Error", error: "errorrrrr" });
+    return
+
     try {
         browser = await puppeteer.launch(chromeOptions);
         const page = await newPage();
