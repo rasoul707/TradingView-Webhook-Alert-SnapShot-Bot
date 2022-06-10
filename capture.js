@@ -126,37 +126,37 @@ app.get('/start', async function (req, res) {
 
     try {
         browser = await puppeteer.launch(chromeOptions);
-        console.log("gggg")
-        // const page = await newPage();
+        const page = await newPage();
+        throw "Error login"
 
-        // await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
-        // if (await page.url() === authUrl) {
-        //     await page.click('.tmv-signin-dialog__toggle-email')
-        //     await page.type('input[name="username"]', username)
-        //     await page.type('input[name="password"]', password)
-        //     await page.click('button[type="submit"]')
-        //     await page.waitForTimeout(5000);
-        //     if (page.url() === authUrl) {
-        //         status = "error"
-        //         ok = false
-        //     }
-        //     else {
-        //         status = "login"
-        //         ok = true
-        //     }
-        // } else {
-        //     status = "hasLogin"
-        //     ok = true
-        // }
+        await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+        if (await page.url() === authUrl) {
+            await page.click('.tv-signin-dialog__toggle-email')
+            await page.type('input[name="username"]', username)
+            await page.type('input[name="password"]', password)
+            await page.click('button[type="submit"]')
+            await page.waitForTimeout(5000);
+            if (page.url() === authUrl) {
+                status = "error"
+                ok = false
+            }
+            else {
+                status = "login"
+                ok = true
+            }
+        } else {
+            status = "hasLogin"
+            ok = true
+        }
 
-        // await page.close();
-        // res.json({ ok, status, username, password, useragent });
-        // if (!ok) throw "Error login"
+        await page.close();
+        res.json({ ok, status, username, password, useragent });
+        if (!ok) throw "Error login"
 
     }
     catch (err) {
         console.log("**")
-        // res.json({ ok: false, status: "Error" });
+        res.json({ ok: false, status: "Error" });
         console.log("++")
         // _server.close()
     }
