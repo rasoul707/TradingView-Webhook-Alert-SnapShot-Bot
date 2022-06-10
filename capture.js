@@ -128,7 +128,7 @@ app.get('/start', async function (req, res) {
 
         await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
         if (await page.url() === authUrl) {
-            await page.click('.tmv-signin-dialog__toggle-email')
+            await page.click('.tv-signin-dialog__toggle-email')
             await page.type('input[name="username"]', username)
             await page.type('input[name="password"]', password)
             await page.click('button[type="submit"]')
