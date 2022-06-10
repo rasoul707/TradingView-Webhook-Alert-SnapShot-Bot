@@ -80,7 +80,7 @@ const runPythonBot = () => {
     });
 }
 
-const _server = app.listen(7007, () => {
+app.listen(7007, () => {
     console.log('Server is running on port 7007');
     runPythonBot();
 });
@@ -107,6 +107,16 @@ const newPage = async () => {
         }
     });
     return page
+}
+
+const rebootServer = () => {
+    const exec = require('child_process').exec;
+    function execute(command, callback) {
+        exec(command, function (error, stdout, stderr) { callback(stdout); });
+    }
+    execute('sudo reboot', function (callback) {
+        console.log(callback);
+    })
 }
 
 
@@ -348,7 +358,7 @@ app.get('/capture', async function (req, res) {
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        process.exit(1)
+        rebootServer()
     }
 
 });
