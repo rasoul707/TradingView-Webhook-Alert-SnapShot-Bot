@@ -151,7 +151,8 @@ app.get('/start', async function (req, res) {
         if (!ok) throw "Error login"
     }
     catch (err) {
-        res.json({ ok: false, status: "Error", error: err.toString() });
+        console.log(err)
+        // res.json({ ok: false, status: "Error", error: err.toString() });
         // _server.close()
     }
 
