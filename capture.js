@@ -156,7 +156,7 @@ app.get('/start', async function (req, res) {
     }
     catch (err) {
         res.json({ ok: false, status: "Error", error: err.toString() });
-        _server.close()
+        process.exit()
     }
 
 });
