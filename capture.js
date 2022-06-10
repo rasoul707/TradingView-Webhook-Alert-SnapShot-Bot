@@ -154,7 +154,7 @@ app.get('/start', async function (req, res) {
     }
     catch (err) {
         console.log("**")
-        // res.json({ ok: false, status: "Error", error: "err" });
+        res.json({ ok: false, status: "Error" });
         console.log("++")
         // _server.close()
     }
@@ -348,7 +348,7 @@ app.get('/capture', async function (req, res) {
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        _server.close()
+        // _server.close()
     }
 
 });
