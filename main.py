@@ -52,7 +52,7 @@ if __name__ == "__main__":
     status = data["status"]
 
     if status == "Error":
-        sen2Admin("Start Error: " + data["error"])
+        sen2Admin("<b>Start Error: </b>\n" + data["error"])
 
     else:
         username = data["username"]
