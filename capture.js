@@ -10,6 +10,8 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const UserAgent = require('user-agents');
 const moment = require('moment');
+const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
+
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
 let browser, useragent;
@@ -249,9 +251,14 @@ app.get('/capture', async function (req, res) {
 
 
 
+
+
     try {
 
         const page = await newPage();
+
+        const recorder = new PuppeteerScreenRecorder(page);
+        await recorder.start("screens1.mp4");
 
         await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
 
@@ -364,3 +371,13 @@ app.get('/capture', async function (req, res) {
 });
 
 
+/******************************/
+
+app.get('/video/:vid', async (req, res) => {
+    const { vid } = req.params
+    const fileName = vid + ".mp4";
+    const filePath = fileName;
+    res.sendFile(filePath, { root: __dirname });
+});
+
+/*******************************/
