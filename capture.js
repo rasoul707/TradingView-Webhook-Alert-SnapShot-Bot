@@ -239,6 +239,9 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
+let errorsCount = 0
+
+
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
     var exchange = req.query.exchange;
@@ -248,10 +251,6 @@ app.get('/capture', async function (req, res) {
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
     console.log("New Capture")
-
-
-
-
 
     try {
 
@@ -362,11 +361,14 @@ app.get('/capture', async function (req, res) {
 
         res.json({ ok: true, token });
         await page.close();
+        errorsCount = 0;
 
     } catch (err) {
         res.json({ ok: false, error: err.toString() })
-        // rebootServer()
+        errorsCount++;
+        if (errorsCount === 5) rebootServer()
     }
+
 
 });
 
