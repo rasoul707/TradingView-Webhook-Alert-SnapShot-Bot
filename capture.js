@@ -122,8 +122,7 @@ app.get('/start', async function (req, res) {
     const userAgent = new UserAgent({ "deviceCategory": "desktop" })
     useragent = userAgent.toString()
 
-    res.json({ ok: false, status: "Error", error: "errorrrrr" });
-    return
+
 
     try {
         browser = await puppeteer.launch(chromeOptions);
@@ -155,7 +154,8 @@ app.get('/start', async function (req, res) {
     }
     catch (err) {
         console.log("**")
-        res.json({ ok: false, status: "Error", error: "err." });
+        res.json({ ok: false, status: "Error", error: "err" });
+        console.log("++")
         // _server.close()
     }
 
@@ -236,6 +236,8 @@ app.get('/capture', async function (req, res) {
     var interval = req.query.interval;
     var candles = req.query.candles;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+
+
 
     try {
 
