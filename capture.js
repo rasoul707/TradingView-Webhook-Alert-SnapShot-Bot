@@ -122,6 +122,7 @@ app.get('/start', async function (req, res) {
     const userAgent = new UserAgent({ "deviceCategory": "desktop" })
     useragent = userAgent.toString()
 
+    return res.json({ ok: false, status: "Error", error: "Ho" });
 
 
     try {
@@ -155,8 +156,9 @@ app.get('/start', async function (req, res) {
 
     }
     catch (err) {
-        console.log("**", err)
-        res.json({ ok: false, status: "Error" });
+        console.log("**")
+
+        res.json({ ok: false, status: "Error", error: "Ho" });
         console.log("++")
         // _server.close()
     }
