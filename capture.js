@@ -250,14 +250,16 @@ app.get('/capture', async function (req, res) {
     var candles = req.query.candles;
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
-    console.log("New Capture")
+    const ts = new Date().getTime();
+    console.log(ts, "New Capture")
 
     try {
 
         const page = await newPage();
 
         const recorder = new PuppeteerScreenRecorder(page);
-        await recorder.start("screens1.mp4");
+
+        await recorder.start("screens/" + ts + ".mp4");
 
         await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
 
@@ -360,13 +362,16 @@ app.get('/capture', async function (req, res) {
         })
 
         res.json({ ok: true, token });
+
+        await recorder.stop();
+
         await page.close();
         errorsCount = 0;
-        console.log("Capture completed")
+        console.log(ts, "Capture completed")
 
     } catch (err) {
-        console.log("Error capture: ", err.toString())
-        res.json({ ok: false, error: err.toString() })
+        console.log(ts, "Error capture: ", err.toString())
+        res.json({ ok: false, error: err.toString() + "\n\n" + 'http://136.243.85.227:7007/video/' + ts })
         errorsCount++;
         if (errorsCount === 3) process.exit(1)
         if (errorsCount === 5) rebootServer()
@@ -380,7 +385,7 @@ app.get('/capture', async function (req, res) {
 
 app.get('/video/:vid', async (req, res) => {
     const { vid } = req.params
-    const fileName = vid + ".mp4";
+    const fileName = 'screens/' + vid + ".mp4";
     const filePath = fileName;
     res.sendFile(filePath, { root: __dirname });
 });
