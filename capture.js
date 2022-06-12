@@ -253,13 +253,13 @@ app.get('/capture', async function (req, res) {
     const ts = new Date().getTime();
     console.log(ts, "New Capture")
 
+    const page = await newPage();
+    const recorder = new PuppeteerScreenRecorder(page);
+    await recorder.start("screens/" + ts + ".mp4");
+
     try {
 
-        const page = await newPage();
 
-        const recorder = new PuppeteerScreenRecorder(page);
-
-        await recorder.start("screens/" + ts + ".mp4");
 
         await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
 
@@ -363,6 +363,7 @@ app.get('/capture', async function (req, res) {
 
         res.json({ ok: true, token });
 
+
         await recorder.stop();
 
         await page.close();
@@ -370,6 +371,8 @@ app.get('/capture', async function (req, res) {
         console.log(ts, "Capture completed")
 
     } catch (err) {
+        await recorder.stop();
+        await page.close();
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() + "\n\n" + 'http://136.243.85.227:7007/video/' + ts })
         errorsCount++;
