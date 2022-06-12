@@ -362,8 +362,10 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: true, token });
         await page.close();
         errorsCount = 0;
+        console.log("Capture completed")
 
     } catch (err) {
+        console.log("Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() })
         errorsCount++;
         if (errorsCount === 3) process.exit(1)
