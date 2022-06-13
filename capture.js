@@ -254,8 +254,8 @@ app.get('/capture', async function (req, res) {
     console.log(ts, "New Capture")
 
     const page = await newPage();
-    const recorder = new PuppeteerScreenRecorder(page);
-    await recorder.start("screens/" + ts + ".mp4");
+    // const recorder = new PuppeteerScreenRecorder(page);
+    // await recorder.start("screens/" + ts + ".mp4");
 
     try {
 
@@ -364,14 +364,14 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
 
-        await recorder.stop();
+        // await recorder.stop();
         await page.close();
         errorsCount = 0;
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() + "\n\n" + 'http://136.243.85.227:7007/video/' + ts })
         errorsCount++;
-        await recorder.stop();
+        // await recorder.stop();
         await page.close();
         // if (errorsCount === 3) process.exit(1)
         // if (errorsCount === 5) rebootServer()
