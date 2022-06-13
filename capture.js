@@ -74,10 +74,12 @@ const runPythonBot = () => {
 
         pyprog.stdout.on('data', function (data) {
             resolve(data);
+            console.log('PYD:', data)
         });
 
         pyprog.stderr.on('data', (data) => {
             reject(data);
+            console.log('PYE:', data)
         });
     });
 }
