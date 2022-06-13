@@ -74,12 +74,10 @@ const runPythonBot = () => {
 
         pyprog.stdout.on('data', function (data) {
             resolve(data);
-            console.log('PYD:', data)
         });
 
         pyprog.stderr.on('data', (data) => {
             reject(data);
-            console.log('PYE:', data)
         });
     });
 }
@@ -364,22 +362,20 @@ app.get('/capture', async function (req, res) {
         })
 
         res.json({ ok: true, token });
-
-
-        await recorder.stop();
-
-        await page.close();
-        errorsCount = 0;
         console.log(ts, "Capture completed")
 
-    } catch (err) {
         await recorder.stop();
         await page.close();
+        errorsCount = 0;
+    } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() + "\n\n" + 'http://136.243.85.227:7007/video/' + ts })
         errorsCount++;
+        await recorder.stop();
+        await page.close();
         // if (errorsCount === 3) process.exit(1)
         // if (errorsCount === 5) rebootServer()
+
     }
 
 
