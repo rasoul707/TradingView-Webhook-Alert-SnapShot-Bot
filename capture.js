@@ -369,7 +369,7 @@ app.get('/capture', async function (req, res) {
         errorsCount = 0;
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
-        res.json({ ok: false, error: err.toString() + "\n\n" + 'http://136.243.85.227:7007/video/' + ts })
+        res.json({ ok: false, error: err.toString() })
         errorsCount++;
         // await recorder.stop();
         await page.close();
