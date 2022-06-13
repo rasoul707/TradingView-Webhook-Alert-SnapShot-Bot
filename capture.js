@@ -373,8 +373,8 @@ app.get('/capture', async function (req, res) {
         errorsCount++;
         // await recorder.stop();
         await page.close();
-        // if (errorsCount === 3) process.exit(1)
-        // if (errorsCount === 5) rebootServer()
+        if (errorsCount === 3) process.exit(1)
+        if (errorsCount === 5) rebootServer()
 
     }
 
