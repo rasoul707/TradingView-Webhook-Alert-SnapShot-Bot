@@ -11,8 +11,7 @@ const puppeteer = require('puppeteer-extra');
 const UserAgent = require('user-agents');
 const moment = require('moment');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
-const readline = require('readline');
-
+const { spawn } = require('child_process');
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
@@ -76,30 +75,16 @@ const exitProc = () => {
 }
 
 
-const runPythonBot = async () => {
-    return await new Promise(async (resolve, reject) => {
-        console.log("Running py server...")
-        const { spawn } = require('child_process');
-        const pyprog = spawn('python3', ['./main.py']);
-
-        pyprog.stdout.on('data', function (data) {
-            resolve("Py server run successfully")
-        });
-
-        pyprog.stderr.on('data', (data) => {
-            resolve("Py server run failed: " + data.toString())
-            // exitProc()
-        });
-    })
+const runPythonBot = () => {
+    spawn('python3', ['main.py'], { encoding: 'utf-8' });
+    console.log("Py server running");
 }
 
-const logPyServer = async () => {
-    console.log("[Python]", await runPythonBot())
-}
+
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    logPyServer();
+    runPythonBot();
 });
 
 const newPage = async () => {
