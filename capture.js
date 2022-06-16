@@ -68,8 +68,9 @@ const skippedResources = [
 ];
 
 
-const runPythonBot = () => {
-    return new Promise(async (resolve, reject) => {
+const runPythonBot = async () => {
+    return await new Promise(async (resolve, reject) => {
+        console.log("Running py server...")
         const { spawn } = require('child_process');
         const pyprog = spawn('python3', ['./main.py']);
 
@@ -87,7 +88,7 @@ const runPythonBot = () => {
 }
 
 const logPyServer = async () => {
-    console.log(await runPythonBot())
+    console.log("[Python]", await runPythonBot())
 }
 
 app.listen(7007, () => {
