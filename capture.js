@@ -125,8 +125,8 @@ const rebootServer = () => {
 app.get('/start', async function (req, res) {
 
     const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
-    const username = req.query.username ?? ""
-    const password = req.query.password ?? ""
+    const username = req.query.username
+    const password = req.query.password
 
     let status = ''
     let ok = false
