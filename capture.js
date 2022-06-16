@@ -68,16 +68,17 @@ const skippedResources = [
 ];
 
 
-const runPythonBot = () => {
+const runPythonBot = (logger) => {
+
     const { spawn } = require('child_process');
     const pyprog = spawn('python3', ['./main.py']);
 
     pyprog.stdout.on('data', function (data) {
-        console.log("Py server run successfully")
+        logger("Py server run successfully")
     });
 
     pyprog.stderr.on('data', (data) => {
-        console.log("Py server run failed", data.toString())
+        logger("Py server run failed", data.toString())
         setTimeout(() => {
             process.exit(1)
         }, 500)
@@ -87,7 +88,7 @@ const runPythonBot = () => {
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    runPythonBot();
+    runPythonBot(console.log);
 });
 
 const newPage = async () => {
@@ -393,9 +394,9 @@ app.get('/capture', async function (req, res) {
         res.json({ ok: false, error: err.toString() })
         errorsCount++;
         // await recorder.stop();
-        await page.close();
-        if (errorsCount === 3) process.exit(1)
-        if (errorsCount === 5) rebootServer()
+        // await page.close();
+        // if (errorsCount === 3) process.exit(1)
+        // if (errorsCount === 5) rebootServer()
 
     }
 
