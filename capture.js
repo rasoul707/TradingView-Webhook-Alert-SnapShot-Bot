@@ -68,6 +68,14 @@ const skippedResources = [
 ];
 
 
+const exitProc = () => {
+    console.log("Exiting process...")
+    setTimeout(() => {
+        process.exit(1)
+    }, 1000)
+}
+
+
 const runPythonBot = async () => {
     return await new Promise(async (resolve, reject) => {
         console.log("Running py server...")
@@ -80,9 +88,7 @@ const runPythonBot = async () => {
 
         pyprog.stderr.on('data', (data) => {
             resolve("Py server run failed: " + data.toString())
-            setTimeout(() => {
-                process.exit(1)
-            }, 500)
+            exitProc()
         });
     })
 }
@@ -187,11 +193,11 @@ app.get('/start', async function (req, res) {
 
         await page.close();
         res.json({ ok, status, username, password, useragent });
-        if (!ok) process.exit(1)
+        if (!ok) exitProc()
     }
     catch (err) {
         res.json({ ok: false, status: "Error", error: err.toString() })
-        process.exit(1)
+        exitProc()
     }
 
 
