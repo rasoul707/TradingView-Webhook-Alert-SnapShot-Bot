@@ -88,7 +88,7 @@ const runPythonBot = async () => {
 
         pyprog.stderr.on('data', (data) => {
             resolve("Py server run failed: " + data.toString())
-            exitProc()
+            // exitProc()
         });
     })
 }
