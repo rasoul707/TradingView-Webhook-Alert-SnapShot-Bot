@@ -68,27 +68,31 @@ const skippedResources = [
 ];
 
 
-const runPythonBot = (logger) => {
+const runPythonBot = () => {
+    return new Promise(async (resolve, reject) => {
+        const { spawn } = require('child_process');
+        const pyprog = spawn('python3', ['./main.py']);
 
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python3', ['./main.py']);
+        pyprog.stdout.on('data', function (data) {
+            resolve("Py server run successfully")
+        });
 
-    pyprog.stdout.on('data', function (data) {
-        logger("Py server run successfully")
-    });
+        pyprog.stderr.on('data', (data) => {
+            resolve("Py server run failed: " + data.toString())
+            setTimeout(() => {
+                process.exit(1)
+            }, 500)
+        });
+    })
+}
 
-    pyprog.stderr.on('data', (data) => {
-        logger("Py server run failed", data.toString())
-        setTimeout(() => {
-            process.exit(1)
-        }, 500)
-    });
-
+const logPyServer = async () => {
+    console.log(await runPythonBot())
 }
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    runPythonBot(console.log);
+    logPyServer();
 });
 
 const newPage = async () => {
