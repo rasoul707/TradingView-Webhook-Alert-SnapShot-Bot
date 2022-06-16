@@ -7,10 +7,12 @@
 
 
 const express = require('express');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const UserAgent = require('user-agents');
 const moment = require('moment');
-const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
+const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
+const readline = require('readline');
+
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
@@ -53,7 +55,7 @@ const skippedResources = [
     'cdn.api.twitter',
     'google-analytics',
     'googletagmanager',
-    'google',
+    // 'google',
     'fontawesome',
     'facebook',
     'analytics',
@@ -67,24 +69,25 @@ const skippedResources = [
 
 
 const runPythonBot = () => {
-    return new Promise((resolve, reject) => {
+    const { spawn } = require('child_process');
+    const pyprog = spawn('python3', ['./main.py']);
 
-        const { spawn } = require('child_process');
-        const pyprog = spawn('python3', ['./main.py']);
-
-        pyprog.stdout.on('data', function (data) {
-            resolve(data);
-        });
-
-        pyprog.stderr.on('data', (data) => {
-            reject(data);
-        });
+    pyprog.stdout.on('data', function (data) {
+        console.log("Py server run successfully")
     });
+
+    pyprog.stderr.on('data', (data) => {
+        console.log("Py server run failed", data.toString())
+        setTimeout(() => {
+            process.exit(1)
+        }, 500)
+    });
+
 }
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    runPythonBot();
+    // runPythonBot();
 });
 
 const newPage = async () => {
@@ -125,8 +128,8 @@ const rebootServer = () => {
 app.get('/start', async function (req, res) {
 
     const authUrl = 'https://www.tradingview.com/accounts/signin/?next=https://www.tradingview.com';
-    const username = req.query.username
-    const password = req.query.password
+    const username = req.query.username ?? ""
+    const password = req.query.password ?? ""
 
     let status = ''
     let ok = false
@@ -135,20 +138,37 @@ app.get('/start', async function (req, res) {
     useragent = userAgent.toString()
 
     try {
+        puppeteer.use(
+            RecaptchaPlugin({
+                provider: {
+                    id: '2captcha',
+                    token: 'c317ac6c93c1954bcdd14a0980f41602' // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
+                },
+                visualFeedback: true
+            })
+        )
         browser = await puppeteer.launch(chromeOptions);
         const page = await newPage();
 
 
         await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
         if (await page.url() === authUrl) {
+            await page.waitForSelector('.tv-signin-dialog__toggle-email', { timeout: 20000 })
             await page.click('.tv-signin-dialog__toggle-email')
             await page.type('input[name="username"]', username)
             await page.type('input[name="password"]', password)
             await page.click('button[type="submit"]')
             await page.waitForTimeout(5000);
             if (page.url() === authUrl) {
-                status = "error"
-                ok = false
+                await page.solveRecaptchas()
+                await page.waitForTimeout(5000);
+                if (page.url() === authUrl) {
+                    status = "errorLogin"
+                    ok = false
+                } else {
+                    status = "login with captcha"
+                    ok = true
+                }
             }
             else {
                 status = "login"
@@ -161,13 +181,14 @@ app.get('/start', async function (req, res) {
 
         await page.close();
         res.json({ ok, status, username, password, useragent });
-        if (!ok) throw "Login Error"
-
+        if (!ok) process.exit(1)
     }
     catch (err) {
         res.json({ ok: false, status: "Error", error: err.toString() })
         process.exit(1)
     }
+
+
 
 });
 
