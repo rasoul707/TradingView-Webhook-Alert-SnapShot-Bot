@@ -84,7 +84,7 @@ const runPythonBot = () => {
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    runPythonBot();
+    // runPythonBot();
 });
 
 const newPage = async () => {
@@ -109,16 +109,6 @@ const newPage = async () => {
         }
     });
     return page
-}
-
-const rebootServer = () => {
-    const exec = require('child_process').exec;
-    function execute(command, callback) {
-        exec(command, function (error, stdout, stderr) { callback(stdout); });
-    }
-    execute('sudo reboot', function (callback) {
-        console.log(callback);
-    })
 }
 
 
@@ -149,16 +139,38 @@ app.get('/start', async function (req, res) {
 
 
         await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+        // ****
+        await page.screenshot({ path: "./screens/a.png" })
+        // ****
         if (await page.url() === authUrl) {
             await page.waitForSelector('.tv-signin-dialog__toggle-email', { timeout: 20000 })
+            // ****
+            await page.screenshot({ path: "./screens/b.png" })
+            // ****
             await page.click('.tv-signin-dialog__toggle-email')
+
             await page.type('input[name="username"]', username)
             await page.type('input[name="password"]', password)
+
+            // ****
+            await page.screenshot({ path: "./screens/c.png" })
+            // ****
+
             await page.click('button[type="submit"]')
             await page.waitForTimeout(5000);
+
+            // ****
+            await page.screenshot({ path: "./screens/d.png" })
+            // ****
+
             if (page.url() === authUrl) {
                 await page.solveRecaptchas()
                 await page.waitForTimeout(5000);
+
+                // ****
+                await page.screenshot({ path: "./screens/e.png" })
+                // ****
+
                 if (page.url() === authUrl) {
                     status = "errorLogin"
                     ok = false
@@ -257,7 +269,7 @@ const dateTimeRange = (interval, candles) => {
 }
 
 
-let errorsCount = 0
+
 
 
 app.get('/capture', async function (req, res) {
@@ -402,9 +414,9 @@ app.get('/capture', async function (req, res) {
 
 /******************************/
 
-app.get('/video/:vid', async (req, res) => {
+app.get('/file/:vid', async (req, res) => {
     const { vid } = req.params
-    const fileName = 'screens/' + vid + ".mp4";
+    const fileName = 'screens/' + vid;
     const filePath = fileName;
     res.sendFile(filePath, { root: __dirname });
 });
