@@ -57,6 +57,7 @@ P
  - Node Js v15.11.0 or newer ```sudo apt install nodejs```
  - Type ```node -v``` to check version
  - ExpressJs 4.17.1 or newer ```npm install```
+ - ```npm install express```
  - ```apt-get upgrade```
  - ```apt-get update```
  - ```apt-get install gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget```
@@ -66,4 +67,37 @@ P
  - and then Read Run
 
 
+
+```sudo crontab -e```
+
+```
+07 00 * * * sudo reboot
+07 08 * * * sudo reboot
+07 16 * * * sudo reboot
+```
+
+
+
+```sudo nano /etc/systemd/system/tvalertbot.service```
+```
+[Unit]
+Description="TV AlertBot"
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+
+[Service]
+ExecStart=/usr/bin/node capture.js
+WorkingDirectory=/root/TradingView-Webhook-Alert-SnapShot-Bot/
+Restart=on-failure
+RestartSec=3s
+User=root
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=MyApp
+
+
+[Install]
+WantedBy=multi-user.target
+```
 Be Happy :)
