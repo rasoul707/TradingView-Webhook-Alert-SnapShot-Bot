@@ -66,4 +66,33 @@ P
  - and then Read Run
 
 
+sudo crontab -e
+07 00 * * * sudo reboot
+07 08 * * * sudo reboot
+07 16 * * * sudo reboot
+
+
+
+sudo nano /etc/systemd/system/tvalertbot.service
+
+[Unit]
+Description="TV AlertBot"
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+
+[Service]
+ExecStart=/usr/bin/node capture.js
+WorkingDirectory=/root/TradingView-Webhook-Alert-SnapShot-Bot/
+Restart=on-failure
+RestartSec=3s
+User=root
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=MyApp
+
+
+[Install]
+WantedBy=multi-user.target
+
 Be Happy :)
