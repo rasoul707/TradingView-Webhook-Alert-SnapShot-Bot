@@ -20,7 +20,6 @@ def sendAlert(data, key):
     ex = data["ex"]
     sy = data["sy"]
     tf = data["tf"]
-    sg = data["sg"]
     cl = data["cl"]
     snapLink = snapshot([
         "-",
@@ -32,8 +31,7 @@ def sendAlert(data, key):
     if not snapLink:
         return 'err'
 
-    message = "<a href='"+snapLink+"'>🔻</a> " + "<b>" + sy.upper() + " | " + tf.upper() + "</b>" + "\n" + \
-        "<b>استراتژی: </b>" + sg + "\n" + msg
+    message = msg + "<a href='"+snapLink+"'>🔻</a> "
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
