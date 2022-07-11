@@ -31,7 +31,7 @@ def sendAlert(data, key):
     if not snapLink:
         return 'err'
 
-    message = msg + "<a href='"+snapLink+"'>🔻</a> "
+    message = msg + "<a href='"+snapLink+"'>👑</a> "
     try:
         tgbot.sendMessage(
             config.channels[config.keys.index(key)],
