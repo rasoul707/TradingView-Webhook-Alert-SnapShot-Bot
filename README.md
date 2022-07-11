@@ -66,15 +66,19 @@ P
  - and then Read Run
 
 
-sudo crontab -e
+
+```sudo crontab -e```
+
+```
 07 00 * * * sudo reboot
 07 08 * * * sudo reboot
 07 16 * * * sudo reboot
+```
 
 
 
-sudo nano /etc/systemd/system/tvalertbot.service
-
+```sudo nano /etc/systemd/system/tvalertbot.service```
+```
 [Unit]
 Description="TV AlertBot"
 StartLimitIntervalSec=500
@@ -94,5 +98,5 @@ SyslogIdentifier=MyApp
 
 [Install]
 WantedBy=multi-user.target
-
+```
 Be Happy :)
