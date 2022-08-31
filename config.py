@@ -9,19 +9,17 @@ BOT_TOKEN = "5386492523:AAFxvoCs0mFyMAx8yhklnVHHJiCM_ks4qM4"
 admin = 115025624
 
 keys = [
-    "KEY_MyChannel",
-    "xRdom45SrcToMxQ53946Top"
+    "2Qy96xavG3qHGpZ7pAHWAWwSAYP4"
 ]
 
-channels = [
-    -1001368926240,
-    -1001724862991
-]
+
+persianChannel = -1001687669560
+englishChannel = -1001704378282
 
 
 # trading-view auth
-username = "qkhpmdbekdeal"
-password = "5HDzYmPpCWQs"
+username = "feyahe9238"
+password = "feyahe9238"
 
 
 # default chart settings

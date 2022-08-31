@@ -301,84 +301,91 @@ app.get('/capture', async function (req, res) {
 
         if (candles) {
 
-            const { start, end } = dateTimeRange(interval, candles)
+            try {
 
-            const start_date = start.format("YYYYMMDD")
-            const end_date = end.format("YYYYMMDD")
-            const start_time = start.format("HHmm")
-            const end_time = end.format("HHmm")
+                const { start, end } = dateTimeRange(interval, candles)
 
-
-            page.keyboard.press('AltLeft');
-            await page.keyboard.press('KeyG');
-
-            await page.waitForTimeout(1000)
-
-            await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
-            await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+                const start_date = start.format("YYYYMMDD")
+                const end_date = end.format("YYYYMMDD")
+                const start_time = start.format("HHmm")
+                const end_time = end.format("HHmm")
 
 
-            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(1) input');
-            await page.waitForTimeout(200);
-            await page.keyboard.press('End');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.type(start_date, { delay: 100 });
+                page.keyboard.press('AltLeft');
+                await page.keyboard.press('KeyG');
+
+                await page.waitForTimeout(1000)
+
+                await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
+                await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
 
 
-
-
-            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
-            await page.waitForTimeout(200);
-            await page.keyboard.press('Backspace');
-            await page.keyboard.type(start_time, { delay: 100 });
-
-
-            // 
-            await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-            // 
-
-            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(1) input');
-            await page.waitForTimeout(200);
-            await page.keyboard.press('End');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.press('Backspace');
-            await page.keyboard.type(end_date, { delay: 100 });
+                await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(1) input');
+                await page.waitForTimeout(200);
+                await page.keyboard.press('End');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.type(start_date, { delay: 100 });
 
 
 
 
-            await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
-            await page.waitForTimeout(200);
-            await page.keyboard.press('Backspace');
-            await page.keyboard.type(end_time, { delay: 100 });
+                await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
+                await page.waitForTimeout(200);
+                await page.keyboard.press('Backspace');
+                await page.keyboard.type(start_time, { delay: 100 });
+
+
+                // 
+                await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+                // 
+
+                await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(1) input');
+                await page.waitForTimeout(200);
+                await page.keyboard.press('End');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.press('Backspace');
+                await page.keyboard.type(end_date, { delay: 100 });
 
 
 
-            // 
-            await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-            // 
+
+                await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
+                await page.waitForTimeout(200);
+                await page.keyboard.press('Backspace');
+                await page.keyboard.type(end_time, { delay: 100 });
 
 
-            await page.waitForTimeout(2000)
-            await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            await page.waitForTimeout(2000)
+
+                // 
+                await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
+                // 
+
+
+                await page.waitForTimeout(2000)
+                await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
+                await page.waitForTimeout(2000)
+
+            }
+            catch (e) {
+
+            }
         }
 
 
