@@ -47,7 +47,9 @@ if __name__ == "__main__":
     print("Running")
     from waitress import serve
     start = requests.get(
-        'http://localhost:7007/start?username='+config.username+'&password='+config.password)
+        'http://localhost:7007/start?username=' +
+        config.username+'&password='+config.password
+    )
     data = start.json()
     ok = data["ok"]
     status = data["status"]
