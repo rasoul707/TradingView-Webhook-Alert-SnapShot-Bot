@@ -4,7 +4,7 @@
 # File Name             : config.py                                   #
 # ------------------------------------------------------------------- #
 
-BOT_TOKEN = "5386492523: AAGxNK-uJmmHWrffR5abxd4Xryk1FK7fcGE"
+BOT_TOKEN = "5386492523:AAGxNK-uJmmHWrffR5abxd4Xryk1FK7fcGE"
 
 admin = 115025624
 
