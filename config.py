@@ -26,3 +26,7 @@ password = "feyahe9238"
 exchange = "binance"
 symbol = "btcusdt"
 timeframe = "15"
+
+
+# server
+baseUrl = "http://82.115.18.212/"

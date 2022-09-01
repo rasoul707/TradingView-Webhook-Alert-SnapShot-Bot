@@ -8,6 +8,7 @@ from re import S
 from telegram import Bot
 import requests
 import config
+from snapshot import saveImage
 
 tgbot = Bot(token=config.BOT_TOKEN)
 
@@ -120,7 +121,7 @@ def sendAlert(data, key):
 def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
     snapLink = snapshot(["-", exchange, symbol, timeframe], candles)
 
-    imageLink = snapLink
+    imageLink = saveImage(snapLink)
 
     if not imageLink:
         return 'err'

@@ -416,11 +416,11 @@ app.get('/capture', async function (req, res) {
 
 /******************************/
 
-app.get('/file/:vid', async (req, res) => {
-    const { vid } = req.params
-    const fileName = 'screens/' + vid;
-    const filePath = fileName;
-    res.sendFile(filePath, { root: __dirname });
-});
+app.get('/snapshots/:id', async (req, res) => {
+    const { id } = req.params
+    const fileName = id + '.png'
+    const filePath = 'snapshots/' + fileName
+    res.sendFile(filePath, { root: __dirname })
+})
 
 /*******************************/

