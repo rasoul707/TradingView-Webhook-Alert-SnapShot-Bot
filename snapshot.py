@@ -30,8 +30,12 @@ def saveImage(url):
     return config.baseUrl + "snapshots/" + m + "-" + id
 
 
-def getSnapshot(exchange, symbol, timeframe, candles):
-    snapLink = generateSnapshot(["-", exchange, symbol, timeframe], candles)
+def getSnapshot(exchange, symbol, timeframe, candles, sen2Admin):
+    snapLink = generateSnapshot(
+        ["-", exchange, symbol, timeframe],
+        candles,
+        sen2Admin
+    )
     imageLink = saveImage(snapLink)
     if not imageLink:
         return 'err'
