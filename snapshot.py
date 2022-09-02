@@ -1,6 +1,6 @@
 
-# import requests
-# from bs4 import BeautifulSoup
+
+from bs4 import BeautifulSoup
 import urllib.request
 import cv2
 import numpy as np
@@ -22,10 +22,11 @@ def saveImage(url):
     id = url.split("/")[-1]
     m = id[0:1].lower()
     imageUrl = 'https://s3.tradingview.com/snapshots/' + m + '/' + id + '.png'
-    print(url)
-    print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
-    r = requests.get(imageUrl)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
+    }
+    r = requests.get(imageUrl, headers=headers)
     print(r.content)
     with open(imgPath, 'wb') as outfile:
         outfile.write(r.content)
