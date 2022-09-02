@@ -26,6 +26,7 @@ def saveImage(url):
     print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
     r = requests.get(imageUrl)
+    print(r.content)
     with open(imgPath, 'wb') as outfile:
         outfile.write(r.content)
     # cropImage(imgPath)
@@ -61,5 +62,3 @@ def cropImage(imgPath):
     image = cv2.imread(imgPath)
     crop_image = image[24:994, 0:1514]
     cv2.imwrite("snapshots/k-ky8cGtAo-cropped.png", crop_image)
-
-
