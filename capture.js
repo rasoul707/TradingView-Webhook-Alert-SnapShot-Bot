@@ -280,6 +280,9 @@ function downloadSnapshot(token) {
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
         const imagePath = `snapshots/${m}-${id}.png`
         request.head(imageUrl, function (err, res, body) {
+            console.log(err)
+            console.log(res)
+            console.log(body)
             request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
         })
     })
