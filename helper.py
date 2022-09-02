@@ -238,8 +238,8 @@ def getCandles(cl):
 
 def getStrategy(sg, lang):
     try:
-        code = sg[-1]
-        name = int(sg[0:-1])
+        code = int(sg[-1])
+        name = sg[0:-1]
         if lang == 'en':
             if name == "SRF":
                 if code == 1:
