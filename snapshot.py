@@ -22,8 +22,6 @@ def saveImage(url):
     id = url.split("/")[-1]
     m = id[0:1].lower()
     imageUrl = 'https://s3.tradingview.com/snapshots/' + m + '/' + id + '.png'
-    print(url)
-    print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
     r = requests.get(imageUrl)
     with open(imgPath, 'wb') as outfile:
@@ -60,7 +58,7 @@ def addWatermark(imgPath, type):
 def cropImage(imgPath):
     image = cv2.imread(imgPath)
     crop_image = image[24:994, 0:1514]
-    cv2.imwrite("snapshots/k-ky8cGtAo-cropped.png", crop_image)
+    cv2.imwrite(imgPath, crop_image)
 
 
 saveImage('https://www.tradingview.com/x/uXpI82Qs')

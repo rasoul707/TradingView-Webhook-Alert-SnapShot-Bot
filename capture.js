@@ -420,7 +420,12 @@ app.get('/snapshots/:id', async (req, res) => {
     const { id } = req.params
     const fileName = id + '.png'
     const filePath = 'snapshots/' + fileName
-    res.sendFile(filePath, { root: __dirname })
+    try {
+        res.sendFile(filePath, { root: __dirname })
+    }
+    catch (e) {
+        res.send("NO_PHOTO")
+    }
 })
 
 /*******************************/

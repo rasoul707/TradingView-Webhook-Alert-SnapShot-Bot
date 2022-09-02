@@ -119,9 +119,7 @@ def checkAlert():
 
 
 def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
-
     snapLink = snapshot(["-", exchange, symbol, timeframe], candles)
-
     imageLink = saveImage(snapLink)
 
     if not imageLink:
@@ -134,6 +132,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
         msg + "\n" + \
         "<a href='" + imageLink + "'>🔻</a>"
     channel = config.persianChannel
+
     if lang == 'en':
         message = "" + \
             "<b>Pair: </b>" + getSymbolName(symbol, lang) + "\n" + \
