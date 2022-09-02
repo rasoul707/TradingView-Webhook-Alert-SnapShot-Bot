@@ -13,24 +13,6 @@ from snapshot import saveImage
 tgbot = Bot(token=config.BOT_TOKEN)
 
 
-alertsList = []
-
-
-def addAlert(symbol, exchange, timeframe, candles, strategySlug):
-    alertsList.append({
-        symbol,
-        exchange,
-        timeframe,
-        candles,
-        strategySlug
-    })
-
-
-def checkAlert():
-
-    pass
-
-
 def sendAlert(data, key):
     msg = ""
 
@@ -118,7 +100,26 @@ def sendAlert(data, key):
 #
 #
 
+
+alertsList = []
+
+
+def addAlert(symbol, exchange, timeframe, candles, strategySlug):
+    alertsList.append({
+        symbol,
+        exchange,
+        timeframe,
+        candles,
+        strategySlug
+    })
+
+
+def checkAlert():
+    pass
+
+
 def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
+    return
     snapLink = snapshot(["-", exchange, symbol, timeframe], candles)
 
     imageLink = saveImage(snapLink)
@@ -131,7 +132,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
         "<b>تایم فریم: </b>" + timeframe.upper() + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
-        "<a href='" + imageLink + "'>🔻</a> "
+        "<a href='" + imageLink + "'>🔻</a>"
     channel = config.persianChannel
     if lang == 'en':
         message = "" + \
@@ -139,7 +140,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
             "<b>Timeframe: </b>" + timeframe.upper() + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
             msg + "\n" + \
-            "<a href='" + imageLink + "'>🔻</a> "
+            "<a href='" + imageLink + "'>🔻</a>"
         channel = config.englishChannel
 
     try:
