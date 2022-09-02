@@ -27,7 +27,7 @@ def saveImage(url):
     imgPath = "snapshots/" + m + "-" + id + ".png"
     # urllib.request.urlretrieve(imageUrl,  imgPath)
     r = requests.get(url)
-    with open(id + '.png', 'wb') as outfile:
+    with open(imgPath, 'wb') as outfile:
         outfile.write(r.content)
     # cropImage(imgPath)
     return config.baseUrl + "snapshots/" + m + "-" + id

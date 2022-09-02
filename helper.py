@@ -124,8 +124,6 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
 
     imageLink = saveImage(snapLink)
 
-    return
-
     if not imageLink:
         return 'err'
 
