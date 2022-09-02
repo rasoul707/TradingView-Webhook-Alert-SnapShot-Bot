@@ -154,19 +154,6 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
 
 ##########
 
-def saveSnapshot():
-    pass
-
-
-def getSnapshotUrl():
-    pass
-
-
-def removeOldSnapshot():
-    pass
-
-#######
-
 
 #
 #
@@ -241,80 +228,83 @@ def getCandles(cl):
 
 
 def getStrategy(sg, lang):
-    code = sg[-1]
-    name = int(sg[0:-1])
-    if lang == 'en':
-        if name == "SRF":
-            if code == 1:
-                return "Price inside important Support zone 🟢"
-            if code == 2:
-                return "Price inside important Resistance zone 🔴"
-        if name == "DIV":
-            if code == 1:
-                return "Bullish Divergence 🟢"
-            if code == 2:
-                return "Bearish Divergence 🔴"
-            if code == 3:
-                return "Bullish Hidden Divergence 🟢"
-            if code == 4:
-                return "Bearish Hidden Divergence 🔴"
-        if name == "FIB":
-            if code == 1:
-                return "Price at 0.618 fibonacci level"
-            if code == 2:
-                return "Price at 1.618 fibonacci level"
-        if name == "SHE":
-            if code == 1:
-                return "Break Bearish trendline 🟢"
-            if code == 2:
-                return "Break Bullish trendline 🔴"
-        if name == "PUL":
-            if code == 1:
-                return "Pullback to Past bearish trendline 🟢"
-            if code == 2:
-                return "Pullback to Past Bullish trendline 🔴"
-        if name == "CHA":
-            if code == 1:
-                return "Price at the Bottom of the regression channel 🟢"
-            if code == 2:
-                return "Price at the Top of the regression channel 🔴"
-    else:
-        if name == "SRF":
-            if code == 1:
-                return "قیمت در محدوده حمایت مهم 🟢"
-            if code == 2:
-                return "قیمت در محدوده مقاومت مهم 🔴"
-        if name == "DIV":
-            if code == 1:
-                return "واگرایی صعودی 🟢"
-            if code == 2:
-                return "واگرایی نزولی 🔴"
-            if code == 3:
-                return "واگرایی مخفی صعودی 🟢"
-            if code == 4:
-                return "واگرایی مخفی نزولی 🔴"
-        if name == "FIB":
-            if code == 1:
-                return "قیمت در محدوده 0.618 فیبوناچی"
-            if code == 2:
-                return "قیمت در محدوده 1.618 فیبوناچی"
-        if name == "SHE":
-            if code == 1:
-                return "شکست خط روند نزولی 🟢"
-            if code == 2:
-                return "شکست خط روند صعودی 🔴"
-        if name == "PUL":
-            if code == 1:
-                return "پولبک به خط روند نزولی گذشته 🟢"
-            if code == 2:
-                return "پولبک به خط روند صعودی گذشته 🔴"
-        if name == "CHA":
-            if code == 1:
-                return "کف کانال قیمتی 🟢"
-            if code == 2:
-                return "سقف کانال قیمتی 🔴"
+    try:
+        code = sg[-1]
+        name = int(sg[0:-1])
+        if lang == 'en':
+            if name == "SRF":
+                if code == 1:
+                    return "Price inside important Support zone 🟢"
+                if code == 2:
+                    return "Price inside important Resistance zone 🔴"
+            if name == "DIV":
+                if code == 1:
+                    return "Bullish Divergence 🟢"
+                if code == 2:
+                    return "Bearish Divergence 🔴"
+                if code == 3:
+                    return "Bullish Hidden Divergence 🟢"
+                if code == 4:
+                    return "Bearish Hidden Divergence 🔴"
+            if name == "FIB":
+                if code == 1:
+                    return "Price at 0.618 fibonacci level"
+                if code == 2:
+                    return "Price at 1.618 fibonacci level"
+            if name == "SHE":
+                if code == 1:
+                    return "Break Bearish trendline 🟢"
+                if code == 2:
+                    return "Break Bullish trendline 🔴"
+            if name == "PUL":
+                if code == 1:
+                    return "Pullback to Past bearish trendline 🟢"
+                if code == 2:
+                    return "Pullback to Past Bullish trendline 🔴"
+            if name == "CHA":
+                if code == 1:
+                    return "Price at the Bottom of the regression channel 🟢"
+                if code == 2:
+                    return "Price at the Top of the regression channel 🔴"
+        else:
+            if name == "SRF":
+                if code == 1:
+                    return "قیمت در محدوده حمایت مهم 🟢"
+                if code == 2:
+                    return "قیمت در محدوده مقاومت مهم 🔴"
+            if name == "DIV":
+                if code == 1:
+                    return "واگرایی صعودی 🟢"
+                if code == 2:
+                    return "واگرایی نزولی 🔴"
+                if code == 3:
+                    return "واگرایی مخفی صعودی 🟢"
+                if code == 4:
+                    return "واگرایی مخفی نزولی 🔴"
+            if name == "FIB":
+                if code == 1:
+                    return "قیمت در محدوده 0.618 فیبوناچی"
+                if code == 2:
+                    return "قیمت در محدوده 1.618 فیبوناچی"
+            if name == "SHE":
+                if code == 1:
+                    return "شکست خط روند نزولی 🟢"
+                if code == 2:
+                    return "شکست خط روند صعودی 🔴"
+            if name == "PUL":
+                if code == 1:
+                    return "پولبک به خط روند نزولی گذشته 🟢"
+                if code == 2:
+                    return "پولبک به خط روند صعودی گذشته 🔴"
+            if name == "CHA":
+                if code == 1:
+                    return "کف کانال قیمتی 🟢"
+                if code == 2:
+                    return "سقف کانال قیمتی 🔴"
 
-    return sg
+        return sg
+    except:
+        return sg
 
 
 #
