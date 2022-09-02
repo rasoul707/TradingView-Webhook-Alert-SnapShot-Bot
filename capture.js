@@ -17,8 +17,6 @@ const request = require('request');
 
 
 
-
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
 let browser, useragent;
 
@@ -39,7 +37,7 @@ const chromeOptions = {
 };
 
 const blockedResourceTypes = [
-    'image',
+    // 'image',
     'media',
     'font',
     'texttrack',
@@ -110,6 +108,7 @@ const newPage = async () => {
         ) {
             request.abort();
         } else {
+
             request.continue();
         }
     });
@@ -274,17 +273,22 @@ const dateTimeRange = (interval, candles) => {
 
 
 function downloadSnapshot(token) {
-    return new Promise((resolve, reject) => {
-        const id = token
-        const m = token.substring(0, 1).toLowerCase()
+    return new Promise(async (resolve, reject) => {
+        // const id = token
+        // const m = token.substring(0, 1).toLowerCase()
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
-        const imagePath = `snapshots/${m}-${id}.png`
-        request.head(imageUrl, function (err, res, body) {
-            console.log(err)
-            console.log(res)
-            console.log(body)
-            request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
+        // const imagePath = `snapshots/${m}-${id}.png`
+        // request.head(imageUrl, function (err, res, body) {
+        //     request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
+        // })
+        await page.goto(imageUrl, { timeout: 25000, waitUntil: 'domcontentloaded', });
+        page.on('response', async function (response) {
+            // Filter those responses that are interesting
+            // const data = await response.buffer()
+            console.log("**", response)
+            // data contains the img information
         })
+
     })
 }
 
