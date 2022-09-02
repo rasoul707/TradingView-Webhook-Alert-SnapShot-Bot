@@ -44,7 +44,7 @@ def sendAlert(data, key):
             candles = int(cl[i])
 
             image = getSnapshot(
-                exchange, symbol, timeframe, candles, sen2Admin
+                exchange, symbol, timeframe, candles, send2Admin
             )
 
             ######
@@ -81,7 +81,7 @@ def sendAlert(data, key):
         candles = int(cl[0])
 
         image = getSnapshot(
-            exchange, symbol, timeframe, candles, sen2Admin
+            exchange, symbol, timeframe, candles, send2Admin
         )
 
         ######
@@ -156,7 +156,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
             parse_mode="HTML",
         )
     except KeyError:
-        sen2Admin(message)
+        send2Admin(message)
     except Exception as e:
         print("[X] Telegram Error:\n>", e)
 
@@ -405,7 +405,7 @@ def getSymbolName(sy, lang):
 
 ####
 
-def sen2Admin(msg):
+def send2Admin(msg):
     try:
         tgbot.sendMessage(
             config.admin,

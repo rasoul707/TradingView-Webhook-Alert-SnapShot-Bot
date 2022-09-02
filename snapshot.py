@@ -30,11 +30,11 @@ def saveImage(url):
     return config.baseUrl + "snapshots/" + m + "-" + id
 
 
-def getSnapshot(exchange, symbol, timeframe, candles, sen2Admin):
+def getSnapshot(exchange, symbol, timeframe, candles, send2Admin):
     snapLink = generateSnapshot(
         ["-", exchange, symbol, timeframe],
         candles,
-        sen2Admin
+        send2Admin
     )
     imageLink = saveImage(snapLink)
     if not imageLink:
@@ -42,7 +42,7 @@ def getSnapshot(exchange, symbol, timeframe, candles, sen2Admin):
     return imageLink
 
 
-def generateSnapshot(arg, cl, sen2Admin):
+def generateSnapshot(arg, cl, send2Admin):
     cmd = [x if i == 0 else x.upper() for i, x in enumerate(arg)] if len(
         arg) >= 4 and len(arg) <= 5 and (arg[0] == '-' or (len(arg[0]) == 8 and not arg[0].islower() and not arg[0].isupper())) else [config.chart_id, config.exchange, config.symbol, config.timeframe] if len(arg) == 0 else 'error'
     if isinstance(cmd, str):
@@ -55,7 +55,7 @@ def generateSnapshot(arg, cl, sen2Admin):
             url = f'https://www.tradingview.com/x/{token}'
             return url
 
-        sen2Admin('<b>Error</b> =>\n' + result['error'])
+        send2Admin('<b>Error</b> =>\n' + result['error'])
         return ''
 
 
