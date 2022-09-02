@@ -281,13 +281,14 @@ function downloadSnapshot(token, page) {
         // request.head(imageUrl, function (err, res, body) {
         //     request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
         // })
-        await page.goto(imageUrl, { timeout: 250000, waitUntil: 'domcontentloaded', });
-        page.on('response', async function (response) {
-            // Filter those responses that are interesting
-            // const data = await response.buffer()
-            console.log("**", response)
-            // data contains the img information
-        })
+        console.log(imageUrl)
+        await page.goto(imageUrl);
+        // page.on('response', async function (response) {
+        //     // Filter those responses that are interesting
+        //     // const data = await response.buffer()
+        //     console.log("**", response)
+        //     // data contains the img information
+        // })
 
     })
 }
