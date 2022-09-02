@@ -277,13 +277,14 @@ function downloadSnapshot(token) {
         const id = token
         const m = token.substring(0, 1).toLowerCase()
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
-        // const imagePath = `snapshots/${m}-${id}.png`
+        const imagePath = `snapshots/${m}-${id}.png`
         // request.head(imageUrl, function (err, res, body) {
         //     request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
         // })
         console.log(imageUrl)
         const page = await newPage()
-        await page.goto(imageUrl)
+        const img = await page.goto(imageUrl)
+        fs.writeFileSync(imagePath, await img.buffer())
         // page.on('response', async function (response) {
         //     // Filter those responses that are interesting
         //     // const data = await response.buffer()
