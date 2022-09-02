@@ -63,4 +63,3 @@ def cropImage(imgPath):
     cv2.imwrite("snapshots/k-ky8cGtAo-cropped.png", crop_image)
 
 
-saveImage('https://www.tradingview.com/x/uXpI82Qs')
