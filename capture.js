@@ -272,7 +272,7 @@ const dateTimeRange = (interval, candles) => {
 
 
 
-function downloadSnapshot(token, page) {
+function downloadSnapshot(token) {
     return new Promise(async (resolve, reject) => {
         const id = token
         const m = token.substring(0, 1).toLowerCase()
@@ -282,13 +282,15 @@ function downloadSnapshot(token, page) {
         //     request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
         // })
         console.log(imageUrl)
-        await page.goto(imageUrl);
+        const page = await newPage()
+        await page.goto(imageUrl)
         // page.on('response', async function (response) {
         //     // Filter those responses that are interesting
         //     // const data = await response.buffer()
         //     console.log("**", response)
         //     // data contains the img information
         // })
+        resolve(true)
 
     })
 }
@@ -419,7 +421,7 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        await downloadSnapshot(token, page)
+        await downloadSnapshot(token)
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
 
