@@ -30,6 +30,31 @@ def saveImage(url):
     return config.baseUrl + "snapshots/" + m + "-" + id
 
 
+def getSnapshot(exchange, symbol, timeframe, candles):
+    snapLink = generateSnapshot(["-", exchange, symbol, timeframe], candles)
+    imageLink = saveImage(snapLink)
+    if not imageLink:
+        return 'err'
+    return imageLink
+
+
+def generateSnapshot(arg, cl, sen2Admin):
+    cmd = [x if i == 0 else x.upper() for i, x in enumerate(arg)] if len(
+        arg) >= 4 and len(arg) <= 5 and (arg[0] == '-' or (len(arg[0]) == 8 and not arg[0].islower() and not arg[0].isupper())) else [config.chart_id, config.exchange, config.symbol, config.timeframe] if len(arg) == 0 else 'error'
+    if isinstance(cmd, str):
+        return cmd
+    else:
+        requestUrl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
+        result = requests.get(requestUrl).json()
+        if result['ok']:
+            token = result['token']
+            url = f'https://www.tradingview.com/x/{token}'
+            return url
+
+        sen2Admin('<b>Error</b> =>\n' + result['error'])
+        return ''
+
+
 def addWatermark(imgPath, type):
     centerWatermark = cv2.imread("assets/center_watermark.png")
     smallWatermark = cv2.imread("assets/small_watermark.png")

@@ -8,7 +8,7 @@ from re import S
 from telegram import Bot
 import requests
 import config
-from snapshot import saveImage
+from snapshot import getSnapshot
 
 tgbot = Bot(token=config.BOT_TOKEN)
 
@@ -43,6 +43,8 @@ def sendAlert(data, key):
             timeframe = tf
             candles = int(cl[i])
 
+            image = getSnapshot(exchange, symbol, timeframe, candles)
+
             ######
             send2Channel(
                 symbol,
@@ -50,6 +52,7 @@ def sendAlert(data, key):
                 timeframe,
                 candles,
                 sgFa,
+                image,
                 msg,
                 "fa"
             )
@@ -59,6 +62,7 @@ def sendAlert(data, key):
                 timeframe,
                 candles,
                 sgEn,
+                image,
                 msg,
                 "en"
             )
@@ -74,6 +78,8 @@ def sendAlert(data, key):
         timeframe = tf
         candles = int(cl[0])
 
+        image = getSnapshot(exchange, symbol, timeframe, candles)
+
         ######
         send2Channel(
             symbol,
@@ -81,6 +87,7 @@ def sendAlert(data, key):
             timeframe,
             candles,
             sgFa,
+            image,
             msg,
             "fa"
         )
@@ -90,6 +97,7 @@ def sendAlert(data, key):
             timeframe,
             candles,
             sgEn,
+            image,
             msg,
             "en"
         )
@@ -118,19 +126,14 @@ def checkAlert():
     pass
 
 
-def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
-    snapLink = snapshot(["-", exchange, symbol, timeframe], candles)
-    imageLink = saveImage(snapLink)
-
-    if not imageLink:
-        return 'err'
+def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lang):
 
     message = "" + \
         "<b>جفت ارز: </b>" + getSymbolName(symbol, lang) + "\n" + \
         "<b>تایم فریم: </b>" + timeframe.upper() + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
-        "<a href='" + imageLink + "'>🔻</a>"
+        "<a href='" + image + "'>🔻</a>"
     channel = config.persianChannel
 
     if lang == 'en':
@@ -139,7 +142,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
             "<b>Timeframe: </b>" + timeframe.upper() + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
             msg + "\n" + \
-            "<a href='" + imageLink + "'>🔻</a>"
+            "<a href='" + image + "'>🔻</a>"
         channel = config.englishChannel
 
     try:
@@ -394,21 +397,6 @@ def getSymbolName(sy, lang):
 #
 #
 ####
-def snapshot(arg, cl):
-    cmd = [x if i == 0 else x.upper() for i, x in enumerate(arg)] if len(
-        arg) >= 4 and len(arg) <= 5 and (arg[0] == '-' or (len(arg[0]) == 8 and not arg[0].islower() and not arg[0].isupper())) else [config.chart_id, config.exchange, config.symbol, config.timeframe] if len(arg) == 0 else 'error'
-    if isinstance(cmd, str):
-        return cmd
-    else:
-        requestUrl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
-        result = requests.get(requestUrl).json()
-        if result['ok']:
-            token = result['token']
-            url = f'https://www.tradingview.com/x/{token}'
-            return url
-
-        sen2Admin('<b>Error</b> =>\n' + result['error'])
-        return ''
 
 
 ####
