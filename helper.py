@@ -119,9 +119,10 @@ def checkAlert():
 
 
 def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
-    return
+
     snapLink = snapshot(["-", exchange, symbol, timeframe], candles)
 
+    return
     imageLink = saveImage(snapLink)
 
     if not imageLink:
