@@ -21,6 +21,8 @@ def saveImage(url):
     id = url.split("/")[-1]
     m = id[0:1].lower()
     imageUrl = 'https://s3.tradingview.com/snapshots/' + m + '/' + id + '.png'
+    print(url)
+    print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
     urllib.request.urlretrieve(imageUrl,  imgPath)
     # cropImage(imgPath)
