@@ -267,6 +267,20 @@ const dateTimeRange = (interval, candles) => {
 
 
 
+
+function downloadSnapshot(token) {
+    return new Promise((resolve, reject) => {
+        const id = token
+        const m = token.substring(0, 1).toLowerCase()
+        const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
+        const imagePath = `snapshots/${m}-${id}.png`
+        request.head(imageUrl, function (err, res, body) {
+            request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', resolve);
+        })
+    })
+}
+
+
 app.get('/capture', async function (req, res) {
     var base = req.query.base;
     var exchange = req.query.exchange;
@@ -279,8 +293,6 @@ app.get('/capture', async function (req, res) {
     console.log(ts, "New Capture")
 
     const page = await newPage();
-    // const recorder = new PuppeteerScreenRecorder(page);
-    // await recorder.start("screens/" + ts + ".mp4");
 
     try {
 
@@ -392,21 +404,16 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-
+        await downloadSnapshot(token)
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
 
-        // await recorder.stop();
         await page.close();
         errorsCount = 0;
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() })
         errorsCount++;
-        // await recorder.stop();
-        // await page.close();
-        // if (errorsCount === 3) process.exit(1)
-        // if (errorsCount === 5) rebootServer()
 
     }
 

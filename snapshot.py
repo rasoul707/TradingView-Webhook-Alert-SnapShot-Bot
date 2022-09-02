@@ -19,13 +19,13 @@ def saveImage(url):
     m = id[0:1].lower()
     imageUrl = 'https://s3.tradingview.com/snapshots/' + m + '/' + id + '.png'
     imgPath = "snapshots/" + m + "-" + id + ".png"
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
-    }
-    r = requests.get(imageUrl, headers=headers)
-    print(r.content)
-    with open(imgPath, 'wb') as outfile:
-        outfile.write(r.content)
+    # headers = {
+    #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
+    # }
+    # r = requests.get(imageUrl, headers=headers)
+    # print(r.content)
+    # with open(imgPath, 'wb') as outfile:
+    #     outfile.write(r.content)
     # cropImage(imgPath)
     return config.baseUrl + "snapshots/" + m + "-" + id
 
