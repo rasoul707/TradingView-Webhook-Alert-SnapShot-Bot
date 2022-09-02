@@ -21,7 +21,7 @@ def sendAlert(data, key):
     except:
         msg = ""
 
-    tf = getTimeFrame(data["tf"])
+    tf = data["tf"].upper()
     sgFa = getStrategy(data["sg"], 'fa')
     sgEn = getStrategy(data["sg"], 'en')
     cl = getCandles(data["cl"])
@@ -132,7 +132,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
 
     message = "" + \
         "<b>جفت ارز: </b>" + getSymbolName(symbol, lang) + "\n" + \
-        "<b>تایم فریم: </b>" + timeframe.upper() + "\n" + \
+        "<b>تایم فریم: </b>" + getTimeFrame(timeframe, 'fa') + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
         "<a href='" + image + "'>🔻</a>"
@@ -141,7 +141,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
     if lang == 'en':
         message = "" + \
             "<b>Pair: </b>" + getSymbolName(symbol, lang) + "\n" + \
-            "<b>Timeframe: </b>" + timeframe.upper() + "\n" + \
+            "<b>Timeframe: </b>" + getTimeFrame(timeframe, 'en') + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
             msg + "\n" + \
             "<a href='" + image + "'>🔻</a>"
@@ -168,8 +168,45 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
 ###
 
 
-def getTimeFrame(tf):
-    return tf.upper()
+def getTimeFrame(tf, lang):
+    u = tf[-1]
+    d = tf[0:-1]
+
+    if u == 'S':
+        return {
+            'fa': d + " ثانیه",
+            'en': d + " Second",
+        }[lang]
+    elif u == 'H':
+        return {
+            'fa': d + " ساعته",
+            'en': d + " Hour",
+        }[lang]
+    elif u == 'D':
+        return {
+            'fa': d + " روزه",
+            'en': d + " Day",
+        }[lang]
+    elif u == 'W':
+        return {
+            'fa': d + " هفته",
+            'en': d + " Week",
+        }[lang]
+    elif u == 'M':
+        return {
+            'fa': d + " ماهه",
+            'en': d + " Month",
+        }[lang]
+    elif u == 'Y':
+        return {
+            'fa': d + " ساله",
+            'en': d + " Year",
+        }[lang]
+    else:
+        return {
+            'fa': d + " دقیقه",
+            'en': d + " Minute",
+        }[lang]
 
 
 def getExchange(sy):
