@@ -130,15 +130,15 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
         "<b>جفت ارز: </b>" + symbol.upper() + "\n" + \
         "<b>تایم فریم: </b>" + timeframe.upper() + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
-        msg + \
+        msg + "\n" + \
         "<a href='" + imageLink + "'>🔻</a> "
     channel = config.persianChannel
     if lang == 'en':
-        message = "<a href='"+imageLink+"'>🔻</a> " + \
+        message = "" + \
             "<b>Pair: </b>" + symbol.upper() + "\n" + \
             "<b>Timeframe: </b>" + timeframe.upper() + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
-            msg + \
+            msg + "\n" + \
             "<a href='" + imageLink + "'>🔻</a> "
         channel = config.englishChannel
 
@@ -168,7 +168,7 @@ def getTimeFrame(tf):
 
 
 def getExchange(sy):
-    m = sy[-4]
+    m = sy[-4:]
     if m != "USDT":
         return "FOREXCOM".upper()
     return "BINANCE".upper()
