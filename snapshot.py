@@ -1,7 +1,3 @@
-
-
-from bs4 import BeautifulSoup
-import urllib.request
 import cv2
 import numpy as np
 import config
