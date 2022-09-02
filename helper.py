@@ -43,7 +43,9 @@ def sendAlert(data, key):
             timeframe = tf
             candles = int(cl[i])
 
-            image = getSnapshot(exchange, symbol, timeframe, candles)
+            image = getSnapshot(
+                exchange, symbol, timeframe, candles, sen2Admin
+            )
 
             ######
             send2Channel(
@@ -78,7 +80,9 @@ def sendAlert(data, key):
         timeframe = tf
         candles = int(cl[0])
 
-        image = getSnapshot(exchange, symbol, timeframe, candles)
+        image = getSnapshot(
+            exchange, symbol, timeframe, candles, sen2Admin
+        )
 
         ######
         send2Channel(
