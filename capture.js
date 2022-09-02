@@ -272,7 +272,7 @@ const dateTimeRange = (interval, candles) => {
 
 
 
-function downloadSnapshot(token) {
+function downloadSnapshot(token, page) {
     return new Promise(async (resolve, reject) => {
         const id = token
         const m = token.substring(0, 1).toLowerCase()
@@ -418,7 +418,7 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        await downloadSnapshot(token)
+        await downloadSnapshot(token, page)
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
 
