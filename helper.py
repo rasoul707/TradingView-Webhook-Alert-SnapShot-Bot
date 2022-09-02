@@ -4,9 +4,7 @@
 # File Name             : helper.py                                   #
 # ------------------------------------------------------------------- #
 
-from re import S
 from telegram import Bot
-import requests
 import config
 from snapshot import getSnapshot
 

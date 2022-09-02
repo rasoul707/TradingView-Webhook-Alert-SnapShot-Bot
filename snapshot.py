@@ -3,32 +3,6 @@ import numpy as np
 import config
 import requests
 
-# def __saveImage():
-#     url = 'https://www.tradingview.com/x/ky8cGtAo'
-#     response = requests.get(url)
-#     soup = BeautifulSoup(response.text, features="lxml")
-#     imgs = soup.find_all('img')
-#     imageUrl = None
-#     for img in imgs:
-#         if img.attrs['alt'] == "TradingView Chart":
-#             imageUrl = img.attrs['src']
-
-
-def saveImage(url):
-    id = url.split("/")[-1]
-    m = id[0:1].lower()
-    imageUrl = 'https://s3.tradingview.com/snapshots/' + m + '/' + id + '.png'
-    imgPath = "snapshots/" + m + "-" + id + ".png"
-    # headers = {
-    #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'
-    # }
-    # r = requests.get(imageUrl, headers=headers)
-    # print(r.content)
-    # with open(imgPath, 'wb') as outfile:
-    #     outfile.write(r.content)
-    # cropImage(imgPath)
-    return config.baseUrl + "snapshots/" + m + "-" + id
-
 
 def getSnapshot(exchange, symbol, timeframe, candles, send2Admin):
     snapLink = generateSnapshot(
@@ -36,10 +10,12 @@ def getSnapshot(exchange, symbol, timeframe, candles, send2Admin):
         candles,
         send2Admin
     )
-    imageLink = saveImage(snapLink)
-    if not imageLink:
+    if not snapLink:
         return 'err'
-    return imageLink
+    id = snapLink.split("/")[-1]
+    m = id[0:1].lower()
+
+    return config.baseUrl + "snapshots/" + m + "-" + id
 
 
 def generateSnapshot(arg, cl, send2Admin):
