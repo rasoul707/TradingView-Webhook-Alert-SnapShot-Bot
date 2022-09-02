@@ -25,8 +25,7 @@ def saveImage(url):
     print(url)
     print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
-    # urllib.request.urlretrieve(imageUrl,  imgPath)
-    r = requests.get(url)
+    r = requests.get(imageUrl)
     with open(imgPath, 'wb') as outfile:
         outfile.write(r.content)
     # cropImage(imgPath)
@@ -62,3 +61,6 @@ def cropImage(imgPath):
     image = cv2.imread(imgPath)
     crop_image = image[24:994, 0:1514]
     cv2.imwrite("snapshots/k-ky8cGtAo-cropped.png", crop_image)
+
+
+saveImage('https://www.tradingview.com/x/uXpI82Qs')
