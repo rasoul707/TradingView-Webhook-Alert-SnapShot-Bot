@@ -127,7 +127,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
         return 'err'
 
     message = "" + \
-        "<b>جفت ارز: </b>" + symbol.upper() + "\n" + \
+        "<b>جفت ارز: </b>" + getSymbolName(symbol, lang) + "\n" + \
         "<b>تایم فریم: </b>" + timeframe.upper() + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
@@ -135,7 +135,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, msg, lang):
     channel = config.persianChannel
     if lang == 'en':
         message = "" + \
-            "<b>Pair: </b>" + symbol.upper() + "\n" + \
+            "<b>Pair: </b>" + getSymbolName(symbol, lang) + "\n" + \
             "<b>Timeframe: </b>" + timeframe.upper() + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
             msg + "\n" + \

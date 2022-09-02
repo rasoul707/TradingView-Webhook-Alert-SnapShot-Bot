@@ -34,8 +34,11 @@ def webhook():
                     return "Failed send", 400
                 return "Sent alert", 200
             else:
-                print("[X]", get_timestamp(),
-                      "New Alert Received & Refused! [Key Not Found]")
+                print(
+                    "[X]",
+                    get_timestamp(),
+                    "New Alert Received & Refused! [Key Not Found]"
+                )
                 return "Refused alert", 400
 
     except Exception as e:
