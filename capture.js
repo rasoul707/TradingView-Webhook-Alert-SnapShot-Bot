@@ -11,7 +11,12 @@ const puppeteer = require('puppeteer-extra');
 const UserAgent = require('user-agents');
 const moment = require('moment');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
-const { spawn } = require('child_process');
+const { spawn } = require('child_process')
+const fs = require('fs');
+const request = require('request');
+
+
+
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const app = express();
@@ -294,6 +299,8 @@ app.get('/capture', async function (req, res) {
 
     const page = await newPage();
 
+    // let errorsCount = 0
+
     try {
 
 
@@ -409,11 +416,11 @@ app.get('/capture', async function (req, res) {
         console.log(ts, "Capture completed")
 
         await page.close();
-        errorsCount = 0;
+        // errorsCount = 0;
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() })
-        errorsCount++;
+        // errorsCount++;
 
     }
 
