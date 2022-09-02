@@ -5,6 +5,7 @@ import urllib.request
 import cv2
 import numpy as np
 import config
+import requests
 
 # def __saveImage():
 #     url = 'https://www.tradingview.com/x/ky8cGtAo'
@@ -24,7 +25,10 @@ def saveImage(url):
     print(url)
     print(imageUrl)
     imgPath = "snapshots/" + m + "-" + id + ".png"
-    urllib.request.urlretrieve(imageUrl,  imgPath)
+    # urllib.request.urlretrieve(imageUrl,  imgPath)
+    r = requests.get(url)
+    with open(id + '.png', 'wb') as outfile:
+        outfile.write(r.content)
     # cropImage(imgPath)
     return config.baseUrl + "snapshots/" + m + "-" + id
 
