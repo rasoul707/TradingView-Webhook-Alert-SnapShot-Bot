@@ -44,5 +44,6 @@ def cropImage(imgPath):
 
 
 def watermark(imgPath, topWatermark):
-    requestUrl = 'http://localhost:7007/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
-    requests.get(requestUrl)
+    # requestUrl = 'http://localhost:7007/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
+    # requests.get(requestUrl)
+    pass
