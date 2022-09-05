@@ -14,10 +14,14 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
         return 'err'
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
-    impath = f"snapshots/{m}-{id}"
-    filepath = f"{impath}.png"
-    cropImage(filepath)
-    watermark(filepath, topWatermark)
+    try:
+        impath = f"snapshots/{m}-{id}"
+        filepath = f"{impath}.png"
+        cropImage(filepath)
+        watermark(filepath, topWatermark)
+    except Exception as ee:
+        print(ee)
+
     return config.baseUrl + impath
 
 
@@ -45,8 +49,5 @@ def cropImage(imgPath):
 
 
 def watermark(imgPath, topWatermark):
-    try:
-        requestUrl = f'http://localhost:7007/snapshots/watermark?filePath={imgPath}'
-        requests.get(requestUrl)
-    except Exception as ee:
-        print(ee)
+    requestUrl = f'http://localhost:7007/snapshots/watermark?filePath={imgPath}'
+    requests.get(requestUrl)
