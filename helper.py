@@ -30,6 +30,13 @@ def sendAlert(data, key):
     if sy == False:
         return
 
+    topWat = True
+    # (
+    #     "FIB" in data["sg"] or
+    #     "CHA" in data["sg"] or
+    #     "SRF" in data["sg"]
+    # )
+
     if type(sy) == list:
         i = 0
         for symbol in sy:
@@ -46,11 +53,7 @@ def sendAlert(data, key):
                 symbol,
                 timeframe,
                 candles,
-                (
-                    "FIB" in data["sg"] or
-                    "CHA" in data["sg"] or
-                    "SRF" in data["sg"]
-                ),
+                topWat,
                 send2Admin
             )
 
@@ -92,11 +95,7 @@ def sendAlert(data, key):
             symbol,
             timeframe,
             candles,
-            (
-                "FIB" in data["sg"] or
-                "CHA" in data["sg"] or
-                "SRF" in data["sg"]
-            ),
+            topWat,
             send2Admin
         )
 
