@@ -30,12 +30,11 @@ def sendAlert(data, key):
     if sy == False:
         return
 
-    topWat = True
-    # (
-    #     "FIB" in data["sg"] or
-    #     "CHA" in data["sg"] or
-    #     "SRF" in data["sg"]
-    # )
+    topWat = (
+        "FIB" in data["sg"] or
+        "CHA" in data["sg"] or
+        "SRF" in data["sg"]
+    )
 
     if type(sy) == list:
         i = 0
