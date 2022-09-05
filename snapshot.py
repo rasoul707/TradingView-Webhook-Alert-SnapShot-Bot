@@ -16,6 +16,7 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     m = id[0:1].lower()
     impath = f"snapshots/{m}-{id}"
     print(impath)
+    print(topWatermark)
     # filepath = impath + ".png"
     # cropImage(filepath)
 
