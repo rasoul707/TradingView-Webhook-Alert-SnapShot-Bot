@@ -20,7 +20,7 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
         cropImage(filepath)
         watermark(filepath, topWatermark)
     except Exception as ee:
-        print(ee)
+        print("TTT", ee)
 
     return config.baseUrl + impath
 
