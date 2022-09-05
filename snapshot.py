@@ -31,7 +31,7 @@ def generateSnapshot(arg, cl, send2Admin):
     if isinstance(cmd, str):
         return cmd
     else:
-        requestUrl = f'http://localhost:443/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
+        requestUrl = f'http://localhost:2083/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
         result = requests.get(requestUrl).json()
         if result['ok']:
             token = result['token']
@@ -49,5 +49,5 @@ def cropImage(imgPath):
 
 
 def watermark(imgPath, topWatermark):
-    requestUrl = f'http://localhost:443/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
+    requestUrl = f'http://localhost:2083/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
     requests.get(requestUrl)
