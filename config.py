@@ -29,4 +29,4 @@ timeframe = "15"
 
 
 # server
-baseUrl = "http://82.115.18.212:443/"
+baseUrl = "https://r707.ir/"
