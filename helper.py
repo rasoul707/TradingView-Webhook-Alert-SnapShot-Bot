@@ -151,7 +151,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
         "<b>تایم فریم: </b>" + getTimeFrame(timeframe, 'fa') + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
-        "<a href='" + image + "'>🔻</a>"
+        image
     channel = config.persianChannel
 
     if lang == 'en':
@@ -160,7 +160,7 @@ def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lan
             "<b>Timeframe: </b>" + getTimeFrame(timeframe, 'en') + "\n" + \
             "<b>Strategy: </b>" + strategy + "\n" + \
             msg + "\n" + \
-            "<a href='" + image + "'>🔻</a>"
+            image
         channel = config.englishChannel
 
     try:
