@@ -15,8 +15,9 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
     impath = "snapshots/" + m + "-" + id
-    cropImage(impath + ".png")
-    print(impath + ".png")
+    filepath = impath + ".png"
+    cropImage(filepath)
+    print(filepath)
     print(topWatermark)
     # watermark(impath + ".png", topWatermark)
     return config.baseUrl + impath
