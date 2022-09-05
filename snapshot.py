@@ -22,7 +22,7 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     except Exception as ee:
         print("TTT", ee)
 
-    return config.baseUrl + impath
+    return config.baseUrl + f"preview/{m}-{id}"
 
 
 def generateSnapshot(arg, cl, send2Admin):

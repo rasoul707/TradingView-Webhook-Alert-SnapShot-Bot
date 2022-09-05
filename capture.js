@@ -14,6 +14,7 @@ const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
 const { spawn } = require('child_process')
 const fs = require('fs');
 const watermark = require('jimp-watermark');
+const path = require("path")
 
 
 
@@ -470,17 +471,41 @@ app.get('/snapshots/watermark', async (req, res) => {
 
 
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './views'));
 
 
 app.get('/snapshots/:id', async (req, res) => {
     const { id } = req.params
     const fileName = id + '.png'
     const filePath = 'snapshots/' + fileName
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath, { root: __dirname })
+    }
+    else {
+        res.sendFile('assets/center_watermark.png', { root: __dirname })
+    }
+})
+
+app.get('/preview/:id', async (req, res) => {
+    const { id } = req.params
+    const fileName = id
+    const filePath = 'snapshots/' + fileName
     try {
-        res.sendFile("assets/preview.html", { root: __dirname })
+        res.render('preview', {
+            title: "The title",
+            description: "The description",
+            url: "/" + filePath,
+            image: "/" + filePath,
+        });
     }
     catch (e) {
-        res.send("NO_PHOTO")
+        res.render('preview', {
+            title: "The title",
+            description: "The description",
+            url: "/" + filePath,
+            image: "/" + filePath,
+        });
     }
 })
 
