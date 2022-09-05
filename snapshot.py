@@ -16,11 +16,8 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     m = id[0:1].lower()
     impath = f"snapshots/{m}-{id}"
     filepath = f"{impath}.png"
-    print(filepath)
-    print(topWatermark)
-    # cropImage(filepath)
-
-    # watermark(impath + ".png", topWatermark)
+    cropImage(filepath)
+    watermark(filepath, topWatermark)
     return config.baseUrl + impath
 
 
@@ -48,9 +45,5 @@ def cropImage(imgPath):
 
 
 def watermark(imgPath, topWatermark):
-    print("gggg")
-    # print(topWatermark)
-    # print(topWatermark)
-    # requestUrl = f'http://localhost:7007/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
-    # print(requestUrl)
-    # requests.get(requestUrl)
+    requestUrl = f'http://localhost:7007/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
+    requests.get(requestUrl)
