@@ -430,17 +430,7 @@ app.get('/capture', async function (req, res) {
 
 /******************************/
 
-app.get('/snapshots/:id', async (req, res) => {
-    const { id } = req.params
-    const fileName = id + '.png'
-    const filePath = 'snapshots/' + fileName
-    try {
-        res.sendFile(filePath, { root: __dirname })
-    }
-    catch (e) {
-        res.send("NO_PHOTO")
-    }
-})
+
 
 
 
@@ -473,6 +463,23 @@ app.get('/snapshots/watermark', async (req, res) => {
     }
     catch (e) {
         res.json({ ok: false })
+    }
+})
+
+
+
+
+
+
+app.get('/snapshots/:id', async (req, res) => {
+    const { id } = req.params
+    const fileName = id + '.png'
+    const filePath = 'snapshots/' + fileName
+    try {
+        res.sendFile(filePath, { root: __dirname })
+    }
+    catch (e) {
+        res.send("NO_PHOTO")
     }
 })
 
