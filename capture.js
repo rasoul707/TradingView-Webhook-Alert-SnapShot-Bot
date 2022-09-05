@@ -447,8 +447,7 @@ app.get('/snapshots/watermark', async (req, res) => {
             'ratio': 1,
             'dstPath': filePath
         }
-        console.log(topWatermark === "True")
-        if (topWatermark) {
+        if (topWatermark === "True") {
             watermark.addWatermark(
                 filePath,
                 'assets/top_watermark.png',
