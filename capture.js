@@ -493,6 +493,7 @@ app.get('/preview/:id', async (req, res) => {
     try {
         res.render('preview', {
             title: "The title",
+            subtitle: "The subtitle",
             description: "The description",
             url: "/" + filePath,
             image: "/" + filePath,
@@ -501,6 +502,7 @@ app.get('/preview/:id', async (req, res) => {
     catch (e) {
         res.render('preview', {
             title: "The title",
+            subtitle: "The subtitle",
             description: "The description",
             url: "/" + filePath,
             image: "/" + filePath,
