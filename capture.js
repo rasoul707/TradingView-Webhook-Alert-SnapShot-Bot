@@ -86,8 +86,8 @@ const runPythonBot = () => {
 
 
 
-app.listen(443, () => {
-    console.log('Server is running on port 443');
+app.listen(7007, () => {
+    console.log('Server is running on port 7007');
     runPythonBot();
 });
 
