@@ -4,7 +4,7 @@ import config
 import requests
 
 
-def getSnapshot(exchange, symbol, timeframe, candles, send2Admin):
+def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     snapLink = generateSnapshot(
         ["-", exchange, symbol, timeframe],
         candles,
@@ -14,9 +14,10 @@ def getSnapshot(exchange, symbol, timeframe, candles, send2Admin):
         return 'err'
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
-    cropImage("snapshots/" + m + "-" + id + ".png")
-
-    return config.baseUrl + "snapshots/" + m + "-" + id
+    impath = "snapshots/" + m + "-" + id
+    cropImage(impath + ".png")
+    watermark(impath + ".png", topWatermark)
+    return config.baseUrl + impath
 
 
 def generateSnapshot(arg, cl, send2Admin):
@@ -36,32 +37,14 @@ def generateSnapshot(arg, cl, send2Admin):
         return ''
 
 
-def addWatermark(imgPath, type):
-    centerWatermark = cv2.imread("assets/center_watermark.png")
-    smallWatermark = cv2.imread("assets/small_watermark.png")
-    image = cv2.imread(imgPath)
-
-    background = image
-    overlay = centerWatermark
-
-    rows, cols, channels = overlay.shape
-
-    overlay = cv2.addWeighted(
-        background[250:250+rows, 0:0+cols],
-        1,
-        overlay,
-        1,
-        0
-    )
-
-    background[250:250+rows, 0:0+cols] = overlay
-
-    cv2.imshow('res', background)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
 def cropImage(imgPath):
     image = cv2.imread(imgPath)
-    crop_image = image[24:994, 0:1514]
+    crop_image = image[23:987, 6:1527]
     cv2.imwrite(imgPath, crop_image)
+
+
+def watermark(imgPath, topWatermark):
+    requestUrl = f'http://localhost:7007//snapshots/watermark'
+    result = requests.post(
+        requestUrl, {'filePath': imgPath, 'topWatermark': topWatermark}
+    ).json()

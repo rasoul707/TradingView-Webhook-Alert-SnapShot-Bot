@@ -42,7 +42,16 @@ def sendAlert(data, key):
             candles = int(cl[i])
 
             image = getSnapshot(
-                exchange, symbol, timeframe, candles, send2Admin
+                exchange,
+                symbol,
+                timeframe,
+                candles,
+                (
+                    "FIB" in data["sg"] or
+                    "CHA" in data["sg"] or
+                    "SRF" in data["sg"]
+                ),
+                send2Admin
             )
 
             ######

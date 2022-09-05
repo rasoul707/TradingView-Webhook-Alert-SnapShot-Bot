@@ -13,7 +13,7 @@ const moment = require('moment');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha')
 const { spawn } = require('child_process')
 const fs = require('fs');
-const request = require('request');
+const watermark = require('jimp-watermark');
 
 
 
@@ -87,7 +87,7 @@ const runPythonBot = () => {
 
 app.listen(7007, () => {
     console.log('Server is running on port 7007');
-    runPythonBot();
+    // runPythonBot();
 });
 
 const newPage = async () => {
@@ -439,6 +439,39 @@ app.get('/snapshots/:id', async (req, res) => {
     }
     catch (e) {
         res.send("NO_PHOTO")
+    }
+})
+
+
+
+
+
+
+app.post('/snapshots/watermark', async (req, res) => {
+    const { filePath, topWatermark } = req.body
+    try {
+        const options = {
+            'opacity': 1,
+            'ratio': 1,
+            'dstPath': filePath
+        }
+        if (topWatermark) {
+            watermark.addWatermark(
+                filePath,
+                'assets/top_watermark.png',
+                options
+            )
+        } else {
+            watermark.addWatermark(
+                filePath,
+                'assets/back_watermark.png',
+                options
+            )
+        }
+        res.json({ ok: true })
+    }
+    catch (e) {
+        res.json({ ok: false })
     }
 })
 
