@@ -447,8 +447,9 @@ app.get('/snapshots/:id', async (req, res) => {
 
 
 
-app.post('/snapshots/watermark', async (req, res) => {
-    const { filePath, topWatermark } = req.body
+app.get('/snapshots/watermark', async (req, res) => {
+    const filePath = req.query.filePath
+    const topWatermark = req.query.topWatermark
     try {
         const options = {
             'opacity': 1,
