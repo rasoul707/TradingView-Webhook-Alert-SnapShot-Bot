@@ -2,28 +2,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-    <title>TradingView</title>
+    <title><%= title%></title>
 
     <meta name="description" content="" />
 
-    <meta property="og:site_name" content="TradingView" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="TradingView Chart" />
-    <meta property="og:image" content="https://s3.tradingview.com/snapshots/p/PNjhSyop.png" />
-    <meta property="og:description" content="" />
-    <meta property="og:url" content="https://www.tradingview.com/x/PNjhSyop" />
+    <meta property="og:site_name" content="<%= title%>" />
+    <meta property="og:title" content="<%= subtitle%>" />
+    <meta property="og:image" content="<%= image%>" />
+    <meta property="og:url" content="<%= url%>" />
 
-    <meta name="twitter:site" content="@TradingView" />
+    <meta name="twitter:site" content="<%= title%>" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://r707.ir/snapshots/ttt" />
-    <meta name="twitter:title" content="TradingView Chartttt" />
+    <meta name="twitter:image" content="<%= image%>" />
+    <meta name="twitter:title" content="<%= subtitle%>" />
     <meta name="twitter:description" content="" />
-    <meta name="twitter:url" content="https://www.tradingview.com/x/PNjhSyop" />
+    <meta name="twitter:url" content="<%= url%>" />
   </head>
-  <body style="display: flex; justify-content: center; align-items: center; flex-direction: column">
-    <h3>Preview image (<%= title%>)</h3>
-    <h5><%= subtitle%></h5>
-    <h6><%= description%></h6>
-    <img src="<%= image%>" />
-  </body>
 </html>
