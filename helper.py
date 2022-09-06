@@ -50,7 +50,7 @@ def snapshot(arg, cl):
     if isinstance(cmd, str):
         return cmd
     else:
-        requestUrl = f'http://localhost:7007/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
+        requestUrl = f'http://localhost:2001/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
         result = requests.get(requestUrl).json()
         if result['ok']:
             token = result['token']

@@ -83,9 +83,9 @@ const runPythonBot = () => {
 
 
 
-app.listen(7007, () => {
-    console.log('Server is running on port 7007');
-    runPythonBot();
+app.listen(2001, () => {
+    console.log('Server is running on port 2001');
+    // runPythonBot();
 });
 
 const newPage = async () => {
