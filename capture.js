@@ -35,6 +35,7 @@ const chromeOptions = {
         "--disable-gpu",
         "--window-size=1920x1080",
     ],
+    userDataDir: "./user_data"
 };
 
 const blockedResourceTypes = [
@@ -184,7 +185,7 @@ app.get('/start', async function (req, res) {
                 ok = true
             }
         } else {
-            status = "hasLogin"
+            status = "loggedIn"
             ok = true
         }
 
