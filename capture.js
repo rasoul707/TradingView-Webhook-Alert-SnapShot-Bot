@@ -495,8 +495,8 @@ app.get('/preview/:id', async (req, res) => {
             title: "The title",
             subtitle: "The subtitle",
             description: "The description",
-            url: "/" + filePath,
-            image: "/" + filePath,
+            url: '/preview/' + fileName,
+            image: '/snapshots/' + fileName,
         });
     }
     catch (e) {
@@ -504,8 +504,8 @@ app.get('/preview/:id', async (req, res) => {
             title: "The title",
             subtitle: "The subtitle",
             description: "The description",
-            url: "/" + filePath,
-            image: "/" + filePath,
+            url: '/preview/' + fileName,
+            image: '/snapshots/' + fileName,
         });
     }
 })
