@@ -29,4 +29,4 @@ timeframe = "15"
 
 
 # server
-baseUrl = "https://r707.ir/"
+baseUrl = "https://tvssh.cp.r707.ir/"
