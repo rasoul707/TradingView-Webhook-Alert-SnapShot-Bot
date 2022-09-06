@@ -489,7 +489,6 @@ app.get('/snapshots/:id', async (req, res) => {
 app.get('/preview/:id', async (req, res) => {
     const { id } = req.params
     const fileName = id
-    const filePath = 'snapshots/' + fileName
     try {
         res.render('preview', {
             title: "The title",
