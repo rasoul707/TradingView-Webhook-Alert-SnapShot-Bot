@@ -88,7 +88,7 @@ const runPythonBot = () => {
 
 app.listen(7707, () => {
     console.log('Server is running on port 7707');
-    runPythonBot();
+    // runPythonBot();
 });
 
 const newPage = async () => {
