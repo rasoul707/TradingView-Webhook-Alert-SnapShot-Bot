@@ -220,8 +220,8 @@ def getTimeFrame(tf, lang):
         }[lang]
     else:
         return {
-            'fa': d + " دقیقه",
-            'en': d + " Minute",
+            'fa': tf + " دقیقه",
+            'en': tf + " Minute",
         }[lang]
 
 

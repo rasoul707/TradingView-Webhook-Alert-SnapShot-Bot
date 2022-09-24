@@ -12,6 +12,8 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     )
     if not snapLink:
         return 'err'
+
+    return snapLink
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
     try:
