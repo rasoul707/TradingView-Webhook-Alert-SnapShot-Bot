@@ -24,7 +24,14 @@ def sendAlert(data, key):
     tf = data["tf"].upper()
     sgFa = getStrategy(data["sg"], 'fa')
     sgEn = getStrategy(data["sg"], 'en')
-    cl = getCandles(data["cl"])
+    # cl = getCandles(data["cl"])
+    chart_id = "-"
+    try:
+        chart_id = data["ch"]
+    except:
+        chart_id = "-"
+
+    zoom = data["zm"]
 
     sy = getSymbol(data["sy"])
     if sy == False:
@@ -45,13 +52,14 @@ def sendAlert(data, key):
                 exchange = getExchange(symbol)
 
             timeframe = tf
-            candles = int(cl[i])
+            # candles = int(cl[i])
 
             image = getSnapshot(
+                chart_id,
                 exchange,
                 symbol,
                 timeframe,
-                candles,
+                zoom,
                 topWat,
                 send2Admin
             )
@@ -61,7 +69,6 @@ def sendAlert(data, key):
                 symbol,
                 exchange,
                 timeframe,
-                candles,
                 sgFa,
                 image,
                 msg,
@@ -71,7 +78,6 @@ def sendAlert(data, key):
                 symbol,
                 exchange,
                 timeframe,
-                candles,
                 sgEn,
                 image,
                 msg,
@@ -87,13 +93,14 @@ def sendAlert(data, key):
             exchange = getExchange(symbol)
 
         timeframe = tf
-        candles = int(cl[0])
+        # candles = int(cl[0])
 
         image = getSnapshot(
+            chart_id,
             exchange,
             symbol,
             timeframe,
-            candles,
+            zoom,
             topWat,
             send2Admin
         )
@@ -103,7 +110,6 @@ def sendAlert(data, key):
             symbol,
             exchange,
             timeframe,
-            candles,
             sgFa,
             image,
             msg,
@@ -113,7 +119,6 @@ def sendAlert(data, key):
             symbol,
             exchange,
             timeframe,
-            candles,
             sgEn,
             image,
             msg,
@@ -144,7 +149,7 @@ def checkAlert():
     pass
 
 
-def send2Channel(symbol, exchange, timeframe, candles, strategy, image, msg, lang):
+def send2Channel(symbol, exchange, timeframe, strategy, image, msg, lang):
 
     message = "" + \
         "<b>جفت ارز: </b>" + getSymbolName(symbol, lang) + "\n" + \

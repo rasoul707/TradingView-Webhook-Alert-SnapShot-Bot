@@ -4,10 +4,10 @@ import config
 import requests
 
 
-def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
+def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2Admin):
     snapLink = generateSnapshot(
-        ["-", exchange, symbol, timeframe],
-        candles,
+        [chart_id, exchange, symbol, timeframe],
+        zoom,
         send2Admin
     )
     if not snapLink:
@@ -27,19 +27,18 @@ def getSnapshot(exchange, symbol, timeframe, candles, topWatermark, send2Admin):
     return config.baseUrl + f"preview/{m}-{id}"
 
 
-def generateSnapshot(arg, cl, send2Admin):
+def generateSnapshot(arg, zoom, send2Admin):
     cmd = [x if i == 0 else x.upper() for i, x in enumerate(arg)] if len(
         arg) >= 4 and len(arg) <= 5 and (arg[0] == '-' or (len(arg[0]) == 8 and not arg[0].islower() and not arg[0].isupper())) else [config.chart_id, config.exchange, config.symbol, config.timeframe] if len(arg) == 0 else 'error'
     if isinstance(cmd, str):
         return cmd
     else:
-        requestUrl = f'http://localhost:7707/capture?base=chart/&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&candles={cl}'
+        requestUrl = f'http://localhost:7707/capture?base=chart/{cmd[0]}&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&zoom={zoom}'
         result = requests.get(requestUrl).json()
         if result['ok']:
             token = result['token']
             url = f'https://www.tradingview.com/x/{token}'
             return url
-
         send2Admin('<b>Error</b> =>\n' + result['error'])
         return ''
 
