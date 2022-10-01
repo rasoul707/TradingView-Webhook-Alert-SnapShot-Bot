@@ -305,12 +305,12 @@ app.get('/capture', async function (req, res) {
 
 
 
-        await page.goto(url, { timeout: 25000, waitUntil: 'domcontentloaded', });
+        await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
 
         await page.waitForTimeout(1000);
 
-        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, timeout: 50000 });
-        await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, timeout: 50000 });
+        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
+        await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
 
         await page.waitForTimeout(1000);
 
