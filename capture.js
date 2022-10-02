@@ -144,11 +144,11 @@ app.get('/start', async function (req, res) {
         const page = await newPage();
 
 
-        await page.goto(authUrl, { timeout: 25000, waitUntil: 'networkidle2', });
+        await page.goto(authUrl, { waitUntil: 'networkidle2', });
 
         // ****
         if (await page.url() === authUrl) {
-            await page.waitForSelector('.tv-signin-dialog__toggle-email', { timeout: 20000 })
+            await page.waitForSelector('.tv-signin-dialog__toggle-email')
 
             // ****
             await page.click('.tv-signin-dialog__toggle-email')
@@ -309,110 +309,20 @@ app.get('/capture', async function (req, res) {
 
         await page.waitForTimeout(1000);
 
-        await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
-        await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
+        // await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
+        // await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
 
-        await page.waitForTimeout(1000);
+        // await page.waitForTimeout(1000);
 
         page.keyboard.press('AltLeft');
         await page.keyboard.press('KeyR');
 
 
         if (zoom) {
-
             for (let i = 0; i < zoom; i++) {
                 page.keyboard.press('ControlLeft');
                 await page.keyboard.press('ArrowUp');
             }
-
-
-
-
-            // try {
-
-            //     const { start, end } = dateTimeRange(interval, candles)
-
-            //     const start_date = start.format("YYYYMMDD")
-            //     const end_date = end.format("YYYYMMDD")
-            //     const start_time = start.format("HHmm")
-            //     const end_time = end.format("HHmm")
-
-
-            //     page.keyboard.press('AltLeft');
-            //     await page.keyboard.press('KeyG');
-
-            //     await page.waitForTimeout(1000)
-
-            //     await page.waitForSelector('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]', { visible: true, timeout: 50000 });
-            //     await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-
-
-            //     await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(1) input');
-            //     await page.waitForTimeout(200);
-            //     await page.keyboard.press('End');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.type(start_date, { delay: 100 });
-
-
-
-
-            //     await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(1) > :nth-child(2) input');
-            //     await page.waitForTimeout(200);
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.type(start_time, { delay: 100 });
-
-
-            //     // 
-            //     await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-            //     // 
-
-            //     await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(1) input');
-            //     await page.waitForTimeout(200);
-            //     await page.keyboard.press('End');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.type(end_date, { delay: 100 });
-
-
-
-
-            //     await page.focus('[data-name="go-to-date-dialog"] .bodyWrapper-70bfoXiO > div > :nth-child(2) > :nth-child(2) input');
-            //     await page.waitForTimeout(200);
-            //     await page.keyboard.press('Backspace');
-            //     await page.keyboard.type(end_time, { delay: 100 });
-
-
-
-            //     // 
-            //     await page.click('[data-name="go-to-date-dialog"] div[data-name="tab-item-customrange"]')
-            //     // 
-
-
-            //     await page.waitForTimeout(2000)
-            //     await page.click('[data-name="go-to-date-dialog"] button[data-name="submit-button"]')
-            //     await page.waitForTimeout(2000)
-
-            // }
-            // catch (e) {
-
-            // }
         }
 
 
