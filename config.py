@@ -29,7 +29,7 @@ timeframe = "15"
 
 
 # server
-baseUrl = "https://tvssh.cp.r707.ir/"
+baseUrl = "http://capture.shabake-art.ir/"
 
 
 # spoil text
