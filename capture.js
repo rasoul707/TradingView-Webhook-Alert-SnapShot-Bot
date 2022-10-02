@@ -19,7 +19,7 @@ const path = require("path")
 
 
 const app = express();
-let browser, useragent;
+
 
 const chromeOptions = {
     headless: true,
@@ -92,7 +92,10 @@ app.listen(7707, () => {
     // runPythonBot();
 });
 
-const newPage = async () => {
+const newPage = async (browser) => {
+    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
+    const useragent = userAgent.toString()
+
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
     await page.setRequestInterception(true);
@@ -127,8 +130,7 @@ app.get('/start', async function (req, res) {
     let status = ''
     let ok = false
 
-    const userAgent = new UserAgent({ "deviceCategory": "desktop" })
-    useragent = userAgent.toString()
+
 
     try {
         puppeteer.use(
@@ -140,8 +142,8 @@ app.get('/start', async function (req, res) {
                 visualFeedback: true
             })
         )
-        browser = await puppeteer.launch(chromeOptions);
-        const page = await newPage();
+        const browser = await puppeteer.launch(chromeOptions);
+        const page = await newPage(browser);
 
 
         await page.goto(authUrl, { waitUntil: 'networkidle2', });
@@ -189,13 +191,15 @@ app.get('/start', async function (req, res) {
             ok = true
         }
 
-        await page.close();
-        res.json({ ok, status, username, password, useragent });
+
+        res.json({ ok, status, username, password, useragent })
+        await page.close()
         await browser.close()
         if (!ok) exitProc()
     }
     catch (err) {
         res.json({ ok: false, status: "Error", error: err.toString() })
+
         await browser.close()
         exitProc()
     }
@@ -304,8 +308,8 @@ app.get('/capture', async function (req, res) {
 
     try {
 
-        browser = await puppeteer.launch(chromeOptions);
-        const page = await newPage();
+        const browser = await puppeteer.launch(chromeOptions);
+        const page = await newPage(browser);
 
         await page.goto(url, { waitUntil: 'networkidle2', })
 
@@ -334,7 +338,7 @@ app.get('/capture', async function (req, res) {
         await downloadSnapshot(token)
 
 
-        await page.close();
+        await page.close()
 
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
