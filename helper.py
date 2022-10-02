@@ -156,7 +156,7 @@ def send2Channel(symbol, exchange, timeframe, strategy, image, msg, lang):
         "<b>تایم فریم: </b>" + getTimeFrame(timeframe, 'fa') + "\n" + \
         "<b>استراتژی: </b>" + strategy + "\n" + \
         msg + "\n" + \
-        "<tg-spoiler><a href='google.com'>salam</a></tg-spoiler>" + "\n" + \
+        "<tg-spoiler><a href='" + config.spoilTextUrl + "'>" + config.spoilText + "</a></tg-spoiler>" + "\n" + \
         image
     channel = config.persianChannel
 

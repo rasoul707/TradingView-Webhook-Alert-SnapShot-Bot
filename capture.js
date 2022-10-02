@@ -314,8 +314,8 @@ app.get('/capture', async function (req, res) {
 
         // await page.waitForTimeout(1000);
 
-        page.keyboard.press('AltLeft');
-        await page.keyboard.press('KeyR');
+        // page.keyboard.press('AltLeft');
+        // await page.keyboard.press('KeyR');
 
 
         if (zoom) {

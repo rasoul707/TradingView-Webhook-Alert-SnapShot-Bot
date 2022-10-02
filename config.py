@@ -30,3 +30,8 @@ timeframe = "15"
 
 # server
 baseUrl = "https://tvssh.cp.r707.ir/"
+
+
+# spoil text
+spoilTextUrl = "https://google.com"
+spoilText = "Salam"
