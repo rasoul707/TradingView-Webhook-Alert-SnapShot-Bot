@@ -198,6 +198,8 @@ app.get('/start', async function (req, res) {
         exitProc()
     }
 
+    browser.close()
+
 });
 
 
@@ -297,6 +299,7 @@ app.get('/capture', async function (req, res) {
     const ts = new Date().getTime();
     console.log(ts, "New Capture")
 
+    browser = await puppeteer.launch(chromeOptions);
     const page = await newPage();
 
     // let errorsCount = 0
@@ -339,6 +342,8 @@ app.get('/capture', async function (req, res) {
         // errorsCount++;
 
     }
+
+    browser.close()
 
 
 });
