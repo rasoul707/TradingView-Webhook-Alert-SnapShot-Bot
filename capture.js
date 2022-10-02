@@ -303,11 +303,9 @@ app.get('/capture', async function (req, res) {
 
     try {
 
+        await page.goto(url, { waitUntil: 'networkidle2', })
 
-
-        await page.goto(url, { waitUntil: 'networkidle2', });
-
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(1000)
 
         // await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
         // await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
@@ -320,8 +318,8 @@ app.get('/capture', async function (req, res) {
 
         if (zoom) {
             for (let i = 0; i < zoom; i++) {
-                page.keyboard.press('ControlLeft');
-                await page.keyboard.press('ArrowUp');
+                page.keyboard.press('ControlLeft')
+                await page.keyboard.press('ArrowUp')
             }
         }
 
