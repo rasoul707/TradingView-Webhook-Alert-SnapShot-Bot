@@ -299,7 +299,7 @@ app.get('/capture', async function (req, res) {
     const ts = new Date().getTime();
     console.log(ts, "New Capture")
 
-    browser.close()
+    await browser.close()
     browser = await puppeteer.launch(chromeOptions);
     const page = await newPage();
 
@@ -331,7 +331,7 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        await downloadSnapshot(token)
+        // await downloadSnapshot(token)
         res.json({ ok: true, token });
         console.log(ts, "Capture completed")
 
