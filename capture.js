@@ -59,7 +59,7 @@ const skippedResources = [
     'cdn.api.twitter',
     'google-analytics',
     'googletagmanager',
-    // 'google',
+    'google',
     'fontawesome',
     'facebook',
     'analytics',
@@ -340,6 +340,7 @@ app.get('/capture', async function (req, res) {
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
         res.json({ ok: false, error: err.toString() })
+        await page.close()
         // errorsCount++;
 
     }
