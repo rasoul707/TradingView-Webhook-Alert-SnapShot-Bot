@@ -19,7 +19,7 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
     try:
         impath = f"snapshots/{m}-{id}"
         filepath = f"{impath}.png"
-        cropImage(filepath)
+        # cropImage(filepath)
         watermark(filepath, topWatermark)
     except Exception as ee:
         print(ee)
