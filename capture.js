@@ -191,14 +191,14 @@ app.get('/start', async function (req, res) {
 
         await page.close();
         res.json({ ok, status, username, password, useragent });
+        await browser.close()
         if (!ok) exitProc()
     }
     catch (err) {
         res.json({ ok: false, status: "Error", error: err.toString() })
+        await browser.close()
         exitProc()
     }
-
-    // browser.close()
 
 });
 
@@ -299,13 +299,13 @@ app.get('/capture', async function (req, res) {
     const ts = new Date().getTime();
     console.log(ts, "New Capture")
 
-    await browser.close()
-    browser = await puppeteer.launch(chromeOptions);
-    const page = await newPage();
 
-    // let errorsCount = 0
+
 
     try {
+
+        browser = await puppeteer.launch(chromeOptions);
+        const page = await newPage();
 
         await page.goto(url, { waitUntil: 'networkidle2', })
 
@@ -332,21 +332,19 @@ app.get('/capture', async function (req, res) {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         await downloadSnapshot(token)
-        res.json({ ok: true, token });
-        console.log(ts, "Capture completed")
+
 
         await page.close();
-        // errorsCount = 0;
+
+        res.json({ ok: true, token });
+        console.log(ts, "Capture completed")
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
-        res.json({ ok: false, error: err.toString() })
         await page.close()
-        // errorsCount++;
-
+        res.json({ ok: false, error: err.toString() })
     }
 
-    // browser.close()
-
+    await browser.close()
 
 });
 
