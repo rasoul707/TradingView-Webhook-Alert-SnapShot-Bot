@@ -305,7 +305,7 @@ app.get('/capture', async function (req, res) {
 
 
 
-        await page.goto(url, { timeout: 25000, waitUntil: 'networkidle2', });
+        await page.goto(url, { waitUntil: 'networkidle2', });
 
         await page.waitForTimeout(1000);
 
