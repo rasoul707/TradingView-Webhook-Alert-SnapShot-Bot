@@ -192,7 +192,7 @@ app.get('/start', async function (req, res) {
         }
 
 
-        res.json({ ok, status, username, password, useragent })
+        res.json({ ok, status, username, password, useragent: "-" })
         await page.close()
         await browser.close()
         if (!ok) exitProc()
