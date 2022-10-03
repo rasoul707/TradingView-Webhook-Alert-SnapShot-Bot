@@ -282,12 +282,12 @@ async function downloadSnapshot(token) {
         const m = token.substring(0, 1).toLowerCase()
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
         const imagePath = `snapshots/${m}-${id}.png`
-        request.head(imageUrl, function (err, res, body) {
-            console.log('content-type:', res.headers['content-type']);
-            console.log('content-length:', res.headers['content-length']);
-            console.log('err', err)
-            request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', () => { resolve(true) });
-        })
+        // request.head(imageUrl, function (err, res, body) {
+        //     console.log('content-type:', res.headers['content-type']);
+        //     console.log('content-length:', res.headers['content-length']);
+        //     console.log('err', err)
+        //     request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', () => { resolve(true) });
+        // })
         // fetch(imageUrl)
         //     .then(res => {
         //         const dest = fs.createWriteStream(imagePath);
@@ -307,6 +307,7 @@ async function downloadSnapshot(token) {
         // console.log("err img")
         // img = await downloadSnapshot(token)
         // resolve(img)
+        resolve(true)
     })
 }
 
