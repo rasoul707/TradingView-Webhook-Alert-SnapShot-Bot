@@ -284,7 +284,7 @@ async function downloadSnapshot(token) {
         let img = await page.goto(imageUrl)
         if (img._status === 200) {
             fs.writeFileSync(imagePath, await img.buffer())
-            setTimeout(() => { resolve(img) }, 1000)
+            setTimeout(() => { resolve(img) }, 3000)
         }
         console.log("err img")
         img = await downloadSnapshot(token)
@@ -335,13 +335,11 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        // await downloadSnapshot(token)
+        await downloadSnapshot(token)
 
+        await page.close()
 
-
-        await page.close();
-
-        res.json({ ok: true, token });
+        res.json({ ok: true, token })
         console.log(ts, "Capture completed")
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
