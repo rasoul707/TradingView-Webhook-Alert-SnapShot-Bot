@@ -280,15 +280,25 @@ async function downloadSnapshot(token) {
         const m = token.substring(0, 1).toLowerCase()
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
         const imagePath = `snapshots/${m}-${id}.png`
-        const page = await newPage()
-        let img = await page.goto(imageUrl)
-        if (img._status === 200) {
-            fs.writeFileSync(imagePath, await img.buffer())
-            setTimeout(() => { resolve(img) }, 3000)
-        }
-        console.log("err img")
-        img = await downloadSnapshot(token)
-        resolve(img)
+        fetch(imageUrl)
+            .then(res => {
+                const dest = fs.createWriteStream(imagePath);
+                res.body.pipe(dest)
+                setTimeout(() => { resolve(true) }, 3000)
+            })
+            .catch(async (err) => {
+                console.log('IMGErr', err)
+                resolve(await downloadSnapshot(token))
+            })
+        // const page = await newPage()
+        // let img = await page.goto(imageUrl)
+        // if (img._status === 200) {
+        //     fs.writeFileSync(imagePath, await img.buffer())
+        //     setTimeout(() => { resolve(img) }, 3000)
+        // }
+        // console.log("err img")
+        // img = await downloadSnapshot(token)
+        // resolve(img)
     })
 }
 
