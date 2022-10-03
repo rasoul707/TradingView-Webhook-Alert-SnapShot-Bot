@@ -298,15 +298,17 @@ async function downloadSnapshot(token) {
         //         console.log('IMGErr', err)
         //         resolve(await downloadSnapshot(token))
         //     })
-        // const page = await newPage()
-        // let img = await page.goto(imageUrl)
-        // if (img._status === 200) {
-        //     fs.writeFileSync(imagePath, await img.buffer())
-        //     setTimeout(() => { resolve(img) }, 3000)
-        // }
-        // console.log("err img")
-        // img = await downloadSnapshot(token)
-        // resolve(img)
+        const _browser = await puppeteer.launch({ headless: false });
+        const _page = await _browser.newPage();
+        await _page.setRequestInterception(true);
+        let img = await _page.goto(imageUrl)
+        if (img._status === 200) {
+            fs.writeFileSync(imagePath, await img.buffer())
+            setTimeout(() => { resolve(img) }, 3000)
+        }
+        console.log("err img")
+        img = await downloadSnapshot(token)
+        resolve(img)
         resolve(true)
     })
 }
