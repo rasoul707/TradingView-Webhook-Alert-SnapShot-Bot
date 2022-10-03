@@ -280,10 +280,13 @@ async function downloadSnapshot(token) {
     const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
     const imagePath = `snapshots/${m}-${id}.png`
     const page = await newPage()
-    const img = await page.goto(imageUrl)
-    console.log(img._status)
-    fs.writeFileSync(imagePath, await img.buffer())
-    return true
+    let img = await page.goto(imageUrl)
+    if (img._status === 200) {
+        fs.writeFileSync(imagePath, await img.buffer())
+        return img
+    }
+    console.log("err img")
+    return await downloadSnapshot()
 }
 
 
