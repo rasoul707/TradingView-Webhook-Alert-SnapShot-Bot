@@ -15,7 +15,7 @@ const { spawn } = require('child_process')
 const fs = require('fs');
 const watermark = require('jimp-watermark');
 const path = require("path")
-const fetch = require('node-fetch');
+const request = require('request');
 
 
 
@@ -282,16 +282,22 @@ async function downloadSnapshot(token) {
         const m = token.substring(0, 1).toLowerCase()
         const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
         const imagePath = `snapshots/${m}-${id}.png`
-        fetch(imageUrl)
-            .then(res => {
-                const dest = fs.createWriteStream(imagePath);
-                res.body.pipe(dest)
-                setTimeout(() => { resolve(true) }, 3000)
-            })
-            .catch(async (err) => {
-                console.log('IMGErr', err)
-                resolve(await downloadSnapshot(token))
-            })
+        request.head(imageUrl, function (err, res, body) {
+            console.log('content-type:', res.headers['content-type']);
+            console.log('content-length:', res.headers['content-length']);
+            console.log('err', err)
+            request(imageUrl).pipe(fs.createWriteStream(imagePath)).on('close', () => { resolve(true) });
+        })
+        // fetch(imageUrl)
+        //     .then(res => {
+        //         const dest = fs.createWriteStream(imagePath);
+        //         res.body.pipe(dest)
+        //         setTimeout(() => { resolve(true) }, 3000)
+        //     })
+        //     .catch(async (err) => {
+        //         console.log('IMGErr', err)
+        //         resolve(await downloadSnapshot(token))
+        //     })
         // const page = await newPage()
         // let img = await page.goto(imageUrl)
         // if (img._status === 200) {
