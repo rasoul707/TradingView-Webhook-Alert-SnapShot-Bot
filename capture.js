@@ -106,13 +106,13 @@ const newPage = async () => {
 
     page.on('request', request => {
         const requestUrl = request.url().split('?')[0].split('#')[0];
+        console.log(request.resourceType())
         if (
             blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
             skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
         ) {
             request.abort();
         } else {
-
             request.continue();
         }
     });
