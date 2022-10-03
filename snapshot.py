@@ -13,7 +13,7 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
     if not snapLink:
         return 'err'
 
-    # return snapLink
+    return snapLink
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
     try:

@@ -42,35 +42,35 @@ const chromeOptions = {
 
 const blockedResourceTypes = [
     // 'image',
-    // 'media',
+    'media',
     // 'font',
-    // 'texttrack',
-    // 'object',
-    // 'beacon',
-    // 'csp_report',
-    // 'imageset',
+    'texttrack',
+    'object',
+    'beacon',
+    'csp_report',
+    'imageset',
 ];
 
 const skippedResources = [
-    // 'quantserve',
-    // 'adzerk',
-    // 'doubleclick',
-    // 'adition',
-    // 'exelator',
-    // 'sharethrough',
-    // 'cdn.api.twitter',
-    // 'google-analytics',
-    // 'googletagmanager',
-    // 'google',
-    // 'fontawesome',
-    // 'facebook',
-    // 'analytics',
-    // 'optimizely',
-    // 'clicktale',
-    // 'mixpanel',
-    // 'zedo',
-    // 'clicksor',
-    // 'tiqcdn',
+    'quantserve',
+    'adzerk',
+    'doubleclick',
+    'adition',
+    'exelator',
+    'sharethrough',
+    'cdn.api.twitter',
+    'google-analytics',
+    'googletagmanager',
+    'google',
+    'fontawesome',
+    'facebook',
+    'analytics',
+    'optimizely',
+    'clicktale',
+    'mixpanel',
+    'zedo',
+    'clicksor',
+    'tiqcdn',
 ];
 
 
@@ -298,15 +298,15 @@ async function downloadSnapshot(token) {
         //         console.log('IMGErr', err)
         //         resolve(await downloadSnapshot(token))
         //     })
-        const _page = await newPage();
-        let img = await _page.goto(imageUrl)
-        if (img._status === 200) {
-            fs.writeFileSync(imagePath, await img.buffer())
-            setTimeout(() => { resolve(img) }, 3000)
-        }
-        console.log("err img")
-        img = await downloadSnapshot(token)
-        resolve(img)
+        // const _page = await newPage();
+        // let img = await _page.goto(imageUrl)
+        // if (img._status === 200) {
+        //     fs.writeFileSync(imagePath, await img.buffer())
+        //     setTimeout(() => { resolve(img) }, 3000)
+        // }
+        // console.log("err img")
+        // img = await downloadSnapshot(token)
+        // resolve(img)
         resolve(true)
     })
 }
