@@ -335,7 +335,7 @@ app.get('/capture', async function (req, res) {
         const token = await page.evaluate(async () => {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
-        await downloadSnapshot(token)
+        // await downloadSnapshot(token)
 
 
 
