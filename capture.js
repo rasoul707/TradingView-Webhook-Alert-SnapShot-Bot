@@ -275,16 +275,15 @@ const dateTimeRange = (interval, candles) => {
 
 
 async function downloadSnapshot(token) {
-    // return new Promise(async (resolve, reject) => {
     const id = token
     const m = token.substring(0, 1).toLowerCase()
     const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
     const imagePath = `snapshots/${m}-${id}.png`
     const page = await newPage()
     const img = await page.goto(imageUrl)
+    console.log(img)
     fs.writeFileSync(imagePath, await img.buffer())
     return true
-    // })
 }
 
 
