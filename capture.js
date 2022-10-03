@@ -286,7 +286,7 @@ async function downloadSnapshot(token) {
         return img
     }
     console.log("err img")
-    return await downloadSnapshot()
+    return await downloadSnapshot(token)
 }
 
 
@@ -341,7 +341,6 @@ app.get('/capture', async function (req, res) {
         console.log(ts, "Capture completed")
     } catch (err) {
         console.log(ts, "Error capture: ", err.toString())
-        await page.close()
         res.json({ ok: false, error: err.toString() })
     }
 
