@@ -27,9 +27,9 @@ const chromeOptions = {
     headless: true,
     defaultViewport: null,
     args: [
-        "--incognito",
+        // "--incognito",
         "--no-sandbox",
-        "--single-process",
+        // "--single-process",
         "--no-zygote",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
@@ -298,9 +298,7 @@ async function downloadSnapshot(token) {
         //         console.log('IMGErr', err)
         //         resolve(await downloadSnapshot(token))
         //     })
-        const _browser = await puppeteer.launch({ headless: false });
-        const _page = await _browser.newPage();
-        await _page.setRequestInterception(true);
+        const _page = await newPage();
         let img = await _page.goto(imageUrl)
         if (img._status === 200) {
             fs.writeFileSync(imagePath, await img.buffer())
