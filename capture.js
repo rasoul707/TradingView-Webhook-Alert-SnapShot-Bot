@@ -281,7 +281,7 @@ async function downloadSnapshot(token) {
     const imagePath = `snapshots/${m}-${id}.png`
     const page = await newPage()
     const img = await page.goto(imageUrl)
-    console.log(img)
+    console.log(img._status)
     fs.writeFileSync(imagePath, await img.buffer())
     return true
 }
