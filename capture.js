@@ -275,18 +275,21 @@ const dateTimeRange = (interval, candles) => {
 
 
 async function downloadSnapshot(token) {
-    const id = token
-    const m = token.substring(0, 1).toLowerCase()
-    const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
-    const imagePath = `snapshots/${m}-${id}.png`
-    const page = await newPage()
-    let img = await page.goto(imageUrl)
-    if (img._status === 200) {
-        fs.writeFileSync(imagePath, await img.buffer())
-        return img
-    }
-    console.log("err img")
-    return await downloadSnapshot(token)
+    return new Promise(async (resolve, reject) => {
+        const id = token
+        const m = token.substring(0, 1).toLowerCase()
+        const imageUrl = `https://s3.tradingview.com/snapshots/${m}/${id}.png`
+        const imagePath = `snapshots/${m}-${id}.png`
+        const page = await newPage()
+        let img = await page.goto(imageUrl)
+        if (img._status === 200) {
+            fs.writeFileSync(imagePath, await img.buffer())
+            setTimeout(() => { resolve(img) }, 1000)
+        }
+        console.log("err img")
+        img = await downloadSnapshot(token)
+        resolve(img)
+    })
 }
 
 
@@ -333,6 +336,7 @@ app.get('/capture', async function (req, res) {
             return this._exposed_chartWidgetCollection.takeScreenshot()
         })
         await downloadSnapshot(token)
+
 
 
         await page.close();
