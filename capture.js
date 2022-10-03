@@ -15,7 +15,7 @@ const { spawn } = require('child_process')
 const fs = require('fs');
 const watermark = require('jimp-watermark');
 const path = require("path")
-const fetch = require("node-fetch")
+import fetch from 'node-fetch';
 
 
 
