@@ -354,8 +354,10 @@ app.get('/capture', async function (req, res) {
         })
         // await downloadSnapshot(token)
 
+        console.log("GGGG")
+
         const downloadPath = path.resolve('./snapshots');
-        await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './snapshots' });
+        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
 
 
         page.keyboard.press('ControlLeft')
