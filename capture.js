@@ -350,9 +350,9 @@ app.get('/capture', async function (req, res) {
         }
 
 
-        // const token = await page.evaluate(async () => {
-        //     return this._exposed_chartWidgetCollection.takeScreenshot()
-        // })
+        const token = await page.evaluate(async () => {
+            return this._exposed_chartWidgetCollection.takeScreenshot()
+        })
         // await downloadSnapshot(token)
 
         await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './snapshots' });
