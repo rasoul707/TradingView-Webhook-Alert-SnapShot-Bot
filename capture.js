@@ -106,7 +106,9 @@ const newPage = async () => {
 
     page.on('request', request => {
         const requestUrl = request.url().split('?')[0].split('#')[0];
-        console.log(request.resourceType())
+        if (request.resourceType() === 'image') {
+            console.log(request)
+        }
         if (
             blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
             skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
