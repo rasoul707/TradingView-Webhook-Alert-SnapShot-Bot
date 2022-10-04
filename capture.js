@@ -310,14 +310,19 @@ async function downloadSnapshot(token) {
 }
 
 
-const getImageName = (ticker, downloadPath) => {
+const getImageDir = (ticker, path) => {
     const f = new Date().toISOString()
     const m = f.split("T")
     const md = m[0].split("-")
     const mt = m[1].split(".")[0].split(":")
     const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
-    const imgDir = path.join(downloadPath, imgName)
-    return imgDir
+    return path.join(path, imgName)
+}
+
+
+const getNewImageDir = (imgToken, path) => {
+    const m = imgToken.substring(0, 1).toLowerCase()
+    return path.join(path, m + "-" + imgToken + ".png")
 }
 
 app.get('/capture', async function (req, res) {
@@ -333,7 +338,6 @@ app.get('/capture', async function (req, res) {
     await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
     const downloadPath = path.resolve('./snap_downloads');
-    const snapshotsPath = path.resolve('./snapshot');
     await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
 
@@ -344,12 +348,14 @@ app.get('/capture', async function (req, res) {
     page.keyboard.press('AltLeft')
     await page.keyboard.press('KeyS')
 
-    const imgDir = getImageName(ticker, downloadPath)
-    const m = imgToken.substring(0, 1).toLowerCase()
-    const newDir = path.join(snapshotsPath, m + "-" + imgToken + ".png")
-    console.log(imgDir, newDir)
+
+    const oldImageDir = getImageDir(ticker, './snap_downloads')
+    const newImageDir = getNewImageDir(imgToken, './snapshot')
+
+    console.log(oldImageDir, newImageDir)
     try {
-        fs.renameSync(imgDir, newDir)
+        fs.renameSync(oldImageDir, newImageDir)
+        console.log("Done")
     } catch (err) {
         console.log("err", err)
     }
