@@ -354,7 +354,7 @@ app.get('/capture', async function (req, res) {
     const newImageDir = getNewImageDir(token, 'snapshot')
 
     console.log(oldImageDir, newImageDir)
-    const ff = fs.readFileSync(oldImageDir)
+    const ff = fs.readFileSync('snap_downloads/BNBUSDT_2022-10-04_13-23-39.png')
 
     // try {
     //     fs.renameSync(oldImageDir, newImageDir)
