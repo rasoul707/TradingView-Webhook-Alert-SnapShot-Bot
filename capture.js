@@ -354,12 +354,16 @@ app.get('/capture', async function (req, res) {
     const newImageDir = getNewImageDir(token, 'snapshot')
 
     console.log(oldImageDir, newImageDir)
-    try {
-        fs.renameSync(oldImageDir, newImageDir)
-        console.log("Done")
-    } catch (err) {
-        console.log("err", err)
-    }
+    const ff = fs.readFileSync(oldImageDir)
+
+    // try {
+    //     fs.renameSync(oldImageDir, newImageDir)
+    //     console.log("Done")
+    // } catch (err) {
+    //     console.log("err", err)
+    // }
+
+    console.log("hhhh")
 
 
 
