@@ -23,7 +23,7 @@ const app = express();
 let browser, useragent;
 
 const chromeOptions = {
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: [
         // "--incognito",
@@ -41,7 +41,7 @@ const chromeOptions = {
 
 const blockedResourceTypes = [
     // 'image',
-    'media',
+    // 'media',
     // 'font',
     'texttrack',
     'object',
@@ -355,7 +355,7 @@ app.get('/capture', async function (req, res) {
         // await downloadSnapshot(token)
 
         const downloadPath = path.resolve('./snapshots');
-        await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+        await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './snapshots' });
 
 
         page.keyboard.press('ControlLeft')
