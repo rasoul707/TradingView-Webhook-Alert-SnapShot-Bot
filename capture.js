@@ -354,6 +354,7 @@ app.get('/capture', async function (req, res) {
 
     const ts = new Date().getTime();
     console.log(ts, "New Capture")
+    let token = null
 
     try {
         const page = await newPage()
@@ -371,7 +372,7 @@ app.get('/capture', async function (req, res) {
         await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
 
-        const token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
+        token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
 
 
         page.keyboard.press('ControlLeft')
@@ -407,7 +408,7 @@ app.get('/capture', async function (req, res) {
     }
     catch (error) {
         console.log(ts, "Error capture: ", error.toString())
-        res.json({ ok: false, error: error.toString() })
+        res.json({ ok: false, error: error.toString(), token })
     }
 
 })
