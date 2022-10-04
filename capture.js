@@ -316,13 +316,14 @@ const getImageDir = (ticker, path) => {
     const md = m[0].split("-")
     const mt = m[1].split(".")[0].split(":")
     const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
-    return path.join(path, imgName)
+    return path + "/" + imgName
 }
 
 
 const getNewImageDir = (imgToken, path) => {
     const m = imgToken.substring(0, 1).toLowerCase()
-    return path.join(path, m + "-" + imgToken + ".png")
+    const imgName = m + "-" + imgToken + ".png"
+    return path + "/" + imgName
 }
 
 app.get('/capture', async function (req, res) {
@@ -341,7 +342,7 @@ app.get('/capture', async function (req, res) {
     await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
 
-    const imgToken = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
+    const token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
 
 
     page.keyboard.press('ControlLeft')
@@ -350,7 +351,7 @@ app.get('/capture', async function (req, res) {
 
 
     const oldImageDir = getImageDir(ticker, './snap_downloads')
-    const newImageDir = getNewImageDir(imgToken, './snapshot')
+    const newImageDir = getNewImageDir(token, './snapshot')
 
     console.log(oldImageDir, newImageDir)
     try {
