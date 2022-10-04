@@ -15,7 +15,6 @@ const { spawn } = require('child_process')
 const fs = require('fs');
 const watermark = require('jimp-watermark');
 const path = require("path")
-const request = require('request');
 
 
 
@@ -355,7 +354,10 @@ app.get('/capture', async function (req, res) {
         })
         // await downloadSnapshot(token)
 
-        await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './snapshots' });
+        const downloadPath = path.resolve('./snapshots');
+        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+
+
         page.keyboard.press('ControlLeft')
         page.keyboard.press('AltLeft')
         await page.keyboard.press('KeyS')
