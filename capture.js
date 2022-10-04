@@ -380,7 +380,7 @@ app.get('/capture', async function (req, res) {
 
 
         const oldImageDir = getImageDir(ticker, 'snap_downloads')
-        const newImageDir = getNewImageDir(token, 'snapshot')
+        const newImageDir = getNewImageDir(token, 'snapshots')
 
 
         await page.waitForTimeout(2000)
