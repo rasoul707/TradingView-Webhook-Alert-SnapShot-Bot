@@ -313,12 +313,17 @@ async function downloadSnapshot(token) {
 
 
 app.get('/capture', async function (req, res) {
-    const page = await newPage()
 
-    const url = `https://www.tradingview.com/chart/MQmuYSvZ/?symbol=BINANCE%3AETHUSDT`
+    var base = req.query.base;
+    var exchange = req.query.exchange;
+    var ticker = req.query.ticker;
+    var interval = req.query.interval;
+    var zoom = req.query.zoom;
+    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+    const page = await newPage()
     await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
-    console.log("GGGG")
+    console.log("GGGGOOO")
 
     const downloadPath = path.resolve('./snapshotsttt');
     await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
@@ -343,12 +348,12 @@ app.get('/capture', async function (req, res) {
 
 
 // app.get('/capture', async function (req, res) {
-//     var base = req.query.base;
-//     var exchange = req.query.exchange;
-//     var ticker = req.query.ticker;
-//     var interval = req.query.interval;
-//     var zoom = req.query.zoom;
-//     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+// var base = req.query.base;
+// var exchange = req.query.exchange;
+// var ticker = req.query.ticker;
+// var interval = req.query.interval;
+// var zoom = req.query.zoom;
+// const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
 //     const ts = new Date().getTime();
 //     console.log(ts, "New Capture")
