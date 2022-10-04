@@ -13,13 +13,15 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
     if not snapLink:
         return 'Capture Error'
 
-    id = snapLink.split("/")[-1]
-    m = id[0:1].lower()
     try:
+        id = snapLink.split("/")[-1]
+        m = id[0:1].lower()
         impath = f"snapshots/{m}-{id}"
         filepath = f"{impath}.png"
         # cropImage(filepath)
-        watermark(filepath, topWatermark)
+        r = watermark(filepath, topWatermark)
+        if not r:
+            return snapLink
         return config.baseUrl + f"preview/{m}-{id}"
     except Exception as ee:
         return snapLink
@@ -59,4 +61,5 @@ def cropImage(imgPath):
 
 def watermark(imgPath, topWatermark):
     requestUrl = f'http://localhost:7707/snapshots/watermark?filePath={imgPath}&topWatermark={topWatermark}'
-    requests.get(requestUrl)
+    res = requests.get(requestUrl)
+    return res['ok']

@@ -568,10 +568,10 @@ app.get('/snapshots/:id', async (req, res) => {
     const { id } = req.params
     const fileName = id + '.png'
     const filePath = 'snapshots/' + fileName
-    if (fs.existsSync(filePath)) {
+    try {
         res.sendFile(filePath, { root: __dirname })
     }
-    else {
+    catch (err) {
         res.sendFile('assets/center_watermark.png', { root: __dirname })
     }
 })
