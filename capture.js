@@ -314,6 +314,7 @@ const getImageDir = (ticker, path) => {
     const t = new Date() - 0
     const d = new Date(t)
     const d1 = new Date(t - 1000)
+    const d2 = new Date(t + 1000)
 
     const f = d.toISOString()
     const m = f.split("T")
@@ -329,7 +330,14 @@ const getImageDir = (ticker, path) => {
     const img1Path = `${path}/${ticker}_${m1d[0]}-${m1d[1]}-${m1d[2]}_${m1t[0]}-${m1t[1]}-${m1t[2]}.png`
 
 
-    return [imgPath, img1Path]
+    const f2 = d2.toISOString()
+    const m2 = f2.split("T")
+    const m2d = m2[0].split("-")
+    const m2t = m2[1].split(".")[0].split(":")
+    const img2Path = `${path}/${ticker}_${m2d[0]}-${m2d[1]}-${m2d[2]}_${m2t[0]}-${m2t[1]}-${m2t[2]}.png`
+
+
+    return [imgPath, img1Path, img2Path]
 }
 
 
@@ -386,22 +394,17 @@ app.get('/capture', async function (req, res) {
 
         await page.waitForTimeout(2000)
 
-        try {
-            fs.renameSync(oldImageDir[0], newImageDir)
-        } catch (err0) {
-            try {
-                await page.waitForTimeout(1000)
-                fs.renameSync(oldImageDir[0], newImageDir)
-            }
-            catch (err1) {
-                try {
-                    fs.renameSync(oldImageDir[1], newImageDir)
-                }
-                catch (err2) {
-                    throw err2.toString()
-                }
-            }
-        }
+
+        fs.rename(oldImageDir[0], newImageDir, (err) => { throw err })
+        fs.rename(oldImageDir[1], newImageDir, (err) => { throw err })
+        fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
+        await page.waitForTimeout(1000)
+        fs.rename(oldImageDir[0], newImageDir, (err) => { throw err })
+        fs.rename(oldImageDir[1], newImageDir, (err) => { throw err })
+        fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
+
+
+
 
         console.log(ts, "Capture completed")
         res.json({ ok: true, token })
