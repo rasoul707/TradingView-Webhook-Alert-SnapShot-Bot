@@ -11,9 +11,8 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
         send2Admin
     )
     if not snapLink:
-        return 'err'
+        return 'Capture Error'
 
-    return snapLink
     id = snapLink.split("/")[-1]
     m = id[0:1].lower()
     try:
@@ -21,10 +20,9 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
         filepath = f"{impath}.png"
         # cropImage(filepath)
         watermark(filepath, topWatermark)
+        return config.baseUrl + f"preview/{m}-{id}"
     except Exception as ee:
-        print(ee)
-
-    return config.baseUrl + f"preview/{m}-{id}"
+        return snapLink
 
 
 def generateSnapshot(arg, zoom, send2Admin):

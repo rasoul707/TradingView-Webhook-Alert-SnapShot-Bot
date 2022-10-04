@@ -311,13 +311,28 @@ async function downloadSnapshot(token) {
 
 
 const getImageDir = (ticker, path) => {
-    const f = new Date().toISOString()
+    const t = new Date() - 0
+    const d = new Date(t)
+    const d1 = new Date(t - 1000)
+
+    const f = d.toISOString()
     const m = f.split("T")
     const md = m[0].split("-")
     const mt = m[1].split(".")[0].split(":")
-    const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
-    return path + "/" + imgName
+    const imgPath = `${path}/${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
+
+
+    const f1 = d1.toISOString()
+    const m1 = f1.split("T")
+    const m1d = m1[0].split("-")
+    const m1t = m1[1].split(".")[0].split(":")
+    const img1Path = `${path}/${ticker}_${m1d[0]}-${m1d[1]}-${m1d[2]}_${m1t[0]}-${m1t[1]}-${m1t[2]}.png`
+
+
+    return [imgPath, img1Path]
 }
+
+
 
 
 const getNewImageDir = (imgToken, path) => {
@@ -335,42 +350,65 @@ app.get('/capture', async function (req, res) {
     const zoom = req.query.zoom;
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
-    const page = await newPage()
-    await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
-
-    const downloadPath = path.resolve('./snap_downloads');
-    await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
 
-    const token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
+    const ts = new Date().getTime();
+    console.log(ts, "New Capture")
+
+    try {
+        const page = await newPage()
+        await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
 
-    page.keyboard.press('ControlLeft')
-    page.keyboard.press('AltLeft')
-    await page.keyboard.press('KeyS')
+        if (zoom) {
+            for (let i = 0; i < zoom; i++) {
+                page.keyboard.press('ControlLeft')
+                await page.keyboard.press('ArrowUp')
+            }
+        }
+
+        const downloadPath = path.resolve('./snap_downloads');
+        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
 
-    const oldImageDir = getImageDir(ticker, 'snap_downloads')
-    const newImageDir = getNewImageDir(token, 'snapshot')
-
-    console.log(oldImageDir, newImageDir)
-    const ff = fs.readFileSync('snap_downloads/BNBUSDT_2022-10-04_13-23-39.png')
-
-    // try {
-    //     fs.renameSync(oldImageDir, newImageDir)
-    //     console.log("Done")
-    // } catch (err) {
-    //     console.log("err", err)
-    // }
-
-    console.log("hhhh")
+        const token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
 
 
+        page.keyboard.press('ControlLeft')
+        page.keyboard.press('AltLeft')
+        await page.keyboard.press('KeyS')
 
 
+        const oldImageDir = getImageDir(ticker, 'snap_downloads')
+        const newImageDir = getNewImageDir(token, 'snapshot')
 
-    res.json({ ok: true, token: "QkCrNuyR" })
 
+        await page.waitForTimeout(2000)
+
+        try {
+            fs.renameSync(oldImageDir[0], newImageDir)
+        } catch (err0) {
+            try {
+                await page.waitForTimeout(1000)
+                fs.renameSync(oldImageDir[0], newImageDir)
+            }
+            catch (err1) {
+                try {
+                    fs.renameSync(oldImageDir[1], newImageDir)
+                }
+                catch (err2) {
+                    throw err2.toString()
+                }
+            }
+        }
+
+        console.log(ts, "Capture completed")
+        res.json({ ok: true, token: "QkCrNuyR" })
+    }
+    catch (error) {
+        console.log(ts, "Error capture: ", error.toString())
+        res.json({ ok: false, error: error.toString() })
+    }
 
 })
 
@@ -390,8 +428,8 @@ app.get('/capture', async function (req, res) {
 // var zoom = req.query.zoom;
 // const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
 
-//     const ts = new Date().getTime();
-//     console.log(ts, "New Capture")
+// const ts = new Date().getTime();
+// console.log(ts, "New Capture")
 
 
 
@@ -413,12 +451,7 @@ app.get('/capture', async function (req, res) {
 //         // await page.keyboard.press('KeyR');
 
 
-//         if (zoom) {
-//             for (let i = 0; i < zoom; i++) {
-//                 page.keyboard.press('ControlLeft')
-//                 await page.keyboard.press('ArrowUp')
-//             }
-//         }
+
 
 
 
