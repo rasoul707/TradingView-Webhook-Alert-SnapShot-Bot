@@ -403,7 +403,7 @@ app.get('/capture', async function (req, res) {
         }
 
         console.log(ts, "Capture completed")
-        res.json({ ok: true, token: "QkCrNuyR" })
+        res.json({ ok: true, token })
     }
     catch (error) {
         console.log(ts, "Error capture: ", error.toString())
