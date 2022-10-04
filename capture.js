@@ -323,10 +323,13 @@ app.get('/capture', async function (req, res) {
     const page = await newPage()
     await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
-    console.log("GGGGOOO")
-
-    const downloadPath = path.resolve('./snapshotsttt');
+    const downloadPath = path.resolve('./snapshot5');
     await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+
+    const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
+    const imgDir = path.join(downloadPath, imgName)
+
+    console.log(imgDir)
 
 
     page.keyboard.press('ControlLeft')
