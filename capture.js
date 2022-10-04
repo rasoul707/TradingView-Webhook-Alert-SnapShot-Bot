@@ -310,73 +310,110 @@ async function downloadSnapshot(token) {
 }
 
 
+
+
 app.get('/capture', async function (req, res) {
-    var base = req.query.base;
-    var exchange = req.query.exchange;
-    var ticker = req.query.ticker;
-    var interval = req.query.interval;
-    var zoom = req.query.zoom;
-    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+    const page = await newPage()
 
-    const ts = new Date().getTime();
-    console.log(ts, "New Capture")
+    const url = `https://www.tradingview.com/chart/MQmuYSvZ/?symbol=BINANCE%3AETHUSDT`
+    await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
+    console.log("GGGG")
 
+    const downloadPath = path.resolve('./snapshotsttt');
+    await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
 
 
-    try {
-        // browser = await puppeteer.launch(chromeOptions);
-        const page = await newPage();
-
-        await page.goto(url, { waitUntil: 'networkidle2', })
-
-        await page.waitForTimeout(1000)
-
-        // await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
-        // await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
-
-        // await page.waitForTimeout(1000);
-
-        // page.keyboard.press('AltLeft');
-        // await page.keyboard.press('KeyR');
+    page.keyboard.press('ControlLeft')
+    page.keyboard.press('AltLeft')
+    await page.keyboard.press('KeyS')
 
 
-        if (zoom) {
-            for (let i = 0; i < zoom; i++) {
-                page.keyboard.press('ControlLeft')
-                await page.keyboard.press('ArrowUp')
-            }
-        }
+    res.json({ ok: true, token: "QkCrNuyR" })
 
 
-        const token = await page.evaluate(async () => {
-            return this._exposed_chartWidgetCollection.takeScreenshot()
-        })
-        // await downloadSnapshot(token)
-
-        console.log("GGGG")
-
-        const downloadPath = path.resolve('./snapshots');
-        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+})
 
 
-        page.keyboard.press('ControlLeft')
-        page.keyboard.press('AltLeft')
-        await page.keyboard.press('KeyS')
 
 
-        await page.close()
 
-        res.json({ ok: true, token })
-        console.log(ts, "Capture completed")
-    } catch (err) {
-        console.log(ts, "Error capture: ", err.toString())
-        res.json({ ok: false, error: err.toString() })
-    }
 
-    // await browser.close()
 
-});
+
+
+// app.get('/capture', async function (req, res) {
+//     var base = req.query.base;
+//     var exchange = req.query.exchange;
+//     var ticker = req.query.ticker;
+//     var interval = req.query.interval;
+//     var zoom = req.query.zoom;
+//     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+
+//     const ts = new Date().getTime();
+//     console.log(ts, "New Capture")
+
+
+
+
+//     try {
+//         // browser = await puppeteer.launch(chromeOptions);
+//         const page = await newPage();
+
+//         await page.goto(url, { waitUntil: 'networkidle2', })
+
+//         await page.waitForTimeout(1000)
+
+//         // await page.waitForSelector('#header-toolbar-symbol-search', { visible: true, });
+//         // await page.waitForSelector('[data-name="legend-series-item"] .loader-OYqjX7Sg', { hidden: true, });
+
+//         // await page.waitForTimeout(1000);
+
+//         // page.keyboard.press('AltLeft');
+//         // await page.keyboard.press('KeyR');
+
+
+//         if (zoom) {
+//             for (let i = 0; i < zoom; i++) {
+//                 page.keyboard.press('ControlLeft')
+//                 await page.keyboard.press('ArrowUp')
+//             }
+//         }
+
+
+
+
+//         console.log("GGGG")
+
+//         const downloadPath = path.resolve('./snapshots');
+//         await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+
+
+//         page.keyboard.press('ControlLeft')
+//         page.keyboard.press('AltLeft')
+//         await page.keyboard.press('KeyS')
+
+
+//         const token = await page.evaluate(async () => {
+//             return this._exposed_chartWidgetCollection.takeScreenshot()
+//         })
+//         // await downloadSnapshot(token)
+
+
+
+
+//         await page.close()
+
+//         res.json({ ok: true, token })
+//         console.log(ts, "Capture completed")
+//     } catch (err) {
+//         console.log(ts, "Error capture: ", err.toString())
+//         res.json({ ok: false, error: err.toString() })
+//     }
+
+//     // await browser.close()
+
+// });
 
 
 /******************************/
