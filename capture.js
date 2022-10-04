@@ -326,6 +326,11 @@ app.get('/capture', async function (req, res) {
     const downloadPath = path.resolve('./snapshot5');
     await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
 
+    const f = new Date().toISOString()
+    const m = f.split("T")
+    const md = m[0].split("-")
+    const mt = m[1].split(".")[0].split(":")
+
     const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
     const imgDir = path.join(downloadPath, imgName)
 
