@@ -106,9 +106,6 @@ const newPage = async () => {
 
     page.on('request', request => {
         const requestUrl = request.url().split('?')[0].split('#')[0];
-        if (request.resourceType() === 'image') {
-            console.log(request)
-        }
         if (
             blockedResourceTypes.indexOf(request.resourceType()) !== -1 ||
             skippedResources.some(resource => requestUrl.indexOf(resource) !== -1)
@@ -353,10 +350,16 @@ app.get('/capture', async function (req, res) {
         }
 
 
-        const token = await page.evaluate(async () => {
-            return this._exposed_chartWidgetCollection.takeScreenshot()
-        })
-        await downloadSnapshot(token)
+        // const token = await page.evaluate(async () => {
+        //     return this._exposed_chartWidgetCollection.takeScreenshot()
+        // })
+        // await downloadSnapshot(token)
+
+        await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './snapshots' });
+        page.keyboard.press('ControlLeft')
+        page.keyboard.press('AltLeft')
+        await page.keyboard.press('KeyS')
+
 
         await page.close()
 
