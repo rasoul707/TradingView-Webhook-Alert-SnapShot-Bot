@@ -310,7 +310,15 @@ async function downloadSnapshot(token) {
 }
 
 
-
+const getImageName = async (ticker, downloadPath) => {
+    const f = new Date().toISOString()
+    const m = f.split("T")
+    const md = m[0].split("-")
+    const mt = m[1].split(".")[0].split(":")
+    const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
+    const imgDir = path.join(downloadPath, imgName)
+    return imgDir
+}
 
 app.get('/capture', async function (req, res) {
 
@@ -319,27 +327,34 @@ app.get('/capture', async function (req, res) {
     var ticker = req.query.ticker;
     var interval = req.query.interval;
     var zoom = req.query.zoom;
+
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage()
     await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
 
-    const downloadPath = path.resolve('./snapshot5');
-    await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadPath });
+    const downloadPath = path.resolve('./snap_downloads');
+    const snapshotsPath = path.resolve('./snapshot');
+    await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
-    const f = new Date().toISOString()
-    const m = f.split("T")
-    const md = m[0].split("-")
-    const mt = m[1].split(".")[0].split(":")
 
-    const imgName = `${ticker}_${md[0]}-${md[1]}-${md[2]}_${mt[0]}-${mt[1]}-${mt[2]}.png`
-    const imgDir = path.join(downloadPath, imgName)
-
-    console.log(imgDir)
+    const imgToken = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
 
 
     page.keyboard.press('ControlLeft')
     page.keyboard.press('AltLeft')
     await page.keyboard.press('KeyS')
+
+    const imgDir = getImageName(ticker, downloadPath)
+    const newDir = path.join(snapshotsPath, imgToken + ".png")
+    console.log(imgDir, newDir)
+    try {
+        fs.renameSync(imgDir, newDir)
+    } catch (err) {
+        console.log("err", err)
+    }
+
+
+
 
 
     res.json({ ok: true, token: "QkCrNuyR" })
@@ -407,9 +422,9 @@ app.get('/capture', async function (req, res) {
 //         await page.keyboard.press('KeyS')
 
 
-//         const token = await page.evaluate(async () => {
-//             return this._exposed_chartWidgetCollection.takeScreenshot()
-//         })
+// const token = await page.evaluate(async () => {
+//     return this._exposed_chartWidgetCollection.takeScreenshot()
+// })
 //         // await downloadSnapshot(token)
 
 
