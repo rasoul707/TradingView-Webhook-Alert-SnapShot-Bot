@@ -33,16 +33,22 @@ def generateSnapshot(arg, zoom, send2Admin):
     else:
         requestUrl = f'http://localhost:7707/capture?base=chart/{cmd[0]}&exchange={cmd[1]}&ticker={cmd[2]}&interval={cmd[3]}&zoom={zoom}'
         result = requests.get(requestUrl).json()
+        url = ''
 
-        if result['error']:
-            send2Admin('<b>Error</b> =>\n' + result['error'])
+        try:
+            if result['error']:
+                send2Admin('<b>Error</b> =>\n' + result['error'])
+        except:
+            pass
 
-        if result['token']:
-            token = result['token']
-            url = f'https://www.tradingview.com/x/{token}'
-            return url
+        try:
+            if result['token']:
+                token = result['token']
+                url = f'https://www.tradingview.com/x/{token}'
+        except:
+            pass
 
-        return ''
+        return url
 
 
 def cropImage(imgPath):
