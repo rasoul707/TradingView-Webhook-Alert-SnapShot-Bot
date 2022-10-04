@@ -349,24 +349,58 @@ const getNewImageDir = (imgToken, path) => {
     return path + "/" + imgName
 }
 
+
+
+const moveImage = async (oldpath, newpath, page) => {
+    return new Promise((resolve, reject) => {
+        fs.rename(oldpath[0], newpath, (err) => {
+            if (err) {
+                fs.rename(oldpath[1], newpath, (err) => {
+                    if (err) {
+                        fs.rename(oldpath[2], newpath, async (err) => {
+                            if (err) {
+                                await page.waitForTimeout(2000)
+                                fs.rename(oldpath[0], newpath, (err) => {
+                                    if (err) {
+                                        fs.rename(oldpath[1], newpath, (err) => {
+                                            if (err) {
+                                                fs.rename(oldpath[2], newpath, async (err) => {
+                                                    if (err) reject(err)
+                                                    else resolve(true)
+                                                })
+                                            }
+                                            else resolve(true)
+                                        })
+                                    } else resolve(true)
+                                })
+                            } else resolve(true)
+                        })
+                    } else resolve(true)
+                })
+            } else resolve(true)
+        })
+        resolve(true)
+    })
+}
+
 app.get('/capture', async function (req, res) {
 
-    const base = req.query.base;
-    const exchange = req.query.exchange;
-    const ticker = req.query.ticker;
-    const interval = req.query.interval;
-    const zoom = req.query.zoom;
+    const base = req.query.base
+    const exchange = req.query.exchange
+    const ticker = req.query.ticker
+    const interval = req.query.interval
+    const zoom = req.query.zoom
 
-    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
+    const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval
 
 
-    const ts = new Date().getTime();
+    const ts = new Date().getTime()
     console.log(ts, "New Capture")
     let token = null
 
     try {
         const page = await newPage()
-        await page.goto(url, { waitUntil: 'networkidle2', }).catch(e => { throw "NavigateFailed" })
+        await page.goto(url, { waitUntil: 'networkidle2', }).catch(err => { throw "NavigateFailed" + err })
 
 
         if (zoom) {
@@ -376,8 +410,8 @@ app.get('/capture', async function (req, res) {
             }
         }
 
-        const downloadPath = path.resolve('./snap_downloads');
-        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
+        const downloadPath = path.resolve('./snap_downloads')
+        await page._client().send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath })
 
 
         token = await page.evaluate(async () => this._exposed_chartWidgetCollection.takeScreenshot())
@@ -395,18 +429,7 @@ app.get('/capture', async function (req, res) {
         await page.waitForTimeout(2000)
 
 
-        fs.rename(oldImageDir[0], newImageDir, (err) => {
-            fs.rename(oldImageDir[1], newImageDir, (err) => {
-                fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
-            })
-        })
-        await page.waitForTimeout(1000)
-        fs.rename(oldImageDir[0], newImageDir, (err) => {
-            fs.rename(oldImageDir[1], newImageDir, (err) => {
-                fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
-            })
-        })
-
+        await moveImage(oldImageDir, newImageDir, page).catch((err) => { throw "moveError" + err })
 
 
         console.log(ts, "Capture completed")
