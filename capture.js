@@ -328,11 +328,11 @@ const getNewImageDir = (imgToken, path) => {
 
 app.get('/capture', async function (req, res) {
 
-    var base = req.query.base;
-    var exchange = req.query.exchange;
-    var ticker = req.query.ticker;
-    var interval = req.query.interval;
-    var zoom = req.query.zoom;
+    const base = req.query.base;
+    const exchange = req.query.exchange;
+    const ticker = req.query.ticker;
+    const interval = req.query.interval;
+    const zoom = req.query.zoom;
 
     const url = 'https://www.tradingview.com/' + base + '?symbol=' + exchange + ':' + ticker + '&interval=' + interval;
     const page = await newPage()
@@ -350,8 +350,8 @@ app.get('/capture', async function (req, res) {
     await page.keyboard.press('KeyS')
 
 
-    const oldImageDir = getImageDir(ticker, './snap_downloads')
-    const newImageDir = getNewImageDir(token, './snapshot')
+    const oldImageDir = getImageDir(ticker, 'snap_downloads')
+    const newImageDir = getNewImageDir(token, 'snapshot')
 
     console.log(oldImageDir, newImageDir)
     try {
