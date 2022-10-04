@@ -310,7 +310,7 @@ async function downloadSnapshot(token) {
 }
 
 
-const getImageName = async (ticker, downloadPath) => {
+const getImageName = (ticker, downloadPath) => {
     const f = new Date().toISOString()
     const m = f.split("T")
     const md = m[0].split("-")
@@ -345,7 +345,8 @@ app.get('/capture', async function (req, res) {
     await page.keyboard.press('KeyS')
 
     const imgDir = getImageName(ticker, downloadPath)
-    const newDir = path.join(snapshotsPath, imgToken + ".png")
+    const m = imgToken.substring(0, 1).toLowerCase()
+    const newDir = path.join(snapshotsPath, m + "-" + imgToken + ".png")
     console.log(imgDir, newDir)
     try {
         fs.renameSync(imgDir, newDir)
