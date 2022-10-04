@@ -395,14 +395,17 @@ app.get('/capture', async function (req, res) {
         await page.waitForTimeout(2000)
 
 
-        fs.rename(oldImageDir[0], newImageDir, (err) => { throw err })
-        fs.rename(oldImageDir[1], newImageDir, (err) => { throw err })
-        fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
+        fs.rename(oldImageDir[0], newImageDir, (err) => {
+            fs.rename(oldImageDir[1], newImageDir, (err) => {
+                fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
+            })
+        })
         await page.waitForTimeout(1000)
-        fs.rename(oldImageDir[0], newImageDir, (err) => { throw err })
-        fs.rename(oldImageDir[1], newImageDir, (err) => { throw err })
-        fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
-
+        fs.rename(oldImageDir[0], newImageDir, (err) => {
+            fs.rename(oldImageDir[1], newImageDir, (err) => {
+                fs.rename(oldImageDir[2], newImageDir, (err) => { throw err })
+            })
+        })
 
 
 
