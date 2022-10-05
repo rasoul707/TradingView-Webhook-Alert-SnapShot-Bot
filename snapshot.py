@@ -14,21 +14,18 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
         return 'Capture Error'
 
     print("JJJJ")
-    # try:
-    id = snapLink.split("/")[-1]
-    m = id[0:1].lower()
-    impath = f"snapshots/{m}-{id}"
-    filepath = f"{impath}.png"
-    # cropImage(filepath)
-    print("BBB")
-    r = watermark(filepath, topWatermark)
-    print(str(r))
-    print("YYY")
-    if not r:
+    try:
+        id = snapLink.split("/")[-1]
+        m = id[0:1].lower()
+        impath = f"snapshots/{m}-{id}"
+        filepath = f"{impath}.png"
+        # cropImage(filepath)
+        r = watermark(filepath, topWatermark)
+        if not r:
+            return snapLink
+        return config.baseUrl + f"preview/{m}-{id}"
+    except Exception as ee:
         return snapLink
-    return config.baseUrl + f"preview/{m}-{id}"
-    # except Exception as ee:
-    #     return snapLink
 
 
 def generateSnapshot(arg, zoom, send2Admin):
