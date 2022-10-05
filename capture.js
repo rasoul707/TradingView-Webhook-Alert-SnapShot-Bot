@@ -538,13 +538,13 @@ app.get('/snapshots/watermark', async (req, res) => {
             'dstPath': filePath
         }
         if (topWatermark === "True") {
-            watermark.addWatermark(
+            await watermark.addWatermark(
                 filePath,
                 'assets/top_watermark.png',
                 options
             )
         } else {
-            watermark.addWatermark(
+            await watermark.addWatermark(
                 filePath,
                 'assets/back_watermark.png',
                 options
