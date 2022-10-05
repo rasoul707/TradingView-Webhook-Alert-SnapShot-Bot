@@ -13,14 +13,17 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
     if not snapLink:
         return 'Capture Error'
 
+    print("JJJJ")
     try:
         id = snapLink.split("/")[-1]
         m = id[0:1].lower()
         impath = f"snapshots/{m}-{id}"
         filepath = f"{impath}.png"
         # cropImage(filepath)
+        print("BBB")
         r = watermark(filepath, topWatermark)
-        print(r)
+        print(str(r))
+        print("YYY")
         if not r:
             return snapLink
         return config.baseUrl + f"preview/{m}-{id}"
