@@ -20,6 +20,7 @@ def getSnapshot(chart_id, exchange, symbol, timeframe, zoom, topWatermark, send2
         filepath = f"{impath}.png"
         # cropImage(filepath)
         r = watermark(filepath, topWatermark)
+        print(r)
         if not r:
             return snapLink
         return config.baseUrl + f"preview/{m}-{id}"
