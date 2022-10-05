@@ -204,7 +204,7 @@ app.get('/start', async function (req, res) {
 
 
 const dateTimeRange = (interval, candles) => {
-    interval = interval.toUpperCase();
+    interval = interval.toUpperCase()
     const types = ['H', 'D', 'W', 'M', 'Y']
     const temp = interval.slice(-1)
     const now = moment()
@@ -397,6 +397,11 @@ app.get('/capture', async function (req, res) {
     const ts = new Date().getTime()
     console.log(ts, "New Capture")
     let token = null
+
+
+    if (!browser.isConnected) {
+        browser = await puppeteer.launch(chromeOptions);
+    }
 
     try {
         const page = await newPage()
