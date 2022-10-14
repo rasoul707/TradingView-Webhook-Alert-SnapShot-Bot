@@ -159,14 +159,12 @@ app.get('/start', async function (req, res) {
 
 
             // ****
-
             if (page.url() === authUrl) {
                 await page.solveRecaptchas()
                 await page.waitForTimeout(5000);
 
 
                 // ****
-
                 if (page.url() === authUrl) {
                     status = "errorLogin"
                     ok = false
@@ -407,7 +405,6 @@ app.get('/capture', async function (req, res) {
         // await page.close();
         // if (errorsCount === 3) process.exit(1)
         // if (errorsCount === 5) rebootServer()
-
     }
 
 
