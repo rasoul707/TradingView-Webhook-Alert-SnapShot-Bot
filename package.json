@@ -1,4 +1,10 @@
 {
+  "name": "tvsnapshot",
+  "version": "1.0.0",
+  "scripts": {
+    "capture_run": "node capture.js",
+    "webhook_run": "python3 main.py"
+  },
   "dependencies": {
     "express": "^4.18.1",
     "moment": "^2.29.3",
