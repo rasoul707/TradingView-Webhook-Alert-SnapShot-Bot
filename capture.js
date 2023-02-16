@@ -184,10 +184,11 @@ app.get('/start', async function (req, res) {
 
         await page.close();
         res.json({ ok, status, username, password, useragent });
+        console.log("errorLogin1", status)
         if (!ok) exitProc()
     }
     catch (err) {
-        console.log(err)
+        console.log("errorLogin", err)
         res.json({ ok: false, status: "Error", error: err.toString() })
         exitProc()
     }
