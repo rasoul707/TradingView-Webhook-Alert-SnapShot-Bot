@@ -31,7 +31,8 @@ const chromeOptions = {
         "--disable-gpu",
         "--window-size=1920x1080",
     ],
-    userDataDir: "./user_data"
+    userDataDir: "./user_data",
+    executablePath: "/usr/bin/google-chrome"
 };
 
 const blockedResourceTypes = [
@@ -182,6 +183,7 @@ app.get('/start', async function (req, res) {
             ok = true
         }
 
+        await page.screenshot({ path: 'screenshot.png' })
         await page.close();
         res.json({ ok, status, username, password, useragent });
         console.log("errorLogin1", status)
