@@ -187,6 +187,7 @@ app.get('/start', async function (req, res) {
         if (!ok) exitProc()
     }
     catch (err) {
+        console.log(err)
         res.json({ ok: false, status: "Error", error: err.toString() })
         exitProc()
     }
@@ -383,7 +384,7 @@ app.get('/capture', async function (req, res) {
             }
 
         } catch (err) {
-
+            console.log(err)
         }
 
 
