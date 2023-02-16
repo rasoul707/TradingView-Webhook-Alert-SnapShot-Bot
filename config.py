@@ -18,8 +18,8 @@ channels = [
 
 
 # trading-view auth
-username = "maryamkarimimk0@gmail.com"
-password = "s.3886.22r"
+username = "wipohon214@redsium.com"
+password = "wOf3$rC3^7ZZ"
 
 
 # default chart settings
