@@ -32,7 +32,7 @@ const chromeOptions = {
         "--window-size=1920x1080",
     ],
     userDataDir: "./user_data",
-    executablePath: "/usr/bin/google-chrome"
+    // executablePath: "/usr/bin/google-chrome"
 };
 
 const blockedResourceTypes = [
