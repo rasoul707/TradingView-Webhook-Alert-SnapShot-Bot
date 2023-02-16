@@ -68,4 +68,4 @@ if __name__ == "__main__":
 
         print(get_timestamp(), title)
 
-    serve(app, host="0.0.0.0", port=2002)
+    serve(app, host="0.0.0.0", port=10004)
