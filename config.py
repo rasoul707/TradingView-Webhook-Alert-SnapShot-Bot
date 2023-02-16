@@ -4,7 +4,7 @@
 # File Name             : config.py                                   #
 # ------------------------------------------------------------------- #
 
-BOT_TOKEN = "5436730011:AAEvLvkzuUglu9rv6xyU47yOIv7ff7x584o"
+BOT_TOKEN = "5994666133:AAFmVrolwFCCnJMHWCCr5bdoIGxSA66r4to"
 
 admin = 115025624
 
@@ -13,13 +13,13 @@ keys = [
 ]
 
 channels = [
-    -1001760641378
+    -1001818754842
 ]
 
 
 # trading-view auth
-username = "wipohon214@redsium.com"
-password = "wOf3$rC3^7ZZ"
+username = "maryamkarimimk0@gmail.com"
+password = "s.3886.22r"
 
 
 # default chart settings
